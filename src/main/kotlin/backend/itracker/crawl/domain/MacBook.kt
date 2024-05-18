@@ -1,9 +1,12 @@
 package backend.itracker.crawl.domain
 
-import jakarta.persistence.Embedded
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 
 @Entity
+@Table(name = "macbook")
 class MacBook(
     val company: String,
     val name: String,
@@ -17,8 +20,8 @@ class MacBook(
     val size: Int,
     val releaseYear: Int,
 
-    @Embedded
-    val price: MacBookPrice,
+    @OneToMany(cascade = [CascadeType.PERSIST])
+    val price: MutableList<MacBookPrice> = mutableListOf(),
 
     val productLink: String,
     val thumbnail: String

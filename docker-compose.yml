@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  database:
+    container_name: itracker
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: itracker
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: 1234
+      TZ: 'Asia/Seoul'
+    ports:
+      - "14306:3306"
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"

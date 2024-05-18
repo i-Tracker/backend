@@ -1,11 +1,11 @@
 package backend.itracker.crawl.domain
 
-import jakarta.persistence.Embeddable
 import jakarta.persistence.Entity
+import jakarta.persistence.Table
 import java.math.BigDecimal
 
-@Embeddable
 @Entity
+@Table(name = "macbook_price")
 class MacBookPrice(
     val discountPercentage: Int,
     val basePrice: BigDecimal,

@@ -42,10 +42,12 @@ data class MacBookCrawlResponse(
             color = color,
             size = size,
             releaseYear = releaseYear,
-            price = MacBookPrice(
+            price = mutableListOf(
+                MacBookPrice(
                 discountPercentage = discountPercentage,
                 basePrice = basePrice,
                 discountPrice = discountPrice
+                )
             ),
             productLink = productLink,
             thumbnail = thumbnail
