@@ -30,7 +30,7 @@ data class MacbookCrawlResponse(
     }
 
     fun toDomain(): Macbook {
-        return Macbook(
+        val macbook = Macbook(
             company = company,
             name = name,
             type = type,
@@ -42,15 +42,15 @@ data class MacbookCrawlResponse(
             color = color,
             size = size,
             releaseYear = releaseYear,
-            price = mutableListOf(
-                MacbookPrice(
-                discountPercentage = discountPercentage,
-                basePrice = basePrice,
-                discountPrice = discountPrice
-                )
-            ),
             productLink = productLink,
             thumbnail = thumbnail
         )
+
+            macbook.addPrice(MacbookPrice(
+            discountPercentage = discountPercentage,
+            basePrice = basePrice,
+            discountPrice = discountPrice
+        ))
+        return macbook
     }
 }

@@ -3,7 +3,7 @@ spring:
     name: itracker
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
         default_batch_fetch_size: 100

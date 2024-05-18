@@ -1,6 +1,7 @@
 package backend.itracker.crawl.domain
 
 import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
@@ -9,7 +10,10 @@ import jakarta.persistence.Table
 @Table(name = "macbook")
 class Macbook(
     val company: String,
+
+    @Column(columnDefinition = "TEXT")
     val name: String,
+
     val type: String,
     val cpu: String,
     val gpu: String,
@@ -20,14 +24,28 @@ class Macbook(
     val size: Int,
     val releaseYear: Int,
 
-    @OneToMany(cascade = [CascadeType.PERSIST])
-    val price: MutableList<MacbookPrice> = mutableListOf(),
-
+    @Column(columnDefinition = "TEXT")
     val productLink: String,
-    val thumbnail: String
-) : BaseEntity() {
+
+    @Column(columnDefinition = "TEXT")
+    val thumbnail: String,
+
+    @OneToMany(mappedBy = "macbook", cascade = [CascadeType.PERSIST])
+    val prices: MutableList<MacbookPrice> = mutableListOf(),
+
+    id: Long = 0L
+) : BaseEntity(id) {
+
+    fun addAllPrices(macbookPrices: List<MacbookPrice>) {
+        macbookPrices.forEach { addPrice(it) }
+    }
+
+    fun addPrice(macbookPrice: MacbookPrice) {
+        prices.add(macbookPrice)
+        macbookPrice.changeMacbook(this)
+    }
 
     override fun toString(): String {
-        return "MacBook(company='$company', name='$name', type='$type', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, price=$price, productLink='$productLink', thumbnail='$thumbnail')"
+        return "Macbook(company='$company', name='$name', type='$type', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, productLink='$productLink', thumbnail='$thumbnail')"
     }
 }

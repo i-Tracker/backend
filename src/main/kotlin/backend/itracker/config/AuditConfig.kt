@@ -5,5 +5,5 @@ import org.springframework.stereotype.Component
 
 @Component
 @EnableJpaAuditing
-class AuditConfig {
-}
+class AuditConfig
+

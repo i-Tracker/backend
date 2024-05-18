@@ -16,16 +16,16 @@ import java.time.LocalDateTime
 abstract class BaseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0L,
-
+    var id: Long = 0L
+) {
     @Column(updatable = false, nullable = false)
     @CreatedDate
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    open var createdAt: LocalDateTime = LocalDateTime.now()
 
     @Column(nullable = false)
     @LastModifiedDate
-    val updatedAt: LocalDateTime = LocalDateTime.now(),
-) {
+    open var updatedAt: LocalDateTime = LocalDateTime.now()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

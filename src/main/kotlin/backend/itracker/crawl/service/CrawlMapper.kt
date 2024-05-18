@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class CrawlMapper {
 
-    fun toMacBook(products: Map<String, DefaultProduct>): List<Macbook> {
+    fun toMacbook(products: Map<String, DefaultProduct>): List<Macbook> {
         return products.values
             .filter { isMacBook(it) }
             .map(MacbookCrawlResponse.Companion::of)
