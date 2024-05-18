@@ -2,21 +2,16 @@ package backend.itracker.crawl.service
 
 import backend.itracker.crawl.domain.MacBook
 import backend.itracker.crawl.response.DefaultProduct
+import backend.itracker.crawl.service.common.DriverHelper
 import backend.itracker.crawl.service.common.PriceParser
 import backend.itracker.crawl.service.common.WebElementHelper
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.openqa.selenium.By
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
-import org.openqa.selenium.support.ui.WebDriverWait
 import org.springframework.stereotype.Component
-import java.time.Duration
 import java.util.*
 
 
-private const val USER_AGENT =
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 private const val PRODUCT_LIST_HEADER_TITLE = "product-list-header__title"
 private val logger = KotlinLogging.logger {}
 
@@ -24,22 +19,15 @@ private val logger = KotlinLogging.logger {}
 class CrawlService(
     private val crawlMapper: CrawlMapper,
     private val priceParser: PriceParser,
-    private val helper: WebElementHelper
+    private val helper: WebElementHelper,
+    private val driverHelper: DriverHelper = DriverHelper()
 ) {
 
     fun crawlMacBook(category: Category): List<MacBook> {
         val url = "https://pages.coupang.com/p/${category.categoryId}"
+        val driver = driverHelper.getDriver()
+        val wait = driverHelper.getWaiter(driver)
 
-        val chromeOptions = ChromeOptions()
-        chromeOptions.addArguments("--headless")
-        chromeOptions.addArguments(USER_AGENT)
-        chromeOptions.addArguments("--disable-gpu")
-        chromeOptions.addArguments("--no-sandbox")
-        chromeOptions.addArguments("--disable-dev-shm-usage")
-        chromeOptions.addArguments("--disable-notifications")
-        chromeOptions.addArguments("--disable-extensions")
-        val driver = ChromeDriver(chromeOptions)
-        val wait = WebDriverWait(driver, Duration.ofSeconds(5))
         val products = HashMap<String, DefaultProduct>()
         try {
             driver.get(url)
