@@ -1,7 +1,7 @@
 package backend.itracker.crawl.domain
 
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
-import java.math.BigDecimal
 
 @Entity
 class MacBook(
@@ -16,14 +16,15 @@ class MacBook(
     val color: String,
     val size: Int,
     val releaseYear: Int,
-    val discountPercentage: Int,
-    val basePrice: BigDecimal,
-    val discountPrice: BigDecimal,
+
+    @Embedded
+    val price: MacBookPrice,
+
     val productLink: String,
     val thumbnail: String
 ) : BaseEntity() {
 
     override fun toString(): String {
-        return "MacBook(company='$company', name='$name', type='$type', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, discountPercentage=$discountPercentage, basePrice=$basePrice, discountPrice=$discountPrice, productLink='$productLink', thumbnail='$thumbnail')"
+        return "MacBook(company='$company', name='$name', type='$type', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, price=$price, productLink='$productLink', thumbnail='$thumbnail')"
     }
 }

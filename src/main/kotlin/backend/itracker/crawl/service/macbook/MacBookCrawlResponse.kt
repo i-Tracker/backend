@@ -1,6 +1,7 @@
 package backend.itracker.crawl.service.macbook
 
 import backend.itracker.crawl.domain.MacBook
+import backend.itracker.crawl.domain.MacBookPrice
 import backend.itracker.crawl.response.DefaultProduct
 import java.math.BigDecimal
 
@@ -41,9 +42,11 @@ data class MacBookCrawlResponse(
             color = color,
             size = size,
             releaseYear = releaseYear,
-            discountPercentage = discountPercentage,
-            discountPrice = discountPrice,
-            basePrice = basePrice,
+            price = MacBookPrice(
+                discountPercentage = discountPercentage,
+                basePrice = basePrice,
+                discountPrice = discountPrice
+            ),
             productLink = productLink,
             thumbnail = thumbnail
         )
