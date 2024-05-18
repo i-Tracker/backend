@@ -11,8 +11,13 @@ class CrawlMapper {
 
     fun toMacBook(products: Map<String, DefaultProduct>): List<MacBook> {
         return products.values
+            .filter { isMacBook(it) }
             .map(MacBookCrawlResponse.Companion::of)
             .map { it.toDomain() }
             .toList()
+    }
+
+    private fun isMacBook(product: DefaultProduct): Boolean {
+        return product.name.contains("맥북") && !product.name.contains("정품")
     }
 }
