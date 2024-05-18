@@ -2,7 +2,7 @@ package backend.itracker.crawl.service
 
 import backend.itracker.crawl.domain.MacBook
 import backend.itracker.crawl.response.DefaultProduct
-import backend.itracker.crawl.response.MacBookCrawlResponse
+import backend.itracker.crawl.service.macbook.MacBookCrawlResponse
 import org.springframework.stereotype.Component
 
 
