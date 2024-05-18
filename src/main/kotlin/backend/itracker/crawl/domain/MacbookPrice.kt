@@ -6,7 +6,7 @@ import java.math.BigDecimal
 
 @Entity
 @Table(name = "macbook_price")
-class MacBookPrice(
+class MacbookPrice(
     val discountPercentage: Int,
     val basePrice: BigDecimal,
     val discountPrice: BigDecimal,

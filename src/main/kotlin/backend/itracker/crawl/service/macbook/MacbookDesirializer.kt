@@ -1,15 +1,15 @@
 package backend.itracker.crawl.service.macbook
 
 import backend.itracker.crawl.response.DefaultProduct
-import backend.itracker.crawl.service.macbook.MacBookDesirializer.Parser.type1
-import backend.itracker.crawl.service.macbook.MacBookDesirializer.Parser.type2
-import backend.itracker.crawl.service.macbook.MacBookDesirializer.Parser.type3
-import backend.itracker.crawl.service.macbook.MacBookDesirializer.Parser.type4
-import backend.itracker.crawl.service.macbook.MacBookDesirializer.Parser.type5
+import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type1
+import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type2
+import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type3
+import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type4
+import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type5
 
-enum class MacBookDesirializer(
+enum class MacbookDesirializer(
     private val category: String,
-    private val function: (DefaultProduct) -> MacBookCrawlResponse
+    private val function: (DefaultProduct) -> MacbookCrawlResponse
 ) {
 
     MAC_BOOK_AIR_M3_13("MacBook Air M3 13 기본형", ::type1),
@@ -32,7 +32,7 @@ enum class MacBookDesirializer(
 
     object Parser {
         @JvmStatic
-        fun type1(product: DefaultProduct): MacBookCrawlResponse {
+        fun type1(product: DefaultProduct): MacbookCrawlResponse {
             val names = product.name.split(",")
                 .map { it.trim() }
                 .toList()
@@ -48,7 +48,7 @@ enum class MacBookDesirializer(
             val memory = names[5]
             val language = names[7]
 
-            return MacBookCrawlResponse(
+            return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
                 type = type,
@@ -69,7 +69,7 @@ enum class MacBookDesirializer(
         }
 
         @JvmStatic
-        fun type2(product: DefaultProduct): MacBookCrawlResponse {
+        fun type2(product: DefaultProduct): MacbookCrawlResponse {
             val names = product.name.split(",")
                 .map { it.trim() }
                 .toList()
@@ -85,7 +85,7 @@ enum class MacBookDesirializer(
             val memory = names[5]
             val language = names[6]
 
-            return MacBookCrawlResponse(
+            return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
                 type = type,
@@ -106,7 +106,7 @@ enum class MacBookDesirializer(
         }
 
         @JvmStatic
-        fun type3(product: DefaultProduct): MacBookCrawlResponse {
+        fun type3(product: DefaultProduct): MacbookCrawlResponse {
             val names = product.name.split(",")
                 .map { it.trim() }
                 .toList()
@@ -123,7 +123,7 @@ enum class MacBookDesirializer(
             val memory = names[3]
             val language = names[4]
 
-            return MacBookCrawlResponse(
+            return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
                 type = type,
@@ -144,7 +144,7 @@ enum class MacBookDesirializer(
         }
 
         @JvmStatic
-        fun type4(product: DefaultProduct): MacBookCrawlResponse {
+        fun type4(product: DefaultProduct): MacbookCrawlResponse {
             val names = product.name.split(",")
                 .map { it.trim() }
                 .toList()
@@ -159,7 +159,7 @@ enum class MacBookDesirializer(
             val storage = names[4]
             val memory = names[5]
 
-            return MacBookCrawlResponse(
+            return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
                 type = type,
@@ -180,7 +180,7 @@ enum class MacBookDesirializer(
         }
 
         @JvmStatic
-        fun type5(product: DefaultProduct): MacBookCrawlResponse {
+        fun type5(product: DefaultProduct): MacbookCrawlResponse {
             val names = product.name.split(",")
                 .map { it.trim() }
                 .toList()
@@ -194,7 +194,7 @@ enum class MacBookDesirializer(
             val storage = names[3]
             val memory = names[4]
 
-            return MacBookCrawlResponse(
+            return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
                 type = type,
@@ -216,7 +216,7 @@ enum class MacBookDesirializer(
     }
 
     companion object {
-        fun deserialize(product: DefaultProduct): MacBookCrawlResponse {
+        fun deserialize(product: DefaultProduct): MacbookCrawlResponse {
             val category = entries.firstOrNull { it.category == product.category }
                 ?: throw IllegalStateException("지원하지 않는 맥북 카테고리 입니다. category : ${product.category}")
 

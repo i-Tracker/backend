@@ -7,7 +7,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "macbook")
-class MacBook(
+class Macbook(
     val company: String,
     val name: String,
     val type: String,
@@ -21,7 +21,7 @@ class MacBook(
     val releaseYear: Int,
 
     @OneToMany(cascade = [CascadeType.PERSIST])
-    val price: MutableList<MacBookPrice> = mutableListOf(),
+    val price: MutableList<MacbookPrice> = mutableListOf(),
 
     val productLink: String,
     val thumbnail: String

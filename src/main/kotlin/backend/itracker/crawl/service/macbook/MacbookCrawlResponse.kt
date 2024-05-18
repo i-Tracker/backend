@@ -1,11 +1,11 @@
 package backend.itracker.crawl.service.macbook
 
-import backend.itracker.crawl.domain.MacBook
-import backend.itracker.crawl.domain.MacBookPrice
+import backend.itracker.crawl.domain.Macbook
+import backend.itracker.crawl.domain.MacbookPrice
 import backend.itracker.crawl.response.DefaultProduct
 import java.math.BigDecimal
 
-data class MacBookCrawlResponse(
+data class MacbookCrawlResponse(
     val company: String,
     val name: String,
     val type: String,
@@ -24,13 +24,13 @@ data class MacBookCrawlResponse(
     val thumbnail: String
 ) {
     companion object {
-        fun of(product: DefaultProduct): MacBookCrawlResponse {
-            return MacBookDesirializer.deserialize(product)
+        fun of(product: DefaultProduct): MacbookCrawlResponse {
+            return MacbookDesirializer.deserialize(product)
         }
     }
 
-    fun toDomain(): MacBook {
-        return MacBook(
+    fun toDomain(): Macbook {
+        return Macbook(
             company = company,
             name = name,
             type = type,
@@ -43,7 +43,7 @@ data class MacBookCrawlResponse(
             size = size,
             releaseYear = releaseYear,
             price = mutableListOf(
-                MacBookPrice(
+                MacbookPrice(
                 discountPercentage = discountPercentage,
                 basePrice = basePrice,
                 discountPrice = discountPrice
