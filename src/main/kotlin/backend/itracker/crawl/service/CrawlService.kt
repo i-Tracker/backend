@@ -1,17 +1,15 @@
 package backend.itracker.crawl.service
 
 import backend.itracker.crawl.domain.MacBook
-import backend.itracker.crawl.response.DefaultPrice
 import backend.itracker.crawl.response.DefaultProduct
+import backend.itracker.crawl.service.common.PriceParser
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.openqa.selenium.By
-import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
 import java.time.Duration
 import java.util.*
 
@@ -74,7 +72,7 @@ class CrawlService(
                         category = element.findElement(By.xpath("..")).findElement(By.xpath(".."))
                             .findElement(By.className("product-list-header__title")).text,
                         names = names,
-                        priceInfo = getDefaultPrice(element),
+                        priceInfo = PriceParser.getDefaultPrice(element),
                         productLink = productLink,
                         thumbnailLink = thumbnailLink
                     )
@@ -96,33 +94,4 @@ class CrawlService(
         return Collections.emptyList()
     }
 
-    private fun getDefaultPrice(element: WebElement): DefaultPrice {
-        var discountPercentage = 0
-        var basePrice = BigDecimal.ZERO
-        if (element.findElements(By.className("discount-price__percentage")).size != 0) {
-            discountPercentage =
-                element.findElement(By.className("discount-price__percentage")).text.split(System.lineSeparator())[0]
-                    .replace("%", "").toInt()
-            basePrice = element.findElement(By.className("discount-price__base-price")).text
-                .replace(",", "")
-                .removeSuffix("원").toBigDecimal()
-        }
-
-
-        val currentPrice = element.findElement(By.className("current-price__price")).text
-            .replace(",", "")
-            .removeSuffix("원").toBigDecimal()
-        var isOutOfStock = ""
-        if (element.findElements(By.className("product-unit-oos")).size != 0) {
-            isOutOfStock = element.findElement(By.className("product-unit-oos")).text
-        } else {
-            isOutOfStock = "."
-        }
-        return DefaultPrice(
-            discountPercentage = discountPercentage,
-            basePrice = basePrice,
-            discountPrice = currentPrice,
-            isOutOfStock = isOutOfStock
-        )
-    }
 }
