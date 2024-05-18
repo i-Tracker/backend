@@ -3,6 +3,7 @@ package backend.itracker.crawl.service
 import backend.itracker.crawl.domain.MacBook
 import backend.itracker.crawl.response.DefaultProduct
 import backend.itracker.crawl.service.common.PriceParser
+import backend.itracker.crawl.service.common.WebElementHelper
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
@@ -16,11 +17,14 @@ import java.util.*
 
 private const val USER_AGENT =
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+private const val PRODUCT_LIST_HEADER_TITLE = "product-list-header__title"
 private val logger = KotlinLogging.logger {}
 
 @Component
 class CrawlService(
     private val crawlMapper: CrawlMapper,
+    private val priceParser: PriceParser,
+    private val helper: WebElementHelper
 ) {
 
     fun crawlMacBook(category: Category): List<MacBook> {
@@ -35,8 +39,8 @@ class CrawlService(
         chromeOptions.addArguments("--disable-notifications")
         chromeOptions.addArguments("--disable-extensions")
         val driver = ChromeDriver(chromeOptions)
-        val products = HashMap<String, DefaultProduct>()
         val wait = WebDriverWait(driver, Duration.ofSeconds(5))
+        val products = HashMap<String, DefaultProduct>()
         try {
             driver.get(url)
             while (true) {
@@ -51,7 +55,7 @@ class CrawlService(
                 for (element in driver.findElements(By.className("product-list-contents__product-unit"))) {
                     var productId = ""
                     try {
-                        productId = element.findElement(By.tagName("a")).getAttribute("id")
+                        productId = helper.findByTagAndAttribute(element, "a", "id")
                     } catch (e: Exception) {
                         continue
                     }
@@ -59,29 +63,26 @@ class CrawlService(
                     if (products.containsKey(productId)) {
                         continue
                     }
-                    val productLink = element.findElement(By.tagName("a")).getAttribute("href")
                     val names = element.text.split(System.lineSeparator())
-                    val thumbnailLink = element.findElement(By.tagName("img")).getAttribute("src").toString()
-
                     if (!names[0].contains("맥북") || names[0].contains("정품")) {
                         continue
                     }
 
+                    val productLink = helper.findByTagAndAttribute(element, "a", "href")
+                    val thumbnailLink = helper.findByTagAndAttribute(element, "img", "src")
+
                     products[productId] = DefaultProduct(
                         productId = productId.toLong(),
-                        category = element.findElement(By.xpath("..")).findElement(By.xpath(".."))
-                            .findElement(By.className("product-list-header__title")).text,
+                        category = helper.findClassName(
+                            helper.findGrandParentElement(element),
+                            PRODUCT_LIST_HEADER_TITLE
+                        ),
                         names = names,
-                        priceInfo = PriceParser.getDefaultPrice(element),
+                        priceInfo = priceParser.getDefaultPrice(element),
                         productLink = productLink,
                         thumbnailLink = thumbnailLink
                     )
                 }
-            }
-            logger.warn { "element: ${products.size}" }
-            var cnt = 1
-            products.values.forEach {
-                logger.warn { "${cnt++}번째 element: ${it}" }
             }
             return crawlMapper.toMacBook(products)
 
