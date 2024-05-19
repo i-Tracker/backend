@@ -1,8 +1,9 @@
-package backend.itracker.crawl.service.macbook
+package backend.itracker.crawl.service.response
 
-import backend.itracker.crawl.domain.Macbook
-import backend.itracker.crawl.domain.MacbookPrice
-import backend.itracker.crawl.response.DefaultProduct
+import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookPrice
+import backend.itracker.crawl.service.MacbookDesirializer
+import backend.itracker.crawl.service.vo.DefaultProduct
 import java.math.BigDecimal
 
 data class MacbookCrawlResponse(
@@ -46,11 +47,13 @@ data class MacbookCrawlResponse(
             thumbnail = thumbnail
         )
 
-            macbook.addPrice(MacbookPrice(
+            macbook.addPrice(
+                MacbookPrice(
             discountPercentage = discountPercentage,
             basePrice = basePrice,
             discountPrice = discountPrice
-        ))
+        )
+            )
         return macbook
     }
 }

@@ -1,7 +1,7 @@
-package backend.itracker.schedule
+package backend.itracker.crawl.macbook.service
 
-import backend.itracker.crawl.domain.Macbook
-import backend.itracker.crawl.domain.MacbookRepository
+import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

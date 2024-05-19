@@ -1,4 +1,4 @@
-package backend.itracker.crawl.domain
+package backend.itracker.crawl.common
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners

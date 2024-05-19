@@ -1,11 +1,12 @@
-package backend.itracker.crawl.service.macbook
+package backend.itracker.crawl.service
 
-import backend.itracker.crawl.response.DefaultProduct
-import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type1
-import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type2
-import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type3
-import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type4
-import backend.itracker.crawl.service.macbook.MacbookDesirializer.Parser.type5
+import backend.itracker.crawl.service.MacbookDesirializer.Parser.type1
+import backend.itracker.crawl.service.MacbookDesirializer.Parser.type2
+import backend.itracker.crawl.service.MacbookDesirializer.Parser.type3
+import backend.itracker.crawl.service.MacbookDesirializer.Parser.type4
+import backend.itracker.crawl.service.MacbookDesirializer.Parser.type5
+import backend.itracker.crawl.service.response.MacbookCrawlResponse
+import backend.itracker.crawl.service.vo.DefaultProduct
 
 enum class MacbookDesirializer(
     private val category: String,

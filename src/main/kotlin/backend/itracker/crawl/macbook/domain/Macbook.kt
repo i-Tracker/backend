@@ -1,5 +1,6 @@
-package backend.itracker.crawl.domain
+package backend.itracker.crawl.macbook.domain
 
+import backend.itracker.crawl.common.BaseEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

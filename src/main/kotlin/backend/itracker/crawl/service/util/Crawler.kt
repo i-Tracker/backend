@@ -1,6 +1,9 @@
-package backend.itracker.crawl.service.common
+package backend.itracker.crawl.service.util
 
-import backend.itracker.crawl.response.DefaultProduct
+import backend.itracker.crawl.service.util.helper.DriverConnector
+import backend.itracker.crawl.service.util.helper.PriceParser
+import backend.itracker.crawl.service.util.helper.WebElementHelper
+import backend.itracker.crawl.service.vo.DefaultProduct
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
@@ -16,12 +19,12 @@ private val logger = KotlinLogging.logger {}
 class Crawler(
     private val helper: WebElementHelper,
     private val priceParser: PriceParser,
-    private val driverHelper: DriverHelper = DriverHelper()
+    private val driverConnector: DriverConnector = DriverConnector()
 ) {
 
     fun crawl(targetUrl: String): Map<String, DefaultProduct> {
-        val driver = driverHelper.getDriver()
-        val wait = driverHelper.getWaiter(driver)
+        val driver = driverConnector.getDriver()
+        val wait = driverConnector.getWaiter(driver)
 
         val products = HashMap<String, DefaultProduct>()
         try {

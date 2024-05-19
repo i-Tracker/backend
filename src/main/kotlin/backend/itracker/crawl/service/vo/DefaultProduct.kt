@@ -1,4 +1,4 @@
-package backend.itracker.crawl.response
+package backend.itracker.crawl.service.vo
 
 data class DefaultProduct(
     val productId: Long,

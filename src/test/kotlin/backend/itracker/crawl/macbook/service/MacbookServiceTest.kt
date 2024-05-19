@@ -1,8 +1,8 @@
-package backend.itracker.schedule
+package backend.itracker.crawl.macbook.service
 
-import backend.itracker.crawl.domain.Macbook
-import backend.itracker.crawl.domain.MacbookPrice
-import backend.itracker.crawl.domain.MacbookRepository
+import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookPrice
+import backend.itracker.crawl.macbook.domain.MacbookRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,3 +55,4 @@ class MacbookServiceTest {
         assertThat(savedMacbooks).hasSize(1)
     }
 }
+

@@ -1,4 +1,4 @@
-package backend.itracker.crawl.domain
+package backend.itracker.crawl.macbook.domain
 
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*

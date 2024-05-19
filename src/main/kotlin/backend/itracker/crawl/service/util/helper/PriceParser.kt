@@ -1,6 +1,6 @@
-package backend.itracker.crawl.service.common
+package backend.itracker.crawl.service.util.helper
 
-import backend.itracker.crawl.response.DefaultPrice
+import backend.itracker.crawl.service.vo.DefaultPrice
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.springframework.stereotype.Component

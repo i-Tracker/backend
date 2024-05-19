@@ -1,4 +1,4 @@
-package backend.itracker.crawl.response
+package backend.itracker.crawl.service.vo
 
 import java.math.BigDecimal
 

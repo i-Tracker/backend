@@ -1,4 +1,4 @@
-package backend.itracker.crawl.service.common
+package backend.itracker.crawl.service.util.helper
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement

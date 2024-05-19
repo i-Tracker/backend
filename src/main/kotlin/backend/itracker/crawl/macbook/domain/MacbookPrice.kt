@@ -1,5 +1,6 @@
-package backend.itracker.crawl.domain
+package backend.itracker.crawl.macbook.domain
 
+import backend.itracker.crawl.common.BaseEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.ManyToOne
