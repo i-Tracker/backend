@@ -12,7 +12,7 @@ import java.math.BigDecimal
 class MacbookPrice(
     val discountPercentage: Int,
     val basePrice: BigDecimal,
-    val discountPrice: BigDecimal,
+    val currentPrice: BigDecimal,
     id: Long = 0L
 ) : BaseEntity(id) {
 
@@ -24,6 +24,6 @@ class MacbookPrice(
     }
 
     override fun toString(): String {
-        return "MacbookPrice(discountPercentage=$discountPercentage, basePrice=$basePrice, discountPrice=$discountPrice)"
+        return "MacbookPrice(discountPercentage=$discountPercentage, basePrice=$basePrice, discountPrice=$currentPrice)"
     }
 }

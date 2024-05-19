@@ -22,7 +22,8 @@ data class MacbookCrawlResponse(
     val basePrice: BigDecimal,
     val discountPrice: BigDecimal,
     val productLink: String,
-    val thumbnail: String
+    val thumbnail: String,
+    val isOutOfStock: Boolean
 ) {
     companion object {
         fun of(product: DefaultProduct): MacbookCrawlResponse {
@@ -44,14 +45,15 @@ data class MacbookCrawlResponse(
             size = size,
             releaseYear = releaseYear,
             productLink = productLink,
-            thumbnail = thumbnail
+            thumbnail = thumbnail,
+            isOutOfStock = isOutOfStock
         )
 
             macbook.addPrice(
                 MacbookPrice(
             discountPercentage = discountPercentage,
             basePrice = basePrice,
-            discountPrice = discountPrice
+            currentPrice = discountPrice
         )
             )
         return macbook

@@ -34,6 +34,7 @@ class Macbook(
     @OneToMany(mappedBy = "macbook", cascade = [CascadeType.PERSIST])
     val prices: MutableList<MacbookPrice> = mutableListOf(),
 
+    val isOutOfStock: Boolean,
     id: Long = 0L
 ) : BaseEntity(id) {
 

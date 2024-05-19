@@ -34,13 +34,14 @@ class MacbookServiceTest {
             size = 13,
             releaseYear = 2024,
             productLink = "https://www.coupang.com/vp/products/7975088162?itemId=22505523317&vendorItemId=89547640201&sourceType=cmgoms&omsPageId=84871&omsPageUrl=84871",
-            thumbnail = "https://thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/15943638430632-244768e7-86d1-4484-b772-013d185666b8.jpg"
+            thumbnail = "https://thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/15943638430632-244768e7-86d1-4484-b772-013d185666b8.jpg",
+            isOutOfStock = false
         )
         macbook.addPrice(
             MacbookPrice(
                 discountPercentage = 2,
                 basePrice = BigDecimal.valueOf(2400000),
-                discountPrice = BigDecimal.valueOf(2351000)
+                currentPrice = BigDecimal.valueOf(2351000)
             )
         )
         val macbooks = listOf(

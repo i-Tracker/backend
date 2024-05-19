@@ -65,7 +65,8 @@ enum class MacbookDesirializer(
                 basePrice = product.price.basePrice,
                 discountPrice = product.price.discountPrice,
                 productLink = product.productLink,
-                thumbnail = product.thumbnailLink
+                thumbnail = product.thumbnailLink,
+                isOutOfStock = product.isOutOfStock
             )
         }
 
@@ -102,7 +103,8 @@ enum class MacbookDesirializer(
                 basePrice = product.price.basePrice,
                 discountPrice = product.price.discountPrice,
                 productLink = product.productLink,
-                thumbnail = product.thumbnailLink
+                thumbnail = product.thumbnailLink,
+                isOutOfStock = product.isOutOfStock
             )
         }
 
@@ -140,7 +142,8 @@ enum class MacbookDesirializer(
                 basePrice = product.price.basePrice,
                 discountPrice = product.price.discountPrice,
                 productLink = product.productLink,
-                thumbnail = product.thumbnailLink
+                thumbnail = product.thumbnailLink,
+                isOutOfStock = product.isOutOfStock
             )
         }
 
@@ -176,7 +179,8 @@ enum class MacbookDesirializer(
                 basePrice = product.price.basePrice,
                 discountPrice = product.price.discountPrice,
                 productLink = product.productLink,
-                thumbnail = product.thumbnailLink
+                thumbnail = product.thumbnailLink,
+                isOutOfStock = product.isOutOfStock
             )
         }
 
@@ -211,7 +215,8 @@ enum class MacbookDesirializer(
                 basePrice = product.price.basePrice,
                 discountPrice = product.price.discountPrice,
                 productLink = product.productLink,
-                thumbnail = product.thumbnailLink
+                thumbnail = product.thumbnailLink,
+                isOutOfStock = product.isOutOfStock
             )
         }
     }
