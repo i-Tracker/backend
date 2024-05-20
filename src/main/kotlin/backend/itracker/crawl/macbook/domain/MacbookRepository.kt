@@ -6,7 +6,7 @@ import java.util.*
 
 interface MacbookRepository: JpaRepository<Macbook, Long> {
 
-    fun findByName(name: String): Optional<Macbook>
+    fun findByCoupangId(coupangId: Long): Optional<Macbook>
 
     @Query(
         """

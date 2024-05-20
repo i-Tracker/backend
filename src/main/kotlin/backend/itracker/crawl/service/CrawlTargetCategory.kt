@@ -1,6 +1,6 @@
 package backend.itracker.crawl.service
 
-enum class Category(
+enum class CrawlTargetCategory(
     val categoryId: Long
 ) {
     MACBOOK(84871),

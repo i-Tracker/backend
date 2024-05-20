@@ -1,6 +1,7 @@
 package backend.itracker.crawl.macbook.domain
 
 import backend.itracker.crawl.common.BaseEntity
+import backend.itracker.crawl.common.ProductCategory
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -10,12 +11,13 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "macbook")
 class Macbook(
+    val coupangId: Long,
     val company: String,
 
     @Column(columnDefinition = "TEXT")
     val name: String,
 
-    val type: String,
+    val category: ProductCategory,
     val cpu: String,
     val gpu: String,
     val storage: String,
@@ -54,6 +56,6 @@ class Macbook(
     }
 
     override fun toString(): String {
-        return "Macbook(company='$company', name='$name', type='$type', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, productLink='$productLink', thumbnail='$thumbnail')"
+        return "Macbook(company='$company', name='$name', type='$category', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, productLink='$productLink', thumbnail='$thumbnail')"
     }
 }
