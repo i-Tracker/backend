@@ -1,5 +1,6 @@
 package backend.itracker.crawl.service
 
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.service.MacbookDesirializer.Parser.type1
 import backend.itracker.crawl.service.MacbookDesirializer.Parser.type2
 import backend.itracker.crawl.service.MacbookDesirializer.Parser.type3
@@ -40,7 +41,6 @@ enum class MacbookDesirializer(
             val title = names[0].split(" ")
             val company = title[0]
             val releaseYear = title[1].toInt()
-            val type = "${title[2]} ${title[3]}"
             val size = title[4].toInt()
             val color = names[1]
             val cpu = names[2]
@@ -52,7 +52,7 @@ enum class MacbookDesirializer(
             return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
-                type = type,
+                category = ProductCategory.MACBOOK_AIR,
                 cpu = cpu,
                 gpu = gpu,
                 storage = storage,
@@ -78,7 +78,6 @@ enum class MacbookDesirializer(
             val title = names[0].split(" ")
             val company = title[0]
             val releaseYear = title[1].toInt()
-            val type = "${title[2]} ${title[3]}"
             val size = title[4].toInt()
             val color = names[1]
             val cpu = names[2]
@@ -90,7 +89,7 @@ enum class MacbookDesirializer(
             return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
-                type = type,
+                category = ProductCategory.MACBOOK_PRO,
                 cpu = cpu,
                 gpu = gpu,
                 storage = storage,
@@ -116,7 +115,6 @@ enum class MacbookDesirializer(
             val title = names[0].split(" ")
             val company = title[0]
             val releaseYear = title[1].toInt()
-            val type = "${title[2]} ${title[3]}"
             val size = title[4].toInt()
             val cpu = "${title[2]} ${title[3]} ${title[4]} ${title[5]}"
             val gpu = "${title[6]} ${title[7]}"
@@ -129,7 +127,7 @@ enum class MacbookDesirializer(
             return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
-                type = type,
+                category = ProductCategory.MACBOOK_PRO,
                 cpu = cpu,
                 gpu = gpu,
                 storage = storage,
@@ -155,7 +153,6 @@ enum class MacbookDesirializer(
             val title = names[0].split(" ")
             val company = title[0]
             val releaseYear = title[1].toInt()
-            val type = title[2]
             val size = title[3].toInt()
             val color = names[1]
             val cpu = names[2]
@@ -166,7 +163,7 @@ enum class MacbookDesirializer(
             return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
-                type = type,
+                category = ProductCategory.MACBOOK_AIR,
                 cpu = cpu,
                 gpu = gpu,
                 storage = storage,
@@ -192,7 +189,6 @@ enum class MacbookDesirializer(
             val title = names[0].split(" ")
             val company = title[0]
             val releaseYear = title[1].toInt()
-            val type = "${title[2]} ${title[3]}"
             val size = title[4].toInt()
             val color = names[1]
             val cpu = names[2]
@@ -202,7 +198,7 @@ enum class MacbookDesirializer(
             return MacbookCrawlResponse(
                 company = company,
                 name = product.name,
-                type = type,
+                category = ProductCategory.MACBOOK_AIR,
                 cpu = cpu,
                 gpu = "",
                 storage = storage,
