@@ -3,14 +3,13 @@ name: Pull Request Open
 on:
   pull_request:
     branches: [ "dev" ]
-    types: [ created ]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-      packages: write
+      pull-requests: write
 
     steps:
     - uses: actions/checkout@v4
@@ -26,8 +25,15 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Publish Unit Test Results
+    - name: Publish Test Result
       uses: EnricoMi/publish-unit-test-result-action@v1
-      if: ${{ always() }}
+      if: always()
       with:
-        files: backend/build/test-results/**/*.xml
+        files: '**/build/test-results/test/TEST-*.xml'
+
+    - name: Comment Fail Test
+      uses: mikepenz/action-junit-report@v3
+      if: always()
+      with:
+        report_paths: '**/build/test-results/test/TEST-*.xml'
+        token: ${{ github.token }}
