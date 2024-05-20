@@ -47,6 +47,12 @@ class Macbook(
         macbookPrice.changeMacbook(this)
     }
 
+    fun keepOnlyRecentPrice() {
+        val recentPrice = prices.maxBy { it.createdAt }
+        prices.clear()
+        prices.add(recentPrice)
+    }
+
     override fun toString(): String {
         return "Macbook(company='$company', name='$name', type='$type', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, productLink='$productLink', thumbnail='$thumbnail')"
     }

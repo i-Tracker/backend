@@ -23,8 +23,9 @@ class MacbookService (
     }
 
     @Transactional(readOnly = true)
-    fun findAllWithRecentPrice(): List<Macbook> {
-        TODO("쿼리 짜ㄱl")
-        return emptyList()
+    fun findAllWithRecentPrices(): List<Macbook> {
+        val macBooks = macbookRepository.findAllFetch()
+        macBooks.map { it.keepOnlyRecentPrice() }
+        return macBooks
     }
 }

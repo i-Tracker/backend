@@ -21,7 +21,7 @@ class ProductController(
             ?: return ResponseEntity.notFound().build())
 
         if (category == Category.MACBOOK) {
-            val macbooks = macbookService.findAllWithRecentPrice()
+            val macbooks = macbookService.findAllWithRecentPrices()
             return ResponseEntity.ok(
                 Pages(data = macbooks.map {
                     ProductResponse(
@@ -32,7 +32,7 @@ class ProductController(
                         discountPercentage = it.prices.last().discountPercentage,
                         basePrice = it.prices.last().basePrice,
                         currentPrice = it.prices.last().currentPrice,
-                        label = "",
+                        label = "역대최저가",
                         imageUrl = it.thumbnail,
                         isOutOfStock = it.isOutOfStock
                     )
