@@ -1,8 +1,8 @@
 package backend.itracker.schedule
 
 import backend.itracker.crawl.macbook.service.MacbookService
-import backend.itracker.crawl.service.CrawlTargetCategory
 import backend.itracker.crawl.service.CrawlService
+import backend.itracker.crawl.service.CrawlTargetCategory
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component

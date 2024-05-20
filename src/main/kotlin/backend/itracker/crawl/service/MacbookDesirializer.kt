@@ -10,7 +10,7 @@ import backend.itracker.crawl.service.response.MacbookCrawlResponse
 import backend.itracker.crawl.service.vo.DefaultProduct
 
 enum class MacbookDesirializer(
-    private val category: String,
+    private val subCategory: String,
     private val function: (DefaultProduct) -> MacbookCrawlResponse
 ) {
 
@@ -50,6 +50,7 @@ enum class MacbookDesirializer(
             val language = names[7]
 
             return MacbookCrawlResponse(
+                coupangId = product.productId,
                 company = company,
                 name = product.name,
                 category = ProductCategory.MACBOOK_AIR,
@@ -87,6 +88,7 @@ enum class MacbookDesirializer(
             val language = names[6]
 
             return MacbookCrawlResponse(
+                coupangId = product.productId,
                 company = company,
                 name = product.name,
                 category = ProductCategory.MACBOOK_PRO,
@@ -116,8 +118,8 @@ enum class MacbookDesirializer(
             val company = title[0]
             val releaseYear = title[1].toInt()
             val size = title[4].toInt()
-            val cpu = "${title[2]} ${title[3]} ${title[4]} ${title[5]}"
-            val gpu = "${title[6]} ${title[7]}"
+            val cpu = "${title[5]} ${title[6]} ${title[7]}"
+            val gpu = "${title[8]} ${title[9]}"
 
             val color = names[1]
             val storage = names[2]
@@ -125,6 +127,7 @@ enum class MacbookDesirializer(
             val language = names[4]
 
             return MacbookCrawlResponse(
+                coupangId = product.productId,
                 company = company,
                 name = product.name,
                 category = ProductCategory.MACBOOK_PRO,
@@ -161,6 +164,7 @@ enum class MacbookDesirializer(
             val memory = names[5]
 
             return MacbookCrawlResponse(
+                coupangId = product.productId,
                 company = company,
                 name = product.name,
                 category = ProductCategory.MACBOOK_AIR,
@@ -196,6 +200,7 @@ enum class MacbookDesirializer(
             val memory = names[4]
 
             return MacbookCrawlResponse(
+                coupangId = product.productId,
                 company = company,
                 name = product.name,
                 category = ProductCategory.MACBOOK_AIR,
@@ -219,7 +224,7 @@ enum class MacbookDesirializer(
 
     companion object {
         fun deserialize(product: DefaultProduct): MacbookCrawlResponse {
-            val category = entries.firstOrNull { it.category == product.category }
+            val category = entries.firstOrNull { it.subCategory == product.category }
                 ?: throw IllegalStateException("지원하지 않는 맥북 카테고리 입니다. category : ${product.category}")
 
             return category.function(product)

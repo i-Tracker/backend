@@ -8,6 +8,7 @@ import backend.itracker.crawl.service.vo.DefaultProduct
 import java.math.BigDecimal
 
 data class MacbookCrawlResponse(
+    val coupangId: Long,
     val company: String,
     val name: String,
     val category: ProductCategory,
@@ -34,6 +35,7 @@ data class MacbookCrawlResponse(
 
     fun toDomain(): Macbook {
         val macbook = Macbook(
+            coupangId = coupangId,
             company = company,
             name = name,
             category = category,
@@ -50,13 +52,13 @@ data class MacbookCrawlResponse(
             isOutOfStock = isOutOfStock
         )
 
-            macbook.addPrice(
-                MacbookPrice(
-            discountPercentage = discountPercentage,
-            basePrice = basePrice,
-            currentPrice = discountPrice
-        )
+        macbook.addPrice(
+            MacbookPrice(
+                discountPercentage = discountPercentage,
+                basePrice = basePrice,
+                currentPrice = discountPrice
             )
+        )
         return macbook
     }
 }

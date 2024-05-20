@@ -28,6 +28,7 @@ class MacbookServiceTest {
     @BeforeEach
     fun setUp() {
         macbook = Macbook(
+            coupangId = 1,
             company = "Apple",
             name = "Apple 2024 맥북 에어 13 M3, 미드나이트, M3 8코어, 10코어 GPU, 1TB, 16GB, 35W 듀얼, 한글",
             category = ProductCategory.MACBOOK_AIR,

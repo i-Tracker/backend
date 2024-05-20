@@ -11,6 +11,7 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "macbook")
 class Macbook(
+    val coupangId: Long,
     val company: String,
 
     @Column(columnDefinition = "TEXT")

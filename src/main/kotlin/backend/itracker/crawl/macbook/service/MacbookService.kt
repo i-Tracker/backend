@@ -13,7 +13,7 @@ class MacbookService (
 
     fun saveAll(macbooks: List<Macbook>) {
         for (macbook in macbooks) {
-            val maybeMacbook = macbookRepository.findByName(macbook.name)
+            val maybeMacbook = macbookRepository.findByCoupangId(macbook.coupangId)
             if (maybeMacbook.isEmpty) {
                 macbookRepository.save(macbook)
                 continue
