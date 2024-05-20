@@ -1,7 +1,7 @@
 package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.macbook.service.MacbookService
-import backend.itracker.crawl.service.Category
+import backend.itracker.crawl.service.CrawlTargetCategory
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.controller.response.ProductResponse
 import org.springframework.http.ResponseEntity
@@ -17,10 +17,10 @@ class ProductController(
     @GetMapping("/products/{categoryId}")
     fun findProductsByCategory(@PathVariable categoryId: Long): ResponseEntity<Pages<ProductResponse>> {
 
-        val category = (Category.entries.find { it.categoryId == categoryId }
+        val crawlTargetCategory = (CrawlTargetCategory.entries.find { it.categoryId == categoryId }
             ?: return ResponseEntity.notFound().build())
 
-        if (category == Category.MACBOOK) {
+        if (crawlTargetCategory == CrawlTargetCategory.MACBOOK) {
             val macbooks = macbookService.findAllWithRecentPrices()
             return ResponseEntity.ok(
                 Pages(data = macbooks.map {

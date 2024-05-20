@@ -11,8 +11,8 @@ class CrawlService(
     private val crawler: Crawler
 ) {
 
-    fun crawlMacbook(category: Category): List<Macbook> {
-        val url = "https://pages.coupang.com/p/${category.categoryId}"
+    fun crawlMacbook(crawlTargetCategory: CrawlTargetCategory): List<Macbook> {
+        val url = "https://pages.coupang.com/p/${crawlTargetCategory.categoryId}"
         val products = crawler.crawl(url)
         return crawlMapper.toMacbook(products)
     }
