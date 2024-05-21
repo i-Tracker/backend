@@ -1,6 +1,6 @@
 package backend.itracker.crawl.macbook.service
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductCategory.MACBOOK_AIR
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.MacbookPrice
 import backend.itracker.crawl.macbook.domain.MacbookRepository
@@ -31,7 +31,7 @@ class MacbookServiceTest {
             coupangId = 1,
             company = "Apple",
             name = "Apple 2024 맥북 에어 13 M3, 미드나이트, M3 8코어, 10코어 GPU, 1TB, 16GB, 35W 듀얼, 한글",
-            category = ProductCategory.MACBOOK_AIR,
+            category = MACBOOK_AIR,
             cpu = "M3 8코어",
             gpu = "10코어 GPU",
             storage = "1TB",
@@ -84,7 +84,7 @@ class MacbookServiceTest {
         macbookService.saveAll(listOf(macbook))
 
         // when
-        val actual = macbookService.findAllWithRecentPrices()
+        val actual = macbookService.findAllWithRecentPricesByProductGategory(MACBOOK_AIR)
 
         // then
         assertAll(
