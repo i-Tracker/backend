@@ -14,17 +14,17 @@ class ProductController(
     private val macbookService: MacbookService
 ) {
 
-    @GetMapping("/api/products/{categoryId}")
+    @GetMapping("/api/product/{category}")
     fun findProductsByCategory(@PathVariable category: String): ResponseEntity<Pages<ProductResponse>> {
 
-        val crawlTargetCategory = ProductCategory.entries.find { it.name.lowercase() == category.trim() }
+        val crawlTargetCategory = ProductCategory.entries.find { it.name.lowercase() == category.lowercase().trim() }
             ?: return ResponseEntity.notFound().build()
 
         if (
             crawlTargetCategory == ProductCategory.MACBOOK_AIR ||
             crawlTargetCategory == ProductCategory.MACBOOK_PRO
         ) {
-            val macbooks = macbookService.findAllWithRecentPrices()
+            val macbooks = macbookService.findAllWithRecentPricesByProductGategory(crawlTargetCategory)
             return ResponseEntity.ok(
                 Pages(data = macbooks.map {
                     ProductResponse(

@@ -1,5 +1,6 @@
 package backend.itracker.crawl.macbook.service
 
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.MacbookRepository
 import org.springframework.stereotype.Service
@@ -23,8 +24,8 @@ class MacbookService (
     }
 
     @Transactional(readOnly = true)
-    fun findAllWithRecentPrices(): List<Macbook> {
-        val macBooks = macbookRepository.findAllFetch()
+    fun findAllWithRecentPricesByProductGategory(crawlTargetCategory: ProductCategory): List<Macbook> {
+        val macBooks = macbookRepository.findAllFetchByProductCategory(crawlTargetCategory)
         macBooks.map { it.keepOnlyRecentPrice() }
         return macBooks
     }
