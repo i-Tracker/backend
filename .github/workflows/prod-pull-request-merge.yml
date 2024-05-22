@@ -1,4 +1,4 @@
-name: All deploy CI + CD on push
+name: Prod PR merge
 
 on:
   push:
@@ -12,20 +12,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: "17"
-          distribution: "corretto"
-
-      - name: Run tests
-        run: ./gradlew test
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
