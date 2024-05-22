@@ -1,3 +1,0 @@
-[submodule "/itracker/secrets"]
-    path = ./secrets
-    url = https://github.com/i-Tracker/secrets
