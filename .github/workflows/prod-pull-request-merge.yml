@@ -31,10 +31,6 @@ jobs:
 
       - name: Docker Image Build
         run: |
-          pwd
-          echo hello
-          ls
-          cd itracker
           docker build --platform linux/amd64 -t itracker2024/itracker-prod:$IMAGE_TAG -f Dockerfile-prod .
 
       - name: Docker Hub Push
