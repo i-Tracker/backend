@@ -54,7 +54,7 @@ jobs:
       - name: Pull Latest Docker Image
         run: |
           sudo docker login --username ${{ secrets.DOCKER_HUB_USERNAME_PROD }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN_PROD }}
-          sudo docker pull itracker2024/itracker-prod:${{ needs.prod-ci.steps.get_image_tag.outputs.IMAGE_TAG }}
+          sudo docker pull itracker2024/itracker-prod:${{ needs.prod-ci.outputs.IMAGE_TAG }}
 
       - name: Docker Compose
         run: |
