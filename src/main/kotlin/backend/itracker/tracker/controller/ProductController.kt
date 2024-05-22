@@ -2,6 +2,7 @@ package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.service.MacbookService
+import backend.itracker.tracker.controller.response.CategoryResponses
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.controller.response.ProductResponse
 import org.springframework.http.ResponseEntity
@@ -9,22 +10,21 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
+private val productCategories = ProductCategory.entries
+
 @RestController
 class ProductController(
     private val macbookService: MacbookService
 ) {
 
-    @GetMapping("/api/product/{category}")
-    fun findProductsByCategory(@PathVariable category: String): ResponseEntity<Pages<ProductResponse>> {
-
-        val crawlTargetCategory = ProductCategory.entries.find { it.name.lowercase() == category.lowercase().trim() }
-            ?: return ResponseEntity.notFound().build()
+    @GetMapping("/api/v1/products/{category}")
+    fun findProductsByCategory(@PathVariable category: ProductCategory): ResponseEntity<Pages<ProductResponse>> {
 
         if (
-            crawlTargetCategory == ProductCategory.MACBOOK_AIR ||
-            crawlTargetCategory == ProductCategory.MACBOOK_PRO
+            category == ProductCategory.MACBOOK_AIR ||
+            category == ProductCategory.MACBOOK_PRO
         ) {
-            val macbooks = macbookService.findAllWithRecentPricesByProductGategory(crawlTargetCategory)
+            val macbooks = macbookService.findAllWithRecentPricesByProductGategory(category)
             return ResponseEntity.ok(
                 Pages(data = macbooks.map {
                     ProductResponse(
@@ -44,5 +44,10 @@ class ProductController(
         }
 
         return ResponseEntity.notFound().build()
+    }
+
+    @GetMapping("/api/v1/category")
+    fun findAllCategories(): ResponseEntity<CategoryResponses> {
+        return ResponseEntity.ok(CategoryResponses(productCategories))
     }
 }

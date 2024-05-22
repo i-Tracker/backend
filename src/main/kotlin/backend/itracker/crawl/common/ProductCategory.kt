@@ -2,5 +2,11 @@ package backend.itracker.crawl.common
 
 enum class ProductCategory {
     MACBOOK_AIR,
-    MACBOOK_PRO
+    MACBOOK_PRO,
+    MAC,
+    I_PHONE,
+    I_PAD,
+    AIRPODS,
+    WATCH,
+    IPAD
 }
