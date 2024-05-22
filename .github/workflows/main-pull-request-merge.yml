@@ -1,0 +1,66 @@
+name: All deploy CI + CD on push
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  IMAGE_TAG: $(git rev-parse --short HEAD)
+
+jobs:
+  prod-ci:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "corretto"
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+          submodules: true
+
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v2.9.1
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME_PROD }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN_PROD }}
+
+      - name: Docker Image Build
+        run: |
+          cd itracker
+          docker build --platform linux/amd64 -t itracker2024/itracker-prod:$IMAGE_TAG -f Dockerfile-prod .
+
+      - name: Docker Hub Push
+        run: docker push itracker2024/itracker-prod:$IMAGE_TAG
+
+  prod-cd:
+    needs: prod-ci
+    runs-on: [self-hosted, Linux, prod]
+
+    steps:
+      - name: Pull Latest Docker Image
+        run: |
+          sudo docker login --username ${{ secrets.DOCKER_HUB_USERNAME_PROD }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN_PROD }}
+          sudo docker pull itracker2024/itracker-prod:$IMAGE_TAG
+
+      - name: Docker Compose
+        run: |
+          ~/backend/deploy.sh
+          docker container prune -f
+          sudo docker image prune -af
