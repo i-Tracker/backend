@@ -1,0 +1,7 @@
+FROM amazoncorretto:17
+
+WORKDIR /app
+
+COPY ./build/libs/itracker-*-SNAPSHOT.jar /app/itracker.jar
+
+CMD ["java", "-Duser.timezone=Asia/Seoul", "-jar", "-Dspring.profiles.active=prod", "itracker.jar"]
