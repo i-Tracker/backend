@@ -2,7 +2,7 @@ name: Prod PR merge
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "prod" ]
 
 env:
   IMAGE_TAG: $(git rev-parse --short HEAD)
