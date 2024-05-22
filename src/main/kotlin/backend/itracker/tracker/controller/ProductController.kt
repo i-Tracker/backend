@@ -18,13 +18,15 @@ class ProductController(
 ) {
 
     @GetMapping("/api/v1/products/{category}")
-    fun findProductsByCategory(@PathVariable category: ProductCategory): ResponseEntity<Pages<ProductResponse>> {
+    fun findProductsByCategory(@PathVariable category: String): ResponseEntity<Pages<ProductResponse>> {
+        val targetCategory = productCategories.firstOrNull { it.name.lowercase() == category }
+            ?: return ResponseEntity.notFound().build()
 
         if (
-            category == ProductCategory.MACBOOK_AIR ||
-            category == ProductCategory.MACBOOK_PRO
+            targetCategory == ProductCategory.MACBOOK_AIR ||
+            targetCategory == ProductCategory.MACBOOK_PRO
         ) {
-            val macbooks = macbookService.findAllWithRecentPricesByProductGategory(category)
+            val macbooks = macbookService.findAllWithRecentPricesByProductGategory(targetCategory)
             return ResponseEntity.ok(
                 Pages(data = macbooks.map {
                     ProductResponse(
