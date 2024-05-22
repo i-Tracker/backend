@@ -30,13 +30,14 @@ jobs:
         id: get_image_tag
         run: |
           IMAGE_TAG=$(git rev-parse --short HEAD)
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
 
       - name: Docker Image Build
-        run: |
-          docker build --platform linux/amd64 -t itracker-prod:${{ steps.get_image_tag.outputs.IMAGE_TAG }} -f Dockerfile-prod .
+        run: docker build --platform linux/amd64 -t itracker2024/itracker-prod:${{ steps.get_image_tag.outputs.IMAGE_TAG }} -f Dockerfile-prod .
 
       - name: Docker Hub Push
-        run: docker push itracker-prod:${{ steps.get_image_tag.outputs.IMAGE_TAG }}
+        run: docker push itracker2024/itracker-prod:${{ steps.get_image_tag.outputs.IMAGE_TAG }}
 
   prod-cd:
     needs: prod-ci
@@ -46,7 +47,7 @@ jobs:
       - name: Pull Latest Docker Image
         run: |
           sudo docker login --username ${{ secrets.DOCKER_HUB_USERNAME_PROD }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN_PROD }}
-          sudo docker pull itracker-prod:${{ needs.prod-ci.steps.get_image_tag.outputs.image_tag }}
+          sudo docker pull itracker2024/itracker-prod:${{ needs.prod-ci.steps.get_image_tag.outputs.IMAGE_TAG }}
 
       - name: Docker Compose
         run: |
