@@ -18,6 +18,7 @@ class Macbook(
     val name: String,
 
     val category: ProductCategory,
+    val chip: String,
     val cpu: String,
     val gpu: String,
     val storage: String,
@@ -56,6 +57,6 @@ class Macbook(
     }
 
     override fun toString(): String {
-        return "Macbook(company='$company', name='$name', type='$category', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, productLink='$productLink', thumbnail='$thumbnail')"
+        return "Macbook(thumbnail='$thumbnail', productLink='$productLink', releaseYear=$releaseYear, size=$size, color='$color', language='$language', memory='$memory', storage='$storage', gpu='$gpu', cpu='$cpu', chip='$chip', category=$category, name='$name', company='$company', coupangId=$coupangId)"
     }
 }
