@@ -1,6 +1,7 @@
 package backend.itracker.tracker.service
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.tracker.service.handler.ProductHandler
 import backend.itracker.tracker.service.response.CommonProductModel
 import backend.itracker.tracker.service.vo.Limit
 import org.springframework.stereotype.Service

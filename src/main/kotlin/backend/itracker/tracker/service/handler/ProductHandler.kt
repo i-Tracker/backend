@@ -1,4 +1,4 @@
-package backend.itracker.tracker.service
+package backend.itracker.tracker.service.handler
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.service.response.CommonProductModel
