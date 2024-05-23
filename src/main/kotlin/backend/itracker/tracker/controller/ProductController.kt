@@ -6,9 +6,11 @@ import backend.itracker.tracker.controller.response.CategoryResponses
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.service.ProductService
 import backend.itracker.tracker.service.response.CommonProductModel
+import backend.itracker.tracker.service.vo.Limit
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 private val productCategories = ProductCategory.entries
@@ -20,11 +22,14 @@ class ProductController(
 ) {
 
     @GetMapping("/api/v1/products/{category}")
-    fun findProductsByCategory(@PathVariable category: String): ResponseEntity<Pages<CommonProductModel>> {
+    fun findProductsByCategory(
+        @PathVariable category: String,
+        @RequestParam(defaultValue = "5") limit: Int,
+    ): ResponseEntity<Pages<CommonProductModel>> {
         val targetCategory = productCategories.firstOrNull { it.name.lowercase() == category }
             ?: return ResponseEntity.notFound().build()
 
-        val products = productService.findTopDiscountPercentageProducts(targetCategory, 5)
+        val products = productService.findTopDiscountPercentageProducts(targetCategory, Limit(limit))
         return ResponseEntity.ok(Pages(data = products))
     }
 
