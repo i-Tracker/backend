@@ -1,7 +1,6 @@
 package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.common.ProductCategory
-import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.tracker.controller.response.CategoryResponses
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.service.ProductService
@@ -18,7 +17,6 @@ private val productCategories = ProductCategory.entries
 @RestController
 class ProductController(
     private val productService: ProductService,
-    private val macbookService: MacbookService
 ) {
 
     @GetMapping("/api/v1/products/{category}")
