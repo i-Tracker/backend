@@ -16,7 +16,7 @@ class SchedulerService(
     private val macbookService: MacbookService
 ) {
 
-    @Scheduled(cron = "0 0 12 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 38 15 * * *", zone = "Asia/Seoul")
     fun crawlMacbook() {
         logger.info { "맥북 크롤링 시작. " }
         val times = measureTime {
