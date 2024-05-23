@@ -2,11 +2,11 @@ package backend.itracker.crawl.macbook.domain
 
 import backend.itracker.crawl.common.BaseEntity
 import backend.itracker.crawl.common.ProductCategory
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
-import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "macbook")
@@ -34,26 +34,28 @@ class Macbook(
     @Column(columnDefinition = "TEXT")
     val thumbnail: String,
 
-    @OneToMany(mappedBy = "macbook", cascade = [CascadeType.PERSIST])
-    val prices: MutableList<MacbookPrice> = mutableListOf(),
+    @Embedded
+    val prices: MacbookPrices = MacbookPrices(),
 
     val isOutOfStock: Boolean,
     id: Long = 0L
 ) : BaseEntity(id) {
 
-    fun addAllPrices(macbookPrices: List<MacbookPrice>) {
-        macbookPrices.forEach { addPrice(it) }
+    fun addAllPrices(targetPrices: MacbookPrices) {
+        targetPrices.macbookPrices.forEach(this::addPrice)
     }
 
-    fun addPrice(macbookPrice: MacbookPrice) {
-        prices.add(macbookPrice)
-        macbookPrice.changeMacbook(this)
+    fun addPrice(targetPrice: MacbookPrice) {
+        prices.add(targetPrice)
+        targetPrice.changeMacbook(this)
     }
 
-    fun keepOnlyRecentPrice() {
-        val recentPrice = prices.maxBy { it.createdAt }
-        prices.clear()
-        prices.add(recentPrice)
+    fun findCurrentPrice(): BigDecimal {
+        return prices.findCurrentPrice()
+    }
+
+    fun findDiscountPercentage(): Int {
+        return prices.findTodayDiscountPercentage()
     }
 
     override fun toString(): String {
