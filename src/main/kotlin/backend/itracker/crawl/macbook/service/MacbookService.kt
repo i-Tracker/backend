@@ -24,13 +24,6 @@ class MacbookService (
     }
 
     @Transactional(readOnly = true)
-    fun findAllWithRecentPricesByProductGategory(crawlTargetCategory: ProductCategory): List<Macbook> {
-        val macBooks = macbookRepository.findAllFetchByProductCategory(crawlTargetCategory)
-        macBooks.map { it.keepOnlyRecentPrice() }
-        return macBooks
-    }
-
-    @Transactional(readOnly = true)
     fun findAllFetchByProductCategory(
         productCategory: ProductCategory,
     ): List<Macbook> {
