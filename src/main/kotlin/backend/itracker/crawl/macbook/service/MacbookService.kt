@@ -29,4 +29,11 @@ class MacbookService (
         macBooks.map { it.keepOnlyRecentPrice() }
         return macBooks
     }
+
+    @Transactional(readOnly = true)
+    fun findAllFetchByProductCategory(
+        productCategory: ProductCategory,
+    ): List<Macbook> {
+        return macbookRepository.findAllFetchByProductCategory(productCategory)
+    }
 }
