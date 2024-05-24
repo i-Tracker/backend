@@ -1,4 +1,4 @@
-package backend.itracker.tracker.controller.response
+package backend.itracker.tracker.service.response.product
 
 import java.math.BigDecimal
 
