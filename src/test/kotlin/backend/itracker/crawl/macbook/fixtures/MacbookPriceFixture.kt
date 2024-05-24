@@ -14,6 +14,7 @@ abstract class MacbookPriceFixture {
             discountPercentage = discountPercentage,
             basePrice = BigDecimal.valueOf(basePrice),
             currentPrice = BigDecimal.valueOf(currentPrice),
+            isOutOfStock = false
         )
 
         fun macbookPrice(

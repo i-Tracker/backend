@@ -12,7 +12,7 @@ class CrawlMapper {
     fun toMacbook(products: Map<String, DefaultProduct>): List<Macbook> {
         return products.values
             .filter { isMacBook(it) }
-            .map(MacbookCrawlResponse.Companion::of)
+            .map(MacbookCrawlResponse.Companion::from)
             .map { it.toDomain() }
             .toList()
     }

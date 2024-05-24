@@ -8,8 +8,8 @@ import java.math.BigDecimal
 
 private const val DISCOUNT_PERCENTAGE = "discount-price__percentage"
 private const val BASE_PRICE = "discount-price__base-price"
-
 private const val CURRENT_PRICE = "current-price__price"
+private const val OUT_OF_STOCK = "product-unit-oos"
 
 
 @Component
@@ -33,10 +33,16 @@ class PriceParser(
             .replace(",", "")
             .removeSuffix("원").toBigDecimal()
 
+        var isOutOfStock = "재고 존재"
+        if (helper.hasClass(element, OUT_OF_STOCK)) {
+            isOutOfStock = element.findElement(By.className(OUT_OF_STOCK)).text
+        }
+
         return DefaultPrice(
             discountPercentage = discountPercentage,
             basePrice = basePrice,
-            discountPrice = currentPrice
+            discountPrice = currentPrice,
+            isOutOfStock = isOutOfStock
         )
     }
 }
