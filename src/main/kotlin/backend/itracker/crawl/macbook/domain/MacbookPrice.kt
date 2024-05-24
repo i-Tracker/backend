@@ -15,6 +15,7 @@ class MacbookPrice(
     val discountPercentage: Int,
     val basePrice: BigDecimal,
     val currentPrice: BigDecimal,
+    val isOutOfStock: Boolean,
     id: Long = 0L
 ) : BaseEntity(id) {
 

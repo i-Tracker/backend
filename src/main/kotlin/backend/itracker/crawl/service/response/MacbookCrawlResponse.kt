@@ -29,7 +29,7 @@ data class MacbookCrawlResponse(
     val isOutOfStock: Boolean
 ) {
     companion object {
-        fun of(product: DefaultProduct): MacbookCrawlResponse {
+        fun from(product: DefaultProduct): MacbookCrawlResponse {
             return MacbookDesirializer.deserialize(product)
         }
     }
@@ -50,15 +50,15 @@ data class MacbookCrawlResponse(
             size = size,
             releaseYear = releaseYear,
             productLink = productLink,
-            thumbnail = thumbnail,
-            isOutOfStock = isOutOfStock
+            thumbnail = thumbnail
         )
 
         macbook.addPrice(
             MacbookPrice(
                 discountPercentage = discountPercentage,
                 basePrice = basePrice,
-                currentPrice = discountPrice
+                currentPrice = discountPrice,
+                isOutOfStock = isOutOfStock
             )
         )
         return macbook

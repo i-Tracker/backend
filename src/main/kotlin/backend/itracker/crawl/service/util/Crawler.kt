@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component
 
 private const val PRODUCT_LIST_HEADER_TITLE = "product-list-header__title"
 private const val CONTENTS_CLASS = "product-list-contents__product-unit"
-private const val OUT_OF_STOCK = "product-unit-oos"
 
 private val logger = KotlinLogging.logger {}
 
@@ -53,10 +52,6 @@ class Crawler(
                         continue
                     }
 
-                    var isOutOfStock = "재고 존재"
-                    if (helper.hasClass(element, OUT_OF_STOCK)) {
-                        isOutOfStock = element.findElement(By.className(OUT_OF_STOCK)).text
-                    }
 
                     products[productId] = DefaultProduct(
                         productId = productId.toLong(),
@@ -67,8 +62,7 @@ class Crawler(
                         names = element.text.split(System.lineSeparator()),
                         priceInfo = priceParser.getDefaultPrice(element),
                         productLink = helper.findByTagAndAttribute(element, "a", "href"),
-                        thumbnailLink = helper.findByTagAndAttribute(element, "img", "src"),
-                        isOutOfStock = isOutOfStock
+                        thumbnailLink = helper.findByTagAndAttribute(element, "img", "src")
                     )
                 }
             }

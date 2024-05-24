@@ -34,4 +34,8 @@ class MacbookPrices(
         return macbookPrices.sumOf { it.currentPrice }
             .divide(BigDecimal.valueOf(macbookPrices.size.toLong()), 2, HALF_UP)
     }
+
+    fun isOutOfStock(): Boolean {
+        return macbookPrices.maxBy { it.createdAt }.isOutOfStock
+    }
 }
