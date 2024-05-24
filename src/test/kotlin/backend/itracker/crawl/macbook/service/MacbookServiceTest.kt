@@ -2,7 +2,7 @@ package backend.itracker.crawl.macbook.service
 
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.MacbookPrice
-import backend.itracker.crawl.macbook.domain.MacbookRepository
+import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
 import backend.itracker.crawl.macbook.fixtures.MacbookFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

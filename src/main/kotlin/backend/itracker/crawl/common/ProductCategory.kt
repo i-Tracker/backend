@@ -7,6 +7,5 @@ enum class ProductCategory {
     I_PHONE,
     I_PAD,
     AIRPODS,
-    WATCH,
-    IPAD
+    APPLE_WATCH
 }
