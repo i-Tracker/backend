@@ -143,7 +143,7 @@ enum class MacbookDesirializer(
                 coupangId = product.productId,
                 company = company,
                 name = product.name,
-                category = ProductCategory.MACBOOK_AIR,
+                category = ProductCategory.MACBOOK_PRO,
                 chip = chip,
                 cpu = cpu,
                 gpu = gpu,
