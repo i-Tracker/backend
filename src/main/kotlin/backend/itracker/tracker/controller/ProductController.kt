@@ -21,13 +21,10 @@ class ProductController(
 
     @GetMapping("/api/v1/products/{category}")
     fun findProductsByCategory(
-        @PathVariable category: String,
+        @PathVariable category: ProductCategory,
         @RequestParam(defaultValue = "5") limit: Int,
     ): ResponseEntity<Pages<CommonProductModel>> {
-        val targetCategory = productCategories.firstOrNull { it.name.lowercase() == category }
-            ?: return ResponseEntity.notFound().build()
-
-        val products = productService.findTopDiscountPercentageProducts(targetCategory, Limit(limit))
+        val products = productService.findTopDiscountPercentageProducts(category, Limit(limit))
         return ResponseEntity.ok(Pages(data = products))
     }
 
