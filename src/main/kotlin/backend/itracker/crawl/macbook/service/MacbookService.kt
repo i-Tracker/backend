@@ -29,4 +29,9 @@ class MacbookService (
     ): List<Macbook> {
         return macbookRepository.findAllFetchByProductCategory(productCategory)
     }
+
+    @Transactional(readOnly = true)
+    fun findAll(): List<Macbook> {
+        return macbookRepository.findAll()
+    }
 }

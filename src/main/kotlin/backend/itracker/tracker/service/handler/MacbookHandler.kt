@@ -2,14 +2,19 @@ package backend.itracker.tracker.service.handler
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.service.MacbookService
-import backend.itracker.tracker.controller.response.MacbookResponse
-import backend.itracker.tracker.service.response.CommonProductModel
+import backend.itracker.tracker.service.common.DataSizeComparator
+import backend.itracker.tracker.service.response.filter.CommonFilterModel
+import backend.itracker.tracker.service.response.filter.MacbookFilter
+import backend.itracker.tracker.service.response.product.CommonProductModel
+import backend.itracker.tracker.service.response.product.MacbookResponse
 import org.springframework.stereotype.Component
 
 
+private val dataSizeComparator: DataSizeComparator = DataSizeComparator()
+
 @Component
 class MacbookHandler(
-    private val macbookService: MacbookService
+    private val macbookService: MacbookService,
 ) : ProductHandler {
 
     override fun supports(productCategory: ProductCategory): Boolean {
@@ -41,5 +46,19 @@ class MacbookHandler(
             )
         }.sortedBy { it.discountPercentage }
             .take(limit)
+    }
+
+    override fun findFilter(
+        productCategory: ProductCategory
+    ): CommonFilterModel {
+        val macbooks = macbookService.findAll()
+
+        return MacbookFilter(
+            size = macbooks.map { it.size }.distinct().sorted(),
+            color = macbooks.map { it.color }.distinct().sorted(),
+            processor = macbooks.map { it.chip }.distinct().sorted(),
+            storage = macbooks.map { it.storage }.distinct().sortedWith(dataSizeComparator),
+            memory = macbooks.map { it.memory }.distinct().sortedWith(dataSizeComparator)
+        )
     }
 }

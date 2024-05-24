@@ -4,7 +4,7 @@ import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.controller.response.CategoryResponses
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.service.ProductService
-import backend.itracker.tracker.service.response.CommonProductModel
+import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.Limit
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -31,5 +31,13 @@ class ProductController(
     @GetMapping("/api/v1/category")
     fun findAllCategories(): ResponseEntity<CategoryResponses> {
         return ResponseEntity.ok(CategoryResponses(productCategories))
+    }
+
+    @GetMapping("/api/v1/products/{category}/filter")
+    fun findProductFilter(
+        @PathVariable category: ProductCategory
+    ): ResponseEntity<Any> {
+        val filter = productService.findFilter(category)
+        return ResponseEntity.ok(filter)
     }
 }

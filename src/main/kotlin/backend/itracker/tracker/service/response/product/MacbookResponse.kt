@@ -1,6 +1,5 @@
-package backend.itracker.tracker.controller.response
+package backend.itracker.tracker.service.response.product
 
-import backend.itracker.tracker.service.response.CommonProductModel
 import java.math.BigDecimal
 
 data class MacbookResponse(
