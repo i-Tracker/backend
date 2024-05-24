@@ -2,7 +2,7 @@ package backend.itracker.crawl.service.vo
 
 data class DefaultProduct(
     val productId: Long,
-    val category: String,
+    val subCategory: String,
     val name: String,
     val price: DefaultPrice,
     val productLink: String,
@@ -11,14 +11,14 @@ data class DefaultProduct(
 
     constructor(
         productId: Long,
-        category: String,
+        subCategory: String,
         names: List<String>,
         priceInfo: DefaultPrice,
         productLink: String,
         thumbnailLink: String,
     ) : this(
         productId = productId,
-        category = category,
+        subCategory = subCategory,
         name = names[0],
         price = priceInfo,
         productLink = productLink,

@@ -374,8 +374,8 @@ enum class MacbookDesirializer(
 
     companion object {
         fun deserialize(product: DefaultProduct): MacbookCrawlResponse {
-            val category = entries.firstOrNull { it.subCategory == product.category }
-                ?: throw IllegalStateException("지원하지 않는 맥북 카테고리 입니다. category : ${product.category}")
+            val category = entries.firstOrNull { it.subCategory == product.subCategory }
+                ?: throw IllegalStateException("지원하지 않는 맥북 서브 카테고리 입니다. subCategory : ${product.subCategory}")
 
             return category.function(product)
         }

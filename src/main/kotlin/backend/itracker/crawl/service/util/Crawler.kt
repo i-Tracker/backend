@@ -55,7 +55,7 @@ class Crawler(
 
                     products[productId] = DefaultProduct(
                         productId = productId.toLong(),
-                        category = helper.findClassName(
+                        subCategory = helper.findClassName(
                             helper.findGrandParentElement(element),
                             PRODUCT_LIST_HEADER_TITLE
                         ),
