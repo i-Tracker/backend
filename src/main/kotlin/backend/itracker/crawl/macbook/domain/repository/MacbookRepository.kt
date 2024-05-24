@@ -1,12 +1,13 @@
-package backend.itracker.crawl.macbook.domain
+package backend.itracker.crawl.macbook.domain.repository
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.macbook.domain.Macbook
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import java.util.*
 
-interface MacbookRepository: JpaRepository<Macbook, Long> {
+interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCustom {
 
     fun findByCoupangId(coupangId: Long): Optional<Macbook>
 
