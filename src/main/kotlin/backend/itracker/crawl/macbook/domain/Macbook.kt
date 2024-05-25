@@ -37,7 +37,6 @@ class Macbook(
     @Embedded
     val prices: MacbookPrices = MacbookPrices(),
 
-    val isOutOfStock: Boolean,
     id: Long = 0L
 ) : BaseEntity(id) {
 
@@ -56,6 +55,10 @@ class Macbook(
 
     fun findDiscountPercentage(): Int {
         return prices.findTodayDiscountPercentage()
+    }
+
+    fun isOutOfStock(): Boolean {
+        return prices.isOutOfStock()
     }
 
     override fun toString(): String {

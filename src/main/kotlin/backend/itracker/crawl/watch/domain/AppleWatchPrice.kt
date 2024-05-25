@@ -1,4 +1,4 @@
-package backend.itracker.crawl.macbook.domain
+package backend.itracker.crawl.watch.domain
 
 import backend.itracker.crawl.common.BaseEntity
 import jakarta.persistence.Entity
@@ -10,8 +10,8 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 
 @Entity
-@Table(name = "macbook_price")
-class MacbookPrice(
+@Table(name = "apple_watch_price")
+class AppleWatchPrice(
     val discountPercentage: Int,
     val basePrice: BigDecimal,
     val currentPrice: BigDecimal,
@@ -21,15 +21,15 @@ class MacbookPrice(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-        name = "macbook_id", nullable = false, foreignKey = ForeignKey(name = "fk_macbook_price_macbook_id_ref_macbook_id")
+        name = "apple_watch_id", nullable = false, foreignKey = ForeignKey(name = "fk_apple_watch_price_apple_watch_id_ref_apple_watch_id")
     )
-    var macbook: Macbook? = null
+    var appleWatch: AppleWatch? = null
 
-    fun changeMacbook(macbook: Macbook) {
-        this.macbook = macbook
+    fun changeAppleWatch(appleWatch: AppleWatch) {
+        this.appleWatch = appleWatch
     }
 
     override fun toString(): String {
-        return "MacbookPrice(discountPercentage=$discountPercentage, basePrice=$basePrice, discountPrice=$currentPrice)"
+        return "AppleWatchPrice(isOutOfStock=$isOutOfStock, currentPrice=$currentPrice, basePrice=$basePrice, discountPercentage=$discountPercentage)"
     }
 }
