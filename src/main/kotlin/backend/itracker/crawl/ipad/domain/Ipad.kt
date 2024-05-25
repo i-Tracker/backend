@@ -4,6 +4,8 @@ import backend.itracker.crawl.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 
 @Entity
@@ -14,7 +16,10 @@ class Ipad(
 
     @Column(columnDefinition = "TEXT")
     val name: String,
+
+    @Enumerated(EnumType.STRING)
     val category: IpadCategory,
+
     val chip: String,
     val storage: String,
     val color: String,

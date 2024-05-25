@@ -7,6 +7,7 @@ import backend.itracker.crawl.service.vo.DefaultProduct
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
+import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.springframework.stereotype.Component
 
@@ -44,11 +45,13 @@ class Crawler(
                         productId = helper.findByTagAndAttribute(element, "a", "id")
                     } catch (exception: NoSuchElementException) {
                         continue
+                    } catch (exception: StaleElementReferenceException) {
+                        continue
                     } catch (exception: Exception) {
                         logger.error(exception) { "크롤링 중에 오류가 발생했습니다. url: $targetUrl" }
                     }
 
-                    if (products.containsKey(productId)) {
+                    if (productId.isBlank() || products.containsKey(productId)) {
                         continue
                     }
 
