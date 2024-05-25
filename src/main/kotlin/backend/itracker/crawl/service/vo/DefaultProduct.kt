@@ -32,4 +32,8 @@ data class DefaultProduct(
     fun isIpad(): Boolean {
         return name.contains("아이패드")
     }
+
+    fun isAppleWatch(): Boolean {
+        return name.contains("애플워치") && !name.contains("정품")
+    }
 }

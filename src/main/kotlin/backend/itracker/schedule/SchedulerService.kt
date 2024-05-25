@@ -3,7 +3,10 @@ package backend.itracker.schedule
 import backend.itracker.crawl.ipad.service.IpadService
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.service.CrawlService
+import backend.itracker.crawl.watch.service.AppleWatchService
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.boot.context.event.ApplicationReadyEvent
+import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import kotlin.time.measureTime
@@ -14,7 +17,8 @@ private val logger = KotlinLogging.logger {}
 class SchedulerService(
     private val crawlService: CrawlService,
     private val macbookService: MacbookService,
-    private val ipadService: IpadService
+    private val ipadService: IpadService,
+    private val appleWatchService: AppleWatchService
 ) {
 
     @Scheduled(cron = "0 0 3 * * *", zone = "Asia/Seoul")
@@ -35,5 +39,16 @@ class SchedulerService(
             ipadService.saveAll(ipads)
         }
         logger.info { "아이패드 크롤링 끝. 시간: $times" }
+    }
+
+    @Scheduled(cron = "0 0 3 * * *", zone = "Asia/Seoul")
+    @EventListener(ApplicationReadyEvent::class)
+    fun crawlAppleWatch() {
+        logger.info { "애플워치 크롤링 시작. " }
+        val times = measureTime {
+            val appleWatches = crawlService.crawlAppleWatch()
+            appleWatchService.saveAll(appleWatches)
+        }
+        logger.info { "애플워치 크롤링 끝. 시간: $times" }
     }
 }

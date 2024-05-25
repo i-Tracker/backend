@@ -17,7 +17,7 @@ class DriverConnector {
     fun getDriver(): RemoteWebDriver {
         val chromeOptions = ChromeOptions()
         chromeOptions.addArguments(USER_AGENT)
-//        chromeOptions.addArguments("--headless")
+        chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--disable-gpu")
         chromeOptions.addArguments("--no-sandbox")
         chromeOptions.addArguments("--disable-dev-shm-usage")

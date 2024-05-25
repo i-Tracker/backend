@@ -3,7 +3,10 @@ package backend.itracker.crawl.service.mapper.ipad
 import backend.itracker.crawl.exception.CrawlException
 import backend.itracker.crawl.ipad.domain.Ipad
 import backend.itracker.crawl.service.vo.DefaultProduct
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class IpadMappers(
