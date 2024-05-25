@@ -3,8 +3,6 @@ package backend.itracker.crawl.service.response
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.MacbookPrice
-import backend.itracker.crawl.service.MacbookDesirializer
-import backend.itracker.crawl.service.vo.DefaultProduct
 import java.math.BigDecimal
 
 data class MacbookCrawlResponse(
@@ -28,11 +26,11 @@ data class MacbookCrawlResponse(
     val thumbnail: String,
     val isOutOfStock: Boolean
 ) {
-    companion object {
-        fun from(product: DefaultProduct): MacbookCrawlResponse {
-            return MacbookDesirializer.deserialize(product)
-        }
-    }
+//    companion object {
+//        fun from(product: DefaultProduct): MacbookCrawlResponse {
+//            return MacbookDesirializer.deserialize(product)
+//        }
+//    }
 
     fun toDomain(): Macbook {
         val macbook = Macbook(

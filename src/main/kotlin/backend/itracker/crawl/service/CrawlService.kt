@@ -1,6 +1,7 @@
 package backend.itracker.crawl.service
 
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.service.mapper.CrawlMapper
 import backend.itracker.crawl.service.util.Crawler
 import org.springframework.stereotype.Component
 
