@@ -24,4 +24,8 @@ data class DefaultProduct(
         productLink = productLink,
         thumbnailLink = thumbnailLink
     )
+
+    fun isMacBook(): Boolean {
+        return name.contains("맥북") && !name.contains("정품")
+    }
 }
