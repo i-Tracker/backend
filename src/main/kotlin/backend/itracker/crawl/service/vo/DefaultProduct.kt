@@ -28,4 +28,8 @@ data class DefaultProduct(
     fun isMacBook(): Boolean {
         return name.contains("맥북") && !name.contains("정품")
     }
+
+    fun isIpad(): Boolean {
+        return name.contains("아이패드")
+    }
 }
