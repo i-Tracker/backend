@@ -1,15 +1,14 @@
 package backend.itracker.crawl.macbook.service
 
 import backend.itracker.crawl.macbook.domain.Macbook
-import backend.itracker.crawl.macbook.domain.MacbookPrice
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
 import backend.itracker.crawl.macbook.fixtures.MacbookFixture
+import backend.itracker.crawl.macbook.fixtures.MacbookPriceFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.math.BigDecimal
 
 
 @SpringBootTest
@@ -32,10 +31,10 @@ class MacbookServiceTest {
     fun `전체 저장 테스트`() {
         // given
         macbook.addPrice(
-            MacbookPrice(
+            MacbookPriceFixture.macbookPrice(
                 discountPercentage = 2,
-                basePrice = BigDecimal.valueOf(2400000),
-                currentPrice = BigDecimal.valueOf(2351000)
+                basePrice = 2400000,
+                currentPrice = 2351000
             )
         )
 

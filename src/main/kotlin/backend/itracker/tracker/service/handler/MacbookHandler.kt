@@ -41,7 +41,7 @@ class MacbookHandler(
                 color = it.color,
                 currentPrice = it.findCurrentPrice(),
                 imageUrl = it.thumbnail,
-                isOutOfStock = it.isOutOfStock
+                isOutOfStock = it.isOutOfStock()
             )
         }.sortedBy { it.discountPercentage }
             .take(limit)
