@@ -15,6 +15,7 @@ data class MacbookResponse(
     val storage: String,
     val memory: String,
     val color: String,
+    val label: String,
     val imageUrl: String,
     val isOutOfStock: Boolean
 ) : CommonProductModel
