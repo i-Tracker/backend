@@ -1,4 +1,4 @@
-package backend.itracker.schedule
+package backend.itracker.schedule.service
 
 import backend.itracker.crawl.ipad.service.IpadService
 import backend.itracker.crawl.macbook.service.MacbookService
