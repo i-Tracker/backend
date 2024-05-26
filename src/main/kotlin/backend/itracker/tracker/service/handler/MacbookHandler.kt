@@ -27,19 +27,25 @@ class MacbookHandler(
     ): List<CommonProductModel> {
         val macbooks = macbookService.findAllFetchByProductCategory(productCategory)
         return macbooks.map {
+            val koreanCategory = when (it.category) {
+                ProductCategory.MACBOOK_AIR -> "맥북 에어"
+                ProductCategory.MACBOOK_PRO -> "맥북 프로"
+                else -> ""
+            }
             MacbookResponse(
                 id = it.id,
-                title = it.name,
+                title = "${it.company} ${it.releaseYear} $koreanCategory ${it.size}",
                 category = it.category.name.lowercase(),
                 size = it.size,
                 discountPercentage = it.findDiscountPercentage(),
                 chip = it.chip,
-                cpu = it.cpu,
-                gpu = it.gpu,
-                storage = it.storage,
-                memory = it.memory,
+                cpu = "${it.cpu} CPU",
+                gpu = "${it.gpu} GPU",
+                storage = "${it.storage} SSD 저장 장치",
+                memory = "${it.memory} 통합 메모리",
                 color = it.color,
                 currentPrice = it.findCurrentPrice(),
+                label = "역대최저가",
                 imageUrl = it.thumbnail,
                 isOutOfStock = it.isOutOfStock()
             )
