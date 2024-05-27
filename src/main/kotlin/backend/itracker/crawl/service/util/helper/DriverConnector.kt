@@ -1,12 +1,11 @@
 package backend.itracker.crawl.service.util.helper
 
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.support.ui.FluentWait
 import org.openqa.selenium.support.ui.WebDriverWait
-import org.springframework.beans.factory.annotation.Value
 import java.time.Duration
 
 private const val USER_AGENT =
@@ -15,26 +14,15 @@ private const val DEFAULT_WAIT_TIME = 5L
 
 class DriverConnector {
 
-    @Value("\${driver.path}")
-    lateinit var driverPath: String
-
     fun getDriver(): RemoteWebDriver {
-        val chromeOptions = ChromeOptions()
-        chromeOptions.addArguments(USER_AGENT)
-        chromeOptions.addArguments("--headless")
-        chromeOptions.addArguments("--remote-debugging-pipe")
-        chromeOptions.addArguments("enable-automation")
-        chromeOptions.addArguments("--disable-gpu")
-        chromeOptions.addArguments("--no-sandbox")
-        chromeOptions.addArguments("--disable-dev-shm-usage")
-        chromeOptions.addArguments("--disable-notifications")
-        chromeOptions.addArguments("--disable-extensions")
+        val firefoxOptions = FirefoxOptions()
+        firefoxOptions.addArguments(USER_AGENT)
+        firefoxOptions.addArguments("--headless")
+        firefoxOptions.addArguments("--no-sandbox")
+        firefoxOptions.addArguments("--disable-dev-shm-usage")
+        firefoxOptions.setCapability("acceptInsecureCerts", true)
 
-        if (System.getProperty("os.name").lowercase().contains("linux")) {
-            chromeOptions.setBinary(driverPath)
-        }
-
-        return ChromeDriver(chromeOptions)
+        return FirefoxDriver(firefoxOptions)
     }
 
     fun getWaiter(driver: RemoteWebDriver): FluentWait<out WebDriver> {
