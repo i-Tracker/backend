@@ -15,3 +15,18 @@ services:
       - "mysqld"
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
+    networks:
+      - itracker
+
+  selenium:
+    container_name: selenium-standalone
+    image: selenium/standalone-firefox:4.21.0-20240522
+    ports:
+      - "4444:4444"
+    shm_size: 2gb
+    networks:
+      - itracker
+
+networks:
+  itracker:
+    driver: bridge

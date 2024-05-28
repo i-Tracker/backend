@@ -1,17 +1,7 @@
 FROM amazoncorretto:17-alpine
 
-RUN apk update
-
-RUN apk add firefox
-
-RUN apk add wget
-
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-RUN apk add firefox-esr
-RUN apk add geckodriver
-
 WORKDIR /app
 
 COPY ./build/libs/itracker-0.0.1-SNAPSHOT.jar /app/itracker.jar
 
-CMD ["java", "-Duser.timezone=Asia/Seoul", "-jar", "itracker.jar"]
+CMD ["java", "-Duser.timezone=Asia/Seoul", "-jar", "-Dspring.profiles.active=prod", "itracker.jar"]
