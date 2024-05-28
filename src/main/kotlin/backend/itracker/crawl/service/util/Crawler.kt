@@ -20,7 +20,7 @@ private val logger = KotlinLogging.logger {}
 class Crawler(
     private val helper: WebElementHelper,
     private val priceParser: PriceParser,
-    private val driverConnector: DriverConnector = DriverConnector()
+    private val driverConnector: DriverConnector
 ) {
 
     fun crawl(targetUrl: String): Map<String, DefaultProduct> {
