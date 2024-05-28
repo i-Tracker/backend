@@ -1,6 +1,7 @@
 package backend.itracker.crawl.service
 
 import backend.itracker.crawl.ipad.domain.Ipad
+import backend.itracker.crawl.mac.domain.Mac
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.service.mapper.CrawlMapper
 import backend.itracker.crawl.service.util.Crawler
@@ -31,6 +32,12 @@ class CrawlService(
         val url = getCrawlUrl(CrawlTargetCategory.APPLE_WATCH)
         val products = crawler.crawl(url)
         return crawlMapper.toAppleWatch(products)
+    }
+
+    fun crawlMac(): List<Mac> {
+        val url = getCrawlUrl(CrawlTargetCategory.MAC)
+        val products = crawler.crawl(url)
+        return crawlMapper.toMac(products)
     }
 
     private fun getCrawlUrl(category: CrawlTargetCategory): String {

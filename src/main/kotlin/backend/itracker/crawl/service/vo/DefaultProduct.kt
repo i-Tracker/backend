@@ -36,4 +36,12 @@ data class DefaultProduct(
     fun isAppleWatch(): Boolean {
         return name.contains("애플워치") && !name.contains("정품")
     }
+
+    fun isMac(): Boolean {
+        return name.contains("아이맥") ||
+                name.contains("맥스튜디오") ||
+                name.contains("맥 미니") ||
+                name.contains("맥미니") ||
+                name.contains("Mac mini")
+    }
 }
