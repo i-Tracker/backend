@@ -1,7 +1,6 @@
 package backend.itracker.crawl.mac.domain
 
 import backend.itracker.crawl.common.BaseEntity
-import backend.itracker.crawl.ipad.domain.IpadCategory
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
@@ -20,15 +19,15 @@ class Mac(
     val name: String,
 
     @Enumerated(EnumType.STRING)
-    val category: IpadCategory,
+    val category: MacCategory,
 
     val releaseYear: Int,
-    val size: Int,
+    val size: String,
     var color: String,
     var chip: String,
     var cpu: String,
     var gpu: String,
-    var memeory: String,
+    var memory: String,
     var storage: String,
 
     @Column(columnDefinition = "TEXT")
@@ -43,7 +42,16 @@ class Mac(
     id: Long = 0L
 ) :BaseEntity(id){
 
+    fun addAllPrices(prices: MacPrices) {
+        prices.macPrices.forEach(this::addPrice)
+    }
+
+    fun addPrice(targetPrice: MacPrice) {
+        prices.add(targetPrice)
+        targetPrice.changeMac(this)
+    }
+
     override fun toString(): String {
-        return "Mac(thumbnail='$thumbnail', productLink='$productLink', storage='$storage', memeory='$memeory', gpu='$gpu', cpu='$cpu', chip='$chip', color='$color', size=$size, releaseYear=$releaseYear, category=$category, name='$name', company='$company', coupangId=$coupangId)"
+        return "Mac(coupangId=$coupangId, company='$company', name='$name', category=$category, releaseYear=$releaseYear, size=$size, color='$color', chip='$chip', cpu='$cpu', gpu='$gpu', memory='$memory', storage='$storage', productLink='$productLink', thumbnail='$thumbnail')"
     }
 }

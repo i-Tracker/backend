@@ -1,7 +1,6 @@
 package backend.itracker.crawl.mac.domain
 
 import backend.itracker.crawl.common.BaseEntity
-import backend.itracker.crawl.macbook.domain.Macbook
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.ForeignKey
@@ -24,10 +23,10 @@ class MacPrice(
     @JoinColumn(
         name = "mac_id", nullable = false, foreignKey = ForeignKey(name = "fk_mac_price_mac_id_ref_mac_id")
     )
-    var macbook: Macbook? = null
+    var mac: Mac? = null
 
-    fun changeMac(macbook: Macbook) {
-        this.macbook = macbook
+    fun changeMac(mac: Mac) {
+        this.mac = mac
     }
 
     override fun toString(): String {
