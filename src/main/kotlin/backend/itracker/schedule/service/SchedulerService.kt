@@ -1,6 +1,7 @@
 package backend.itracker.schedule.service
 
 import backend.itracker.crawl.ipad.service.IpadService
+import backend.itracker.crawl.mac.service.MacService
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.service.CrawlService
 import backend.itracker.crawl.watch.service.AppleWatchService
@@ -19,7 +20,8 @@ class SchedulerService(
     private val crawlService: CrawlService,
     private val macbookService: MacbookService,
     private val ipadService: IpadService,
-    private val appleWatchService: AppleWatchService
+    private val appleWatchService: AppleWatchService,
+    private val macService: MacService
 ) {
 
     @Scheduled(cron = CRAWLING_TIME, zone = TIME_ZONE)
@@ -50,5 +52,15 @@ class SchedulerService(
             appleWatchService.saveAll(appleWatches)
         }
         logger.info { "애플워치 크롤링 끝. 시간: $times" }
+    }
+
+    @Scheduled(cron = CRAWLING_TIME, zone = TIME_ZONE)
+    fun crawlMac() {
+        logger.info { "맥 크롤링 시작. " }
+        val times = measureTime {
+            val macs = crawlService.crawlMac()
+            macService.saveAll(macs)
+        }
+        logger.info { "맥 크롤링 끝. 시간: $times" }
     }
 }

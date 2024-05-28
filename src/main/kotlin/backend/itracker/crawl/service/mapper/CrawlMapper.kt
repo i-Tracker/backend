@@ -1,8 +1,10 @@
 package backend.itracker.crawl.service.mapper
 
 import backend.itracker.crawl.ipad.domain.Ipad
+import backend.itracker.crawl.mac.domain.Mac
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.service.mapper.ipad.IpadMappers
+import backend.itracker.crawl.service.mapper.mac.MacMappers
 import backend.itracker.crawl.service.mapper.macbook.MacbookMappers
 import backend.itracker.crawl.service.mapper.watch.AppleWatchMappers
 import backend.itracker.crawl.service.vo.DefaultProduct
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Component
 class CrawlMapper(
     private val macbookMappers: MacbookMappers,
     private val ipadMappers: IpadMappers,
-    private val appleWatchMappers: AppleWatchMappers
+    private val appleWatchMappers: AppleWatchMappers,
+    private val macMappers: MacMappers
 ) {
 
     fun toMacbook(products: Map<String, DefaultProduct>): List<Macbook> {
@@ -33,5 +36,11 @@ class CrawlMapper(
         val filteredProducts = products.values.filter { it.isAppleWatch() }
 
         return appleWatchMappers.toDomain(filteredProducts)
+    }
+
+    fun toMac(products: Map<String, DefaultProduct>): List<Mac> {
+        val filteredProducts = products.values.filter { it.isMac() }
+
+        return macMappers.toDomain(filteredProducts)
     }
 }
