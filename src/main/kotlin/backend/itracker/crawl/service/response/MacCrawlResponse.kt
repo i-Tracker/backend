@@ -5,7 +5,7 @@ import backend.itracker.crawl.mac.domain.MacCategory
 import backend.itracker.crawl.mac.domain.MacPrice
 import java.math.BigDecimal
 
-class MacCrawlResponse(
+data class MacCrawlResponse(
     val coupangId: Long,
     val company: String,
     val name: String,
