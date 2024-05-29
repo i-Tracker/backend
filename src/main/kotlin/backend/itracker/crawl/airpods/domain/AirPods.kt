@@ -1,6 +1,5 @@
 package backend.itracker.crawl.airpods.domain
 
-import backend.itracker.crawl.mac.domain.MacPrices
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
@@ -31,10 +30,19 @@ class AirPods(
     val thumbnail: String,
 
     @Embedded
-    val prices: MacPrices = MacPrices(),
+    val prices: AirPodsPrices = AirPodsPrices(),
 
     id: Long = 0L
 ) {
+
+    fun addAllPrices(prices: AirPodsPrices) {
+        prices.airPodsPrices.forEach(this::addPrice)
+    }
+
+    fun addPrice(airPodsPrice: AirPodsPrice) {
+        prices.add(airPodsPrice)
+        airPodsPrice.changeAirPods(this)
+    }
 
     override fun toString(): String {
         return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', category=$category, name='$name', productLink='$productLink', thumbnail='$thumbnail')"
