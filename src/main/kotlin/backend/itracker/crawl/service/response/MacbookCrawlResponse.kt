@@ -26,11 +26,6 @@ data class MacbookCrawlResponse(
     val thumbnail: String,
     val isOutOfStock: Boolean
 ) {
-//    companion object {
-//        fun from(product: DefaultProduct): MacbookCrawlResponse {
-//            return MacbookDesirializer.deserialize(product)
-//        }
-//    }
 
     fun toDomain(): Macbook {
         val macbook = Macbook(
