@@ -44,4 +44,8 @@ data class DefaultProduct(
                 name.contains("맥미니") ||
                 name.contains("Mac mini")
     }
+
+    fun isAirPods(): Boolean {
+        return name.contains("에어팟") && !name.contains("케이스")
+    }
 }
