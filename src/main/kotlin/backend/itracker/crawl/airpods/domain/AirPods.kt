@@ -1,5 +1,6 @@
 package backend.itracker.crawl.airpods.domain
 
+import backend.itracker.crawl.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
@@ -16,6 +17,7 @@ class AirPods(
     val generation: Int,
     val canWirelessCharging: Boolean,
     val chargingType: String,
+    val color: String,
 
     @Enumerated(EnumType.STRING)
     val category: AirPodsCategory,
@@ -33,7 +35,7 @@ class AirPods(
     val prices: AirPodsPrices = AirPodsPrices(),
 
     id: Long = 0L
-) {
+) : BaseEntity(id) {
 
     fun addAllPrices(prices: AirPodsPrices) {
         prices.airPodsPrices.forEach(this::addPrice)
@@ -45,6 +47,6 @@ class AirPods(
     }
 
     override fun toString(): String {
-        return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', category=$category, name='$name', productLink='$productLink', thumbnail='$thumbnail')"
+        return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', color='$color', category=$category, name='$name', productLink='$productLink', thumbnail='$thumbnail')"
     }
 }

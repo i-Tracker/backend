@@ -1,5 +1,6 @@
 package backend.itracker.crawl.service
 
+import backend.itracker.crawl.airpods.domain.AirPods
 import backend.itracker.crawl.ipad.domain.Ipad
 import backend.itracker.crawl.mac.domain.Mac
 import backend.itracker.crawl.macbook.domain.Macbook
@@ -38,6 +39,12 @@ class CrawlService(
         val url = getCrawlUrl(CrawlTargetCategory.MAC)
         val products = crawler.crawl(url)
         return crawlMapper.toMac(products)
+    }
+
+    fun crawlAirPods(): List<AirPods> {
+        val url = getCrawlUrl(CrawlTargetCategory.AIRPODS)
+        val products = crawler.crawl(url)
+        return crawlMapper.toAirPods(products)
     }
 
     private fun getCrawlUrl(category: CrawlTargetCategory): String {
