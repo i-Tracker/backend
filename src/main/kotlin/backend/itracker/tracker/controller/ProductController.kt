@@ -2,7 +2,6 @@ package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.controller.response.CategoryResponses
-import backend.itracker.tracker.controller.response.PageInfo
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.controller.response.SinglePage
 import backend.itracker.tracker.service.ProductService
@@ -56,15 +55,6 @@ class ProductController(
         val pageProducts =
             productService.findFilteredProducts(category, ProductFilter(filterCondition), page, limit)
 
-        return ResponseEntity.ok(
-            Pages(
-                data = pageProducts.content,
-                pageInfo = PageInfo(
-                    currentPage = pageProducts.number,
-                    lastPage = pageProducts.totalPages,
-                    elementSize = pageProducts.numberOfElements
-                )
-            )
-        )
+        return ResponseEntity.ok(Pages.withPagination(pageProducts))
     }
 }
