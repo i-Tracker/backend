@@ -8,6 +8,9 @@ import backend.itracker.tracker.service.response.filter.MacbookFilterResponse
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.response.product.MacbookResponse
 import backend.itracker.tracker.service.vo.ProductFilter
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 
 
@@ -26,30 +29,8 @@ class MacbookHandler(
         limit: Int
     ): List<CommonProductModel> {
         val macbooks = macbookService.findAllFetchByProductCategory(productCategory)
-        return macbooks.map {
-            val koreanCategory = when (it.category) {
-                ProductCategory.MACBOOK_AIR -> "맥북 에어"
-                ProductCategory.MACBOOK_PRO -> "맥북 프로"
-                else -> ""
-            }
-            MacbookResponse(
-                id = it.id,
-                title = "${it.company} ${it.releaseYear} $koreanCategory ${it.size}",
-                category = it.category.name.lowercase(),
-                size = it.size,
-                discountPercentage = it.findDiscountPercentage(),
-                chip = it.chip,
-                cpu = "${it.cpu} CPU",
-                gpu = "${it.gpu} GPU",
-                storage = "${it.storage} SSD 저장 장치",
-                memory = "${it.memory} 통합 메모리",
-                color = it.color,
-                currentPrice = it.findCurrentPrice(),
-                label = "역대최저가",
-                imageUrl = it.thumbnail,
-                isOutOfStock = it.isOutOfStock()
-            )
-        }.sortedBy { it.discountPercentage }
+        return macbooks.map { MacbookResponse.of(it) }
+            .sortedBy { it.discountPercentage }
             .take(limit)
     }
 
@@ -60,5 +41,22 @@ class MacbookHandler(
         val macbooks = macbookService.findAllByProductCategoryAndFilter(productCategory, MacbookFilterCondition(filter.value))
 
         return MacbookFilterResponse.from(macbooks)
+    }
+
+    override fun findFilteredProductsOrderByDiscountRate(
+        category: ProductCategory,
+        filter: ProductFilter,
+        pageable: Pageable,
+    ): Page<CommonProductModel> {
+        val pageMacbooks = macbookService.findAllProductsByFilter(
+            category,
+            MacbookFilterCondition(filter.value),
+            pageable
+        )
+
+        val contents = pageMacbooks.content.map { MacbookResponse.of(it) }
+            .sortedBy { it.discountPercentage }
+
+        return PageImpl(contents, pageMacbooks.pageable, pageMacbooks.totalElements)
     }
 }

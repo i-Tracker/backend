@@ -20,4 +20,14 @@ interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCust
         """
     )
     fun findAllFetchByProductCategory(@Param("category") crawlTargetCategory: ProductCategory): List<Macbook>
+
+    @Query(
+        """
+            select m
+            from Macbook m
+            join fetch m.prices
+            where m.id = :id
+        """
+    )
+    fun findAllPricesByMacbookId(@Param("id") id: Long)
 }
