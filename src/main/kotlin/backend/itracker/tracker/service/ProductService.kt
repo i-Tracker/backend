@@ -6,6 +6,7 @@ import backend.itracker.tracker.service.response.filter.CommonFilterModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.Limit
 import backend.itracker.tracker.service.vo.ProductFilter
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 
 @Service
@@ -31,5 +32,17 @@ class ProductService(
             ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $productCategory")
 
         return productHandler.findFilter(productCategory, productFilter)
+    }
+
+    fun findFilteredProducts(
+        category: ProductCategory,
+        productFilter: ProductFilter,
+        page: Int,
+        limit: Int
+    ): Page<CommonProductModel> {
+        val productHandler = productHandlers.find { it.supports(category) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
+
+        return productHandler.findFilteredProductsOrderByDiscountRate(category, productFilter, page, limit)
     }
 }

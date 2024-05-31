@@ -2,6 +2,7 @@ package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.controller.response.CategoryResponses
+import backend.itracker.tracker.controller.response.PageInfo
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.controller.response.SinglePage
 import backend.itracker.tracker.service.ProductService
@@ -43,5 +44,27 @@ class ProductController(
     ): ResponseEntity<SinglePage<CommonFilterModel>> {
         val filter = productService.findFilter(category, ProductFilter(filterConditon))
         return ResponseEntity.ok(SinglePage(filter))
+    }
+
+    @GetMapping("/api/v1/products/{category}/search")
+    fun findFilterdMacbookAir(
+        @PathVariable category: ProductCategory,
+        @RequestParam filterCondition: Map<String, String>,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "8") limit: Int,
+    ): ResponseEntity<Pages<CommonProductModel>> {
+        val pageProducts =
+            productService.findFilteredProducts(category, ProductFilter(filterCondition), page, limit)
+
+        return ResponseEntity.ok(
+            Pages(
+                data = pageProducts.content,
+                pageInfo = PageInfo(
+                    currentPage = pageProducts.number,
+                    lastPage = pageProducts.totalPages,
+                    elementSize = pageProducts.numberOfElements
+                )
+            )
+        )
     }
 }
