@@ -1,6 +1,7 @@
 package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.tracker.controller.request.PageParams
 import backend.itracker.tracker.controller.response.CategoryResponses
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.controller.response.SinglePage
@@ -11,6 +12,7 @@ import backend.itracker.tracker.service.vo.Limit
 import backend.itracker.tracker.service.vo.ProductFilter
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -49,11 +51,10 @@ class ProductController(
     fun findFilterdMacbookAir(
         @PathVariable category: ProductCategory,
         @RequestParam filterCondition: Map<String, String>,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "8") limit: Int,
+        @ModelAttribute pageParams: PageParams,
     ): ResponseEntity<Pages<CommonProductModel>> {
         val pageProducts =
-            productService.findFilteredProducts(category, ProductFilter(filterCondition), page, limit)
+            productService.findFilteredProducts(category, ProductFilter(filterCondition), pageParams.offset, pageParams.limit)
 
         return ResponseEntity.ok(Pages.withPagination(pageProducts))
     }
