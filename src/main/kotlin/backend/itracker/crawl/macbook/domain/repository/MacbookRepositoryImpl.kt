@@ -6,6 +6,8 @@ import backend.itracker.crawl.macbook.domain.QMacbook.macbook
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
 import com.querydsl.core.types.Predicate
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 
 class MacbookRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory
@@ -25,6 +27,38 @@ class MacbookRepositoryImpl(
                 equalMemory(filterCondition.memory),
                 equalCategory(productCategory)
             ).fetch()
+    }
+
+    override fun findAllProductsByFilter(
+        category: ProductCategory,
+        filterCondition: MacbookFilterCondition,
+        pageable: Pageable
+    ): PageImpl<Macbook> {
+        val contents = jpaQueryFactory.selectFrom(macbook)
+            .where(
+                equalSize(filterCondition.size),
+                equalColor(filterCondition.color),
+                equalChip(filterCondition.processor),
+                equalStorage(filterCondition.storage),
+                equalMemory(filterCondition.memory),
+                equalCategory(category)
+            ).offset(pageable.offset)
+            .limit(pageable.pageSize.toLong())
+            .fetch()
+
+        val total = jpaQueryFactory.selectFrom(macbook)
+            .where(
+                equalSize(filterCondition.size),
+                equalColor(filterCondition.color),
+                equalChip(filterCondition.processor),
+                equalStorage(filterCondition.storage),
+                equalMemory(filterCondition.memory),
+                equalCategory(category)
+            ).fetch()
+            .count()
+            .toLong()
+
+        return PageImpl(contents, pageable, total)
     }
 
     private fun equalSize(
