@@ -10,7 +10,7 @@ import backend.itracker.tracker.service.response.product.MacbookResponse
 import backend.itracker.tracker.service.vo.ProductFilter
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
-import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 
 
@@ -46,13 +46,12 @@ class MacbookHandler(
     override fun findFilteredProductsOrderByDiscountRate(
         category: ProductCategory,
         filter: ProductFilter,
-        page: Int,
-        limit: Int
+        pageable: Pageable,
     ): Page<CommonProductModel> {
         val pageMacbooks = macbookService.findAllProductsByFilter(
             category,
             MacbookFilterCondition(filter.value),
-            PageRequest.of(page, limit)
+            pageable
         )
 
         val contents = pageMacbooks.content.map { MacbookResponse.of(it) }

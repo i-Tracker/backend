@@ -5,6 +5,7 @@ import backend.itracker.tracker.service.response.filter.CommonFilterModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.ProductFilter
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 
 interface ProductHandler {
@@ -18,7 +19,6 @@ interface ProductHandler {
     fun findFilteredProductsOrderByDiscountRate(
         category: ProductCategory,
         filter: ProductFilter,
-        page: Int,
-        limit: Int
+        pageable: Pageable,
     ): Page<CommonProductModel>
 }

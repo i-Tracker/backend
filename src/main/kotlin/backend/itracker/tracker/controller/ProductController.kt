@@ -10,6 +10,7 @@ import backend.itracker.tracker.service.response.filter.CommonFilterModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.Limit
 import backend.itracker.tracker.service.vo.ProductFilter
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
@@ -54,7 +55,7 @@ class ProductController(
         @ModelAttribute pageParams: PageParams,
     ): ResponseEntity<Pages<CommonProductModel>> {
         val pageProducts =
-            productService.findFilteredProducts(category, ProductFilter(filterCondition), pageParams.offset, pageParams.limit)
+            productService.findFilteredProducts(category, ProductFilter(filterCondition), PageRequest.of(pageParams.offset, pageParams.limit))
 
         return ResponseEntity.ok(Pages.withPagination(pageProducts))
     }
