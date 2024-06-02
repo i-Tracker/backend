@@ -3,18 +3,22 @@ package backend.itracker.tracker.service
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.service.handler.ProductHandler
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
+import backend.itracker.tracker.service.response.product.CommonProductDetailModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.Limit
 import backend.itracker.tracker.service.vo.ProductFilter
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @Service
 class ProductService(
     private val productHandlers: List<ProductHandler>
 ) {
 
+    @Transactional(readOnly = true)
     fun findTopDiscountPercentageProducts(
         productCategory: ProductCategory,
         limit: Limit
@@ -25,6 +29,7 @@ class ProductService(
         return productHandler.findTopDiscountPercentageProducts(productCategory, limit.value)
     }
 
+    @Transactional(readOnly = true)
     fun findFilter(
         productCategory: ProductCategory,
         productFilter: ProductFilter,
@@ -35,6 +40,7 @@ class ProductService(
         return productHandler.findFilter(productCategory, productFilter)
     }
 
+    @Transactional(readOnly = true)
     fun findFilteredProducts(
         category: ProductCategory,
         productFilter: ProductFilter,
@@ -44,5 +50,15 @@ class ProductService(
             ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
 
         return productHandler.findFilteredProductsOrderByDiscountRate(category, productFilter, pageable)
+    }
+
+    @Transactional(readOnly = true)
+    fun findProductById(
+        category: ProductCategory, productId: Long
+    ): CommonProductDetailModel {
+        val productHandler = productHandlers.find { it.supports(category) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
+
+        return productHandler.findProductById(productId)
     }
 }

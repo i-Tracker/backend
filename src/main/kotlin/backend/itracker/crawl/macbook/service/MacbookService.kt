@@ -3,6 +3,7 @@ package backend.itracker.crawl.macbook.service
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
+import backend.itracker.crawl.macbook.domain.repository.findByIdAllFetch
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -52,5 +53,10 @@ class MacbookService(
         pageMacbooks.forEach { macbookRepository.findAllPricesByMacbookId(it.id) }
 
         return pageMacbooks
+    }
+
+    @Transactional(readOnly = true)
+    fun findMacbookById(macbookId: Long): Macbook {
+        return macbookRepository.findByIdAllFetch(macbookId)
     }
 }

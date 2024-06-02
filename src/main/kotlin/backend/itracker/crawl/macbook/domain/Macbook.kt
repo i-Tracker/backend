@@ -7,6 +7,7 @@ import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 import java.math.BigDecimal
+import java.time.Period
 
 @Entity
 @Table(name = "macbook")
@@ -53,12 +54,28 @@ class Macbook(
         return prices.findCurrentPrice()
     }
 
+    fun findAveragePrice(): BigDecimal {
+        return prices.findAveragePrice()
+    }
+
+    fun findAllTimeHighPrice(): BigDecimal {
+        return prices.findAllTimeHighPrice()
+    }
+
+    fun findAllTimeLowPrice(): BigDecimal {
+        return prices.findAllTimeLowPrice()
+    }
+
     fun findDiscountPercentage(): Int {
         return prices.findTodayDiscountPercentage()
     }
 
     fun isOutOfStock(): Boolean {
         return prices.isOutOfStock()
+    }
+
+    fun getRecentPricesByPeriod(period: Period): MacbookPrices {
+        return prices.getRecentPricesByPeriod(period)
     }
 
     override fun toString(): String {

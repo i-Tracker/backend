@@ -2,6 +2,7 @@ package backend.itracker.tracker.service.handler
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
+import backend.itracker.tracker.service.response.product.CommonProductDetailModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.ProductFilter
 import org.springframework.data.domain.Page
@@ -21,4 +22,6 @@ interface ProductHandler {
         filter: ProductFilter,
         pageable: Pageable,
     ): Page<CommonProductModel>
+
+    fun findProductById(productId: Long): CommonProductDetailModel
 }
