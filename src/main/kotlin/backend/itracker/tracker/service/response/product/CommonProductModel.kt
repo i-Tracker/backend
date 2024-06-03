@@ -3,6 +3,7 @@ package backend.itracker.tracker.service.response.product
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.Period
+import java.time.format.DateTimeFormatter
 
 interface CommonProductModel
 
@@ -23,6 +24,14 @@ abstract class CommonProductDetailModel(
 }
 
 data class CommonPriceInfo(
-    val date: LocalDateTime,
+    val date: String,
     val currentPrice: BigDecimal
-)
+){
+    companion object {
+        fun of(date: LocalDateTime, currentPrice: BigDecimal): CommonPriceInfo {
+            val changedDate = date.format(DateTimeFormatter.ISO_LOCAL_DATE)
+            return CommonPriceInfo(changedDate, currentPrice)
+        }
+    }
+}
+

@@ -64,7 +64,7 @@ class MacbookDetailResponse(
                 imageUrl = macbook.thumbnail,
                 isOutOfStock = macbook.isOutOfStock(),
                 priceInfos = macbook.getRecentPricesByPeriod(SIX_MONTH).macbookPrices
-                    .map { CommonPriceInfo(it.createdAt, it.currentPrice) }
+                    .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }
             )
         }
     }
