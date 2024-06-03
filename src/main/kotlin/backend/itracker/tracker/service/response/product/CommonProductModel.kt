@@ -13,7 +13,7 @@ abstract class CommonProductDetailModel(
     val allTimeHighPrice: BigDecimal,
     val allTimeLowPrice: BigDecimal,
     val averagePrice: BigDecimal,
-    val commonPriceInfos: List<CommonPriceInfo>
+    val priceInfos: List<CommonPriceInfo>
 ) {
 
     companion object {
