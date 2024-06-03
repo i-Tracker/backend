@@ -1,4 +1,4 @@
-package backend.itracker.tracker.service.handler
+package backend.itracker.tracker.controller.handler
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.service.MacbookService
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component
 @Component
 class MacbookHandler(
     private val macbookService: MacbookService,
-) : ProductHandler {
+) : ProductHandleable {
 
     override fun supports(productCategory: ProductCategory): Boolean {
         return productCategory == ProductCategory.MACBOOK_AIR ||

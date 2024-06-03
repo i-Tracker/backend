@@ -1,11 +1,11 @@
 package backend.itracker.tracker.controller
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.tracker.controller.handler.ProductHandlerImpl
 import backend.itracker.tracker.controller.request.PageParams
 import backend.itracker.tracker.controller.response.CategoryResponses
 import backend.itracker.tracker.controller.response.Pages
 import backend.itracker.tracker.controller.response.SinglePage
-import backend.itracker.tracker.service.ProductService
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
 import backend.itracker.tracker.service.response.product.CommonProductDetailModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
@@ -23,7 +23,7 @@ private val productCategories = ProductCategory.entries
 
 @RestController
 class ProductController(
-    private val productService: ProductService,
+    private val productHandler: ProductHandlerImpl,
 ) {
 
     @GetMapping("/api/v1/products/{category}")
@@ -31,7 +31,7 @@ class ProductController(
         @PathVariable category: ProductCategory,
         @RequestParam(defaultValue = "5") limit: Int,
     ): ResponseEntity<Pages<CommonProductModel>> {
-        val products = productService.findTopDiscountPercentageProducts(category, Limit(limit))
+        val products = productHandler.findTopDiscountPercentageProducts(category, Limit(limit))
         return ResponseEntity.ok(Pages(data = products))
     }
 
@@ -45,7 +45,7 @@ class ProductController(
         @PathVariable category: ProductCategory,
         @RequestParam filterConditon: Map<String, String>
     ): ResponseEntity<SinglePage<CommonFilterModel>> {
-        val filter = productService.findFilter(category, ProductFilter(filterConditon))
+        val filter = productHandler.findFilter(category, ProductFilter(filterConditon))
         return ResponseEntity.ok(SinglePage(filter))
     }
 
@@ -56,7 +56,7 @@ class ProductController(
         @ModelAttribute pageParams: PageParams,
     ): ResponseEntity<Pages<CommonProductModel>> {
         val pageProducts =
-            productService.findFilteredProducts(category, ProductFilter(filterCondition), PageRequest.of(pageParams.offset, pageParams.limit))
+            productHandler.findFilteredProducts(category, ProductFilter(filterCondition), PageRequest.of(pageParams.offset, pageParams.limit))
 
         return ResponseEntity.ok(Pages.withPagination(pageProducts))
     }
@@ -66,7 +66,7 @@ class ProductController(
         @PathVariable category: ProductCategory,
         @PathVariable productId: Long,
     ): ResponseEntity<CommonProductDetailModel> {
-        val product = productService.findProductById(category, productId)
+        val product = productHandler.findProductById(category, productId)
 
         return ResponseEntity.ok(product)
     }

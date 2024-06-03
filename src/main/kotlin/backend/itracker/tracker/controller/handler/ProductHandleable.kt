@@ -1,4 +1,4 @@
-package backend.itracker.tracker.service.handler
+package backend.itracker.tracker.controller.handler
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
 
-interface ProductHandler {
+interface ProductHandleable {
 
     fun supports(productCategory: ProductCategory): Boolean
 
