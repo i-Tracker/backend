@@ -1,18 +1,18 @@
-package backend.itracker.tracker.service
+package backend.itracker.tracker.controller.handler
 
 import backend.itracker.crawl.common.ProductCategory
-import backend.itracker.tracker.service.handler.ProductHandler
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
+import backend.itracker.tracker.service.response.product.CommonProductDetailModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.vo.Limit
 import backend.itracker.tracker.service.vo.ProductFilter
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
-class ProductService(
-    private val productHandlers: List<ProductHandler>
+@Component
+class ProductHandlerImpl(
+    private val productHandlers: List<ProductHandleable>
 ) {
 
     fun findTopDiscountPercentageProducts(
@@ -44,5 +44,14 @@ class ProductService(
             ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
 
         return productHandler.findFilteredProductsOrderByDiscountRate(category, productFilter, pageable)
+    }
+
+    fun findProductById(
+        category: ProductCategory, productId: Long
+    ): CommonProductDetailModel {
+        val productHandler = productHandlers.find { it.supports(category) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
+
+        return productHandler.findProductById(productId)
     }
 }
