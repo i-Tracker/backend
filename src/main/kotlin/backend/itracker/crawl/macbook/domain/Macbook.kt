@@ -33,6 +33,9 @@ class Macbook(
     val productLink: String,
 
     @Column(columnDefinition = "TEXT")
+    var coupangLink: String = "",
+
+    @Column(columnDefinition = "TEXT")
     val thumbnail: String,
 
     @Embedded
@@ -74,11 +77,15 @@ class Macbook(
         return prices.isOutOfStock()
     }
 
+    fun changeCoupangLink(coupangLink: String) {
+        this.coupangLink = coupangLink
+    }
+
     fun getRecentPricesByPeriod(period: Period): MacbookPrices {
         return prices.getRecentPricesByPeriod(period)
     }
 
     override fun toString(): String {
-        return "Macbook(thumbnail='$thumbnail', productLink='$productLink', releaseYear=$releaseYear, size=$size, color='$color', language='$language', memory='$memory', storage='$storage', gpu='$gpu', cpu='$cpu', chip='$chip', category=$category, name='$name', company='$company', coupangId=$coupangId)"
+        return "Macbook(coupangId=$coupangId, company='$company', name='$name', category=$category, chip='$chip', cpu='$cpu', gpu='$gpu', storage='$storage', memory='$memory', language='$language', color='$color', size=$size, releaseYear=$releaseYear, productLink='$productLink', coupangLink='$coupangLink', thumbnail='$thumbnail')"
     }
 }

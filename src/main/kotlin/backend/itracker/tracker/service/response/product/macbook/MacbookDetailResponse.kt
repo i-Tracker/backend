@@ -19,6 +19,7 @@ class MacbookDetailResponse(
     val color: String,
     val label: String,
     val imageUrl: String,
+    val coupangUrl: String,
     val isOutOfStock: Boolean,
 
     discountPercentage: Int,
@@ -62,6 +63,7 @@ class MacbookDetailResponse(
                 color = macbook.color,
                 label = "역대최저가",
                 imageUrl = macbook.thumbnail,
+                coupangUrl = macbook.coupangLink,
                 isOutOfStock = macbook.isOutOfStock(),
                 priceInfos = macbook.getRecentPricesByPeriod(SIX_MONTH).macbookPrices
                     .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }
