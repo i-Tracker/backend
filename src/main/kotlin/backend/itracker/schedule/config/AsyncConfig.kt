@@ -1,6 +1,5 @@
 package backend.itracker.schedule.config
 
-import ch.qos.logback.core.CoreConstants.MAX_POOL_SIZE
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableAsync

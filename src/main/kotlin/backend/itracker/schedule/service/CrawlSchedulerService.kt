@@ -17,7 +17,7 @@ private const val TIME_ZONE = "Asia/Seoul"
 private val logger = KotlinLogging.logger {}
 
 @Component
-class SchedulerService(
+class CrawlSchedulerService(
     private val crawlService: CrawlService,
     private val macbookService: MacbookService,
     private val ipadService: IpadService,
