@@ -1,5 +1,6 @@
 package backend.itracker.tracker.controller
 
+import backend.itracker.crawl.common.CoupangLinkInfo
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.tracker.service.service.CoupangPartnersService
@@ -21,16 +22,15 @@ class CoupangPartnersController(
         @RequestParam start: Long,
         @RequestParam end: Long,
     ): ResponseEntity<Unit> {
-        println("heelo")
-        when (category) {
+        return when (category) {
             ProductCategory.MACBOOK_AIR, ProductCategory.MACBOOK_PRO -> {
                 val deeplinks = coupangPartnersService.updateAllMacbookCoupangLink(start, end)
-                macbookService.updateAllCoupangLink(deeplinks)
-                return ResponseEntity.ok().build()
+                macbookService.updateAllCoupangLink(deeplinks.map { CoupangLinkInfo(it.originalUrl, it.shortenUrl)})
+                ResponseEntity.ok().build()
             }
 
             else -> {
-                return ResponseEntity.badRequest().build()
+                ResponseEntity.badRequest().build()
             }
         }
     }

@@ -34,7 +34,6 @@ class CoupangApiClient(
     private lateinit var secretKey: String
 
     fun issueCoupangLinks(originLinks: List<String>): List<Deeplink> {
-        println(originLinks)
         val authorization = hmacGenerator.generate(REQUEST_METHOD, URL, secretKey, accessKey)
         val httpHeaders = HttpHeaders().apply {
             set(AUTHORIZATION, authorization)
