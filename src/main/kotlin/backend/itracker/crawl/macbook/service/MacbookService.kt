@@ -5,6 +5,7 @@ import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
 import backend.itracker.crawl.macbook.domain.repository.findByIdAllFetch
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
+import backend.itracker.tracker.service.response.Deeplink
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -58,5 +59,21 @@ class MacbookService(
     @Transactional(readOnly = true)
     fun findMacbookById(macbookId: Long): Macbook {
         return macbookRepository.findByIdAllFetch(macbookId)
+    }
+
+    @Transactional(readOnly = true)
+    fun findByIdBetween(startId: Long, endId: Long): List<Macbook> {
+        return macbookRepository.findByIdBetween(startId, endId)
+    }
+
+    fun updateAllCoupangLink(deeplinks: List<Deeplink>) {
+        val macbooks = macbookRepository.findAll()
+        deeplinks.forEach {
+            val productLink = it.originalUrl
+            val coupangLink = it.shortenUrl
+
+            macbooks.filter { it.productLink == productLink }
+                .map { it.changeCoupangLink(coupangLink) }
+        }
     }
 }
