@@ -56,7 +56,7 @@ class MacbookService(
         category: ProductCategory,
         macbookFilterCondition: MacbookFilterCondition,
     ): List<Macbook> {
-        return macbookRepository.findAllByFilterCondition(category, macbookFilterCondition)
+        return macbookRepository.findAllFetchBySearchCondition(category, macbookFilterCondition)
     }
 
     @Transactional(readOnly = true)
