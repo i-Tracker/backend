@@ -62,16 +62,13 @@ class MacbookHandler(
     private fun paginate(macbooks: List<Macbook>, pageable: Pageable): List<MacbookResponse> {
         val startElementNumber = pageable.offset.toInt()
         val lastElementNumber = min(startElementNumber + pageable.pageSize, macbooks.size)
-
         if (startElementNumber >= macbooks.size) {
             return emptyList()
         }
 
-        val contents = macbooks.map { MacbookResponse.from(it) }
+        return macbooks.map { MacbookResponse.from(it) }
             .sortedBy { it.discountPercentage }
             .slice(startElementNumber until lastElementNumber)
-
-        return contents
     }
 
     override fun findProductById(productId: Long): CommonProductDetailModel {
