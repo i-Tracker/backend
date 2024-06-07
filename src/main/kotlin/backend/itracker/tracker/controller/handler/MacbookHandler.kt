@@ -1,6 +1,7 @@
 package backend.itracker.tracker.controller.handler
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
@@ -14,7 +15,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
-
+import kotlin.math.min
 
 @Component
 class MacbookHandler(
@@ -50,16 +51,24 @@ class MacbookHandler(
         filter: ProductFilter,
         pageable: Pageable,
     ): Page<CommonProductModel> {
-        val pageMacbooks = macbookService.findAllProductsByFilter(
+        val macbooks = macbookService.findAllProductsByFilter(
             category,
             MacbookFilterCondition(filter.value),
-            pageable
         )
 
-        val contents = pageMacbooks.content.map { MacbookResponse.from(it) }
-            .sortedBy { it.discountPercentage }
+        return PageImpl(paginate(macbooks, pageable), pageable, macbooks.size.toLong())
+    }
 
-        return PageImpl(contents, pageMacbooks.pageable, pageMacbooks.totalElements)
+    private fun paginate(macbooks: List<Macbook>, pageable: Pageable): List<MacbookResponse> {
+        val startElementNumber = pageable.offset.toInt()
+        val lastElementNumber = min(startElementNumber + pageable.pageSize, macbooks.size)
+        if (startElementNumber >= macbooks.size) {
+            return emptyList()
+        }
+
+        return macbooks.map { MacbookResponse.from(it) }
+            .sortedBy { it.discountPercentage }
+            .slice(startElementNumber until lastElementNumber)
     }
 
     override fun findProductById(productId: Long): CommonProductDetailModel {
