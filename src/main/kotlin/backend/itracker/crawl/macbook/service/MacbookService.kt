@@ -6,8 +6,6 @@ import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
 import backend.itracker.crawl.macbook.domain.repository.findByIdAllFetch
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -57,13 +55,8 @@ class MacbookService(
     fun findAllProductsByFilter(
         category: ProductCategory,
         macbookFilterCondition: MacbookFilterCondition,
-        pageable: Pageable
-    ): Page<Macbook> {
-        val pageMacbooks =
-            macbookRepository.findAllProductsByFilter(category, macbookFilterCondition, pageable)
-        pageMacbooks.forEach { macbookRepository.findAllPricesByMacbookId(it.id) }
-
-        return pageMacbooks
+    ): List<Macbook> {
+        return macbookRepository.findAllFetchBySearchCondition(category, macbookFilterCondition)
     }
 
     @Transactional(readOnly = true)
