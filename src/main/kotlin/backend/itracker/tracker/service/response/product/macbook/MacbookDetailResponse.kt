@@ -63,7 +63,7 @@ class MacbookDetailResponse(
                 color = macbook.color,
                 label = "역대최저가",
                 imageUrl = macbook.thumbnail,
-                coupangUrl = macbook.coupangLink,
+                coupangUrl = macbook.coupangLink.ifBlank { macbook.productLink },
                 isOutOfStock = macbook.isOutOfStock(),
                 priceInfos = macbook.getRecentPricesByPeriod(SIX_MONTH).macbookPrices
                     .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }
