@@ -1,6 +1,7 @@
 package backend.itracker.tracker.controller.handler
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
@@ -10,11 +11,14 @@ import backend.itracker.tracker.service.response.product.CommonProductModel
 import backend.itracker.tracker.service.response.product.macbook.MacbookDetailResponse
 import backend.itracker.tracker.service.response.product.macbook.MacbookResponse
 import backend.itracker.tracker.service.vo.ProductFilter
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
+import kotlin.math.min
 
+val logger = KotlinLogging.logger {}
 
 @Component
 class MacbookHandler(
@@ -50,16 +54,36 @@ class MacbookHandler(
         filter: ProductFilter,
         pageable: Pageable,
     ): Page<CommonProductModel> {
-        val pageMacbooks = macbookService.findAllProductsByFilter(
+        logger.error { "query start" }
+        val macbooks = macbookService.findAllProductsByFilter(
             category,
             MacbookFilterCondition(filter.value),
-            pageable
         )
+        logger.error { "query end" }
 
-        val contents = pageMacbooks.content.map { MacbookResponse.from(it) }
+        logger.warn { "macbook size ${macbooks.size}" }
+        logger.warn { "pageable pageNumber ${pageable.pageNumber}" }
+        logger.warn { "pageable offset ${pageable.offset}" }
+        logger.warn { "pageable pageSize ${pageable.pageSize}" }
+
+        return PageImpl(paginate(macbooks, pageable), pageable, macbooks.size.toLong())
+    }
+
+    private fun paginate(macbooks: List<Macbook>, pageable: Pageable): List<MacbookResponse> {
+        val startElementNumber = pageable.offset.toInt()
+        val lastElementNumber = min(startElementNumber + pageable.pageSize, macbooks.size)
+        logger.warn { "start : ${startElementNumber}" }
+        logger.warn { "end : ${lastElementNumber}" }
+
+        if (startElementNumber >= macbooks.size) {
+            return emptyList()
+        }
+
+        val contents = macbooks.map { MacbookResponse.from(it) }
             .sortedBy { it.discountPercentage }
+            .slice(startElementNumber until lastElementNumber)
 
-        return PageImpl(contents, pageMacbooks.pageable, pageMacbooks.totalElements)
+        return contents
     }
 
     override fun findProductById(productId: Long): CommonProductDetailModel {
