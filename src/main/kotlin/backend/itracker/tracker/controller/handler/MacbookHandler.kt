@@ -31,17 +31,17 @@ class MacbookHandler(
         productCategory: ProductCategory,
         limit: Int
     ): List<CommonProductModel> {
-        val macbooks = macbookService.findAllFetchByProductCategory(productCategory)
+        val macbooks = macbookService.findAllFetchByCategory(productCategory.toMacbookCategory())
         return macbooks.map { MacbookResponse.from(it) }
             .sortedBy { it.discountPercentage }
             .take(limit)
     }
 
     override fun findFilter(
-        productCategory: ProductCategory,
+        category: ProductCategory,
         filter: ProductFilter
     ): CommonFilterModel {
-        val macbooks = macbookService.findAllByProductCategoryAndFilter(productCategory, MacbookFilterCondition(filter.value))
+        val macbooks = macbookService.findAllByProductCategoryAndFilter(category.toMacbookCategory(), MacbookFilterCondition(filter.value))
 
         return MacbookFilterResponse.from(macbooks)
     }
@@ -52,7 +52,7 @@ class MacbookHandler(
         pageable: Pageable,
     ): Page<CommonProductModel> {
         val macbooks = macbookService.findAllProductsByFilter(
-            category,
+            category.toMacbookCategory(),
             MacbookFilterCondition(filter.value),
         )
 

@@ -1,7 +1,7 @@
 package backend.itracker.tracker.service.response.product.macbook
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.tracker.service.response.product.CommonPriceInfo
 import backend.itracker.tracker.service.response.product.CommonProductDetailModel
 import java.math.BigDecimal
@@ -40,9 +40,8 @@ class MacbookDetailResponse(
     companion object {
         fun from(macbook: Macbook): MacbookDetailResponse {
             val koreanCategory = when (macbook.category) {
-                ProductCategory.MACBOOK_AIR -> "맥북 에어"
-                ProductCategory.MACBOOK_PRO -> "맥북 프로"
-                else -> ""
+                MacbookCategory.MACBOOK_AIR -> "맥북 에어"
+                MacbookCategory.MACBOOK_PRO -> "맥북 프로"
             }
 
             return MacbookDetailResponse(

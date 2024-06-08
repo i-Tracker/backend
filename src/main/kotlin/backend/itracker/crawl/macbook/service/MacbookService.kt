@@ -1,8 +1,8 @@
 package backend.itracker.crawl.macbook.service
 
 import backend.itracker.crawl.common.CoupangLinkInfo
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
 import backend.itracker.crawl.macbook.domain.repository.findByIdAllFetch
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
@@ -37,23 +37,23 @@ class MacbookService(
     }
 
     @Transactional(readOnly = true)
-    fun findAllFetchByProductCategory(
-        productCategory: ProductCategory,
+    fun findAllFetchByCategory(
+        category: MacbookCategory,
     ): List<Macbook> {
-        return macbookRepository.findAllFetchByProductCategory(productCategory)
+        return macbookRepository.findAllFetchByProductCategory(category)
     }
 
     @Transactional(readOnly = true)
     fun findAllByProductCategoryAndFilter(
-        productCategory: ProductCategory,
+        category: MacbookCategory,
         filterCondition: MacbookFilterCondition
     ): List<Macbook> {
-        return macbookRepository.findAllByFilterCondition(productCategory, filterCondition)
+        return macbookRepository.findAllByFilterCondition(category, filterCondition)
     }
 
     @Transactional(readOnly = true)
     fun findAllProductsByFilter(
-        category: ProductCategory,
+        category: MacbookCategory,
         macbookFilterCondition: MacbookFilterCondition,
     ): List<Macbook> {
         return macbookRepository.findAllFetchBySearchCondition(category, macbookFilterCondition)
