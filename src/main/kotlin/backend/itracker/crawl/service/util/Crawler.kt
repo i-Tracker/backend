@@ -13,9 +13,6 @@ import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.springframework.stereotype.Component
 
-private const val PRODUCT_LIST_HEADER_TITLE = "product-list-header__title"
-private const val CONTENTS_CLASS = "product-list-contents__product-unit"
-
 private val logger = KotlinLogging.logger {}
 
 @Component
@@ -35,13 +32,13 @@ class Crawler(
             while (true) {
                 val lastHeight = driver.executeScript("return window.pageYOffset")
                 driver.executeScript("window.scrollTo(0, window.pageYOffset + 400)")
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.className(CONTENTS_CLASS)))
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.className("product-list-contents__product-unit")))
                 val newHeight = driver.executeScript("return window.pageYOffset")
                 if (lastHeight == newHeight) {
                     break
                 }
 
-                for (element in driver.findElements(By.className(CONTENTS_CLASS))) {
+                for (element in driver.findElements(By.className("product-list-contents__product-unit"))) {
                     var productId = ""
                     try {
                         productId = helper.findByTagAndAttribute(element, "a", "id")
@@ -62,7 +59,7 @@ class Crawler(
                         productId = productId.toLong(),
                         subCategory = helper.findClassName(
                             helper.findGrandParentElement(element),
-                            PRODUCT_LIST_HEADER_TITLE
+                            "product-list-header__title"
                         ),
                         name = element.text.split(System.lineSeparator())[0],
                         price = priceParser.getDefaultPrice(element),
@@ -100,12 +97,9 @@ class Crawler(
                 }
 
                 val subcategory = tab.text
-                logger.warn { "subcategory: $subcategory" }
-
                 val maxClicks =
                     driver.findElement(By.className("carousel-header__nav")).text.toCharArray().last().toString()
                         .toInt()
-                logger.warn { "maxClicks: ${maxClicks}" }
 
                 val buttons = driver.findElements(By.ByClassName("carousel-contents__nav--next"))
                 val targetButton = buttons.firstOrNull {
