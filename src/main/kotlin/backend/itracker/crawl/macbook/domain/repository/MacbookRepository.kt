@@ -1,7 +1,7 @@
 package backend.itracker.crawl.macbook.domain.repository
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -24,7 +24,7 @@ interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCust
             where m.category = :category
         """
     )
-    fun findAllFetchByProductCategory(@Param("category") crawlTargetCategory: ProductCategory): List<Macbook>
+    fun findAllFetchByProductCategory(@Param("category") crawlTargetCategory: MacbookCategory): List<Macbook>
 
     @Query(
         """

@@ -23,4 +23,11 @@ class WebElementHelper {
         return element.findElement(By.xpath(".."))
             .findElement(By.xpath(".."))
     }
+
+    fun findGrandGrandParentElement(element: WebElement): WebElement {
+        return element.findElement(By.xpath(".."))
+            .findElement(By.xpath(".."))
+            .findElement(By.xpath(".."))
+            .findElement(By.xpath(".."))
+    }
 }

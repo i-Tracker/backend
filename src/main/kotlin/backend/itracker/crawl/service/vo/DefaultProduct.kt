@@ -9,22 +9,6 @@ data class DefaultProduct(
     val thumbnailLink: String
 ) {
 
-    constructor(
-        productId: Long,
-        subCategory: String,
-        names: List<String>,
-        priceInfo: DefaultPrice,
-        productLink: String,
-        thumbnailLink: String,
-    ) : this(
-        productId = productId,
-        subCategory = subCategory,
-        name = names[0],
-        price = priceInfo,
-        productLink = productLink,
-        thumbnailLink = thumbnailLink
-    )
-
     fun isMacBook(): Boolean {
         return name.contains("맥북") && !name.contains("정품")
     }
@@ -47,5 +31,9 @@ data class DefaultProduct(
 
     fun isAirPods(): Boolean {
         return name.contains("에어팟") && !name.contains("케이스")
+    }
+
+    fun isIphone(): Boolean {
+        return name.contains("아이폰") && !name.contains("케이스")
     }
 }

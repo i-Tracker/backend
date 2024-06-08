@@ -1,7 +1,7 @@
 package backend.itracker.crawl.macbook.domain.repository
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.crawl.macbook.domain.QMacbook.macbook
 import backend.itracker.crawl.macbook.domain.QMacbookPrice.macbookPrice
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
@@ -13,7 +13,7 @@ class MacbookRepositoryImpl(
 ) : MacbookRepositoryCustom {
 
     override fun findAllByFilterCondition(
-        productCategory: ProductCategory,
+        category: MacbookCategory,
         filterCondition: MacbookFilterCondition
     ): List<Macbook> {
         return jpaQueryFactory
@@ -24,12 +24,12 @@ class MacbookRepositoryImpl(
                 equalChip(filterCondition.processor),
                 equalStorage(filterCondition.storage),
                 equalMemory(filterCondition.memory),
-                equalCategory(productCategory)
+                equalCategory(category)
             ).fetch()
     }
 
     override fun findAllFetchBySearchCondition(
-        productCategory: ProductCategory,
+        category: MacbookCategory,
         filterCondition: MacbookFilterCondition
     ): List<Macbook> {
         return jpaQueryFactory
@@ -41,7 +41,7 @@ class MacbookRepositoryImpl(
                 equalChip(filterCondition.processor),
                 equalStorage(filterCondition.storage),
                 equalMemory(filterCondition.memory),
-                equalCategory(productCategory)
+                equalCategory(category)
             ).fetch()
     }
 
@@ -86,7 +86,7 @@ class MacbookRepositoryImpl(
     }
 
     private fun equalCategory(
-        category: ProductCategory
+        category: MacbookCategory
     ): Predicate? {
         return macbook.category.eq(category)
     }

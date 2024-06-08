@@ -1,7 +1,7 @@
 package backend.itracker.tracker.service.response.product
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import java.math.BigDecimal
 
 data class MacbookResponse(
@@ -25,8 +25,8 @@ data class MacbookResponse(
     companion object {
         fun of(macbook: Macbook): MacbookResponse {
             val koreanCategory = when (macbook.category) {
-                ProductCategory.MACBOOK_AIR -> "맥북 에어"
-                ProductCategory.MACBOOK_PRO -> "맥북 프로"
+                MacbookCategory.MACBOOK_AIR -> "맥북 에어"
+                MacbookCategory.MACBOOK_PRO -> "맥북 프로"
                 else -> ""
             }
 

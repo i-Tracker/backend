@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class ScheduleController(
     private val crawlSchedulerService: CrawlSchedulerService
 ) {
+
     @Async
     @PostMapping("/api/v1/schedule/update")
     fun manualCrawl(@RequestParam category: CrawlTargetCategory) {
@@ -20,7 +21,7 @@ class ScheduleController(
             CrawlTargetCategory.APPLE_WATCH -> crawlSchedulerService.crawlAppleWatch()
             CrawlTargetCategory.MAC -> crawlSchedulerService.crawlMac()
             CrawlTargetCategory.AIRPODS -> crawlSchedulerService.crawlAirPods()
-            else -> throw IllegalArgumentException("수동 업데이트를 지원하지 않는 카테고리 입니다.")
+            CrawlTargetCategory.IPHONE -> crawlSchedulerService.crawlIphone()
         }
     }
 }
