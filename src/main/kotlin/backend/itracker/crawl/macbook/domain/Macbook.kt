@@ -1,10 +1,11 @@
 package backend.itracker.crawl.macbook.domain
 
 import backend.itracker.crawl.common.BaseEntity
-import backend.itracker.crawl.common.ProductCategory
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.Period
@@ -18,7 +19,6 @@ class Macbook(
     @Column(columnDefinition = "TEXT")
     val name: String,
 
-    val category: ProductCategory,
     val chip: String,
     val cpu: String,
     val gpu: String,
@@ -28,6 +28,9 @@ class Macbook(
     val color: String,
     val size: Int,
     val releaseYear: Int,
+
+    @Enumerated(EnumType.STRING)
+    val category: MacbookCategory,
 
     @Column(columnDefinition = "TEXT")
     val productLink: String,
