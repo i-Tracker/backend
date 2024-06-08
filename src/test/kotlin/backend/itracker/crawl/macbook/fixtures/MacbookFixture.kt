@@ -1,13 +1,13 @@
 package backend.itracker.crawl.macbook.fixtures
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 
 abstract class MacbookFixture {
 
     companion object {
         fun macbook(
-            category: ProductCategory,
+            category: MacbookCategory,
             size: Int,
             chip: String,
             cpu: String,
@@ -37,7 +37,7 @@ abstract class MacbookFixture {
 
         fun createDefaultMacbookAir(): Macbook {
             return macbook(
-                category = ProductCategory.MACBOOK_AIR,
+                category = MacbookCategory.MACBOOK_AIR,
                 chip = "M3",
                 cpu = "8코어",
                 gpu = "10코어",

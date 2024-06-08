@@ -1,7 +1,7 @@
 package backend.itracker.crawl.service.response
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.crawl.macbook.domain.MacbookPrice
 import java.math.BigDecimal
 
@@ -9,7 +9,7 @@ data class MacbookCrawlResponse(
     val coupangId: Long,
     val company: String,
     val name: String,
-    val category: ProductCategory,
+    val category: MacbookCategory,
     val chip: String,
     val cpu: String,
     val gpu: String,

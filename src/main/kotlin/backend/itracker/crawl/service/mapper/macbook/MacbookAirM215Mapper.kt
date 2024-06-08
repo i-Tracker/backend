@@ -1,7 +1,7 @@
 package backend.itracker.crawl.service.mapper.macbook
 
-import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.crawl.service.response.MacbookCrawlResponse
 import backend.itracker.crawl.service.vo.DefaultProduct
 import org.springframework.stereotype.Component
@@ -38,7 +38,7 @@ class MacbookAirM215Mapper : MacbookMappingComponent {
             coupangId = product.productId,
             company = company,
             name = product.name,
-            category = ProductCategory.MACBOOK_AIR,
+            category = MacbookCategory.MACBOOK_AIR,
             chip = chip,
             cpu = cpu,
             gpu = gpu,
