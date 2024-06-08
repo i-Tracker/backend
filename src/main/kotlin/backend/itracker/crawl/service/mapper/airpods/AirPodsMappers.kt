@@ -6,7 +6,7 @@ import backend.itracker.crawl.service.vo.DefaultProduct
 import org.springframework.stereotype.Component
 
 @Component
-class AirPodsMapper(
+class AirPodsMappers(
     private val airPodsMappers: List<AirPodsMappingComponent>
 ) {
 

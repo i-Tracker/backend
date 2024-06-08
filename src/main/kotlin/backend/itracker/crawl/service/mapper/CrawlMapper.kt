@@ -4,7 +4,7 @@ import backend.itracker.crawl.airpods.domain.AirPods
 import backend.itracker.crawl.ipad.domain.Ipad
 import backend.itracker.crawl.mac.domain.Mac
 import backend.itracker.crawl.macbook.domain.Macbook
-import backend.itracker.crawl.service.mapper.airpods.AirPodsMapper
+import backend.itracker.crawl.service.mapper.airpods.AirPodsMappers
 import backend.itracker.crawl.service.mapper.ipad.IpadMappers
 import backend.itracker.crawl.service.mapper.mac.MacMappers
 import backend.itracker.crawl.service.mapper.macbook.MacbookMappers
@@ -20,7 +20,7 @@ class CrawlMapper(
     private val ipadMappers: IpadMappers,
     private val appleWatchMappers: AppleWatchMappers,
     private val macMappers: MacMappers,
-    private val airPodsMapper: AirPodsMapper,
+    private val airPodsMappers: AirPodsMappers,
 ) {
 
     fun toMacbook(products: Map<String, DefaultProduct>): List<Macbook> {
@@ -50,6 +50,7 @@ class CrawlMapper(
     fun toAirPods(products: Map<String, DefaultProduct>): List<AirPods> {
         val filteredProducts = products.values.filter { it.isAirPods() }
 
-        return airPodsMapper.toDomain(filteredProducts)
+        return airPodsMappers.toDomain(filteredProducts)
     }
+
 }
