@@ -80,6 +80,10 @@ class Macbook(
         return prices.isOutOfStock()
     }
 
+    fun isAllTimeLowPrice(): Boolean {
+        return prices.isAllTimeLowPrice()
+    }
+
     fun changeCoupangLink(coupangLink: String) {
         this.coupangLink = coupangLink
     }
