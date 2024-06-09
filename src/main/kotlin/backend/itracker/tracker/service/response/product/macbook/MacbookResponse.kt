@@ -18,7 +18,7 @@ data class MacbookResponse(
     val storage: String,
     val memory: String,
     val color: String,
-    val label: String,
+    val label: Boolean,
     val imageUrl: String,
     val isOutOfStock: Boolean
 ) : CommonProductModel {
@@ -43,7 +43,7 @@ data class MacbookResponse(
                 memory = "${macbook.memory} 통합 메모리",
                 color = macbook.color,
                 currentPrice = macbook.findCurrentPrice(),
-                label = "역대최저가",
+                label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
                 isOutOfStock = macbook.isOutOfStock()
             )
