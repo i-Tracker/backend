@@ -8,6 +8,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import java.math.BigDecimal
+import java.time.Period
 
 @Entity
 @Table(name = "airpods")
@@ -73,6 +74,10 @@ class AirPods(
 
     fun isAllTimeLowPrice(): Boolean {
         return prices.isAllTimeLowPrice()
+    }
+
+    fun getRecentPricesByPeriod(period: Period): AirPodsPrices {
+        return prices.getRecentPricesByPeriod(period)
     }
 
     override fun toString(): String {

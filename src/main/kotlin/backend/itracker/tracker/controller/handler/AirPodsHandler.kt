@@ -6,6 +6,7 @@ import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.service.response.filter.CommonFilterModel
 import backend.itracker.tracker.service.response.product.CommonProductDetailModel
 import backend.itracker.tracker.service.response.product.CommonProductModel
+import backend.itracker.tracker.service.response.product.airpods.AirPodsDetailResponse
 import backend.itracker.tracker.service.response.product.airpods.AirPodsResponse
 import backend.itracker.tracker.service.vo.ProductFilter
 import jakarta.transaction.NotSupportedException
@@ -61,6 +62,8 @@ class AirPodsHandler(
     }
 
     override fun findProductById(productId: Long): CommonProductDetailModel {
-        TODO("Not yet implemented")
+        val airPods = airPodsService.findByIdAllFetch(productId)
+
+        return AirPodsDetailResponse.from(airPods)
     }
 }

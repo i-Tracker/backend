@@ -2,6 +2,7 @@ package backend.itracker.crawl.airpods.service
 
 import backend.itracker.crawl.airpods.domain.AirPods
 import backend.itracker.crawl.airpods.domain.repository.AirPodsRepository
+import backend.itracker.crawl.airpods.domain.repository.getByIdAllFetch
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -25,5 +26,10 @@ class AirPodsService(
     @Transactional(readOnly = true)
     fun findAllFetch(): List<AirPods> {
         return airPodsRepository.findAllFetch()
+    }
+
+    @Transactional(readOnly = true)
+    fun findByIdAllFetch(productId: Long): AirPods {
+        return airPodsRepository.getByIdAllFetch(productId)
     }
 }
