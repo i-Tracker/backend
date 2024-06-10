@@ -50,7 +50,7 @@ class AirPodsDetailResponse(
                 color = airPods.color,
                 label = airPods.isAllTimeLowPrice(),
                 imageUrl = airPods.thumbnail,
-                coupangUrl = airPods.productLink,
+                coupangUrl = airPods.partnersLink.ifBlank { airPods.productLink },
                 discountPercentage = airPods.findDiscountPercentage(),
                 currentPrice = airPods.findCurrentPrice(),
                 isOutOfStock = airPods.isOutOfStock(),
