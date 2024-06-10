@@ -17,7 +17,7 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
             select a
             from AirPods a
-            join fetch a.prices
+            join fetch a.prices.airPodsPrices
             where a.coupangId = :coupangId
         """
     )
@@ -27,7 +27,7 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
             select a
             from AirPods a
-            join fetch a.prices
+            join fetch a.prices.airPodsPrices
         """
     )
     fun findAllFetch(): List<AirPods>
@@ -36,7 +36,7 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
             select a
             from AirPods a
-            join fetch a.prices
+            join fetch a.prices.airPodsPrices
             where a.id = :id
     """
     )
