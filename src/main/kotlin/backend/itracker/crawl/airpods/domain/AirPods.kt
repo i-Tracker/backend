@@ -7,6 +7,8 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
+import java.math.BigDecimal
+import java.time.Period
 
 @Entity
 @Table(name = "airpods")
@@ -29,6 +31,9 @@ class AirPods(
     val productLink: String,
 
     @Column(columnDefinition = "TEXT")
+    var partnersLink: String = "",
+
+    @Column(columnDefinition = "TEXT")
     val thumbnail: String,
 
     @Embedded
@@ -46,7 +51,43 @@ class AirPods(
         airPodsPrice.changeAirPods(this)
     }
 
+    fun findCurrentPrice(): BigDecimal {
+        return prices.findCurrentPrice()
+    }
+
+    fun findAveragePrice(): BigDecimal {
+        return prices.findAveragePrice()
+    }
+
+    fun findAllTimeHighPrice(): BigDecimal {
+        return prices.findAllTimeHighPrice()
+    }
+
+    fun findAllTimeLowPrice(): BigDecimal {
+        return prices.findAllTimeLowPrice()
+    }
+
+    fun findDiscountPercentage(): Int {
+        return prices.findTodayDiscountPercentage()
+    }
+
+    fun isOutOfStock(): Boolean {
+        return prices.isOutOfStock()
+    }
+
+    fun isAllTimeLowPrice(): Boolean {
+        return prices.isAllTimeLowPrice()
+    }
+
+    fun changePartnersLink(partnersLink: String) {
+        this.partnersLink = partnersLink
+    }
+
+    fun getRecentPricesByPeriod(period: Period): AirPodsPrices {
+        return prices.getRecentPricesByPeriod(period)
+    }
+
     override fun toString(): String {
-        return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', color='$color', category=$category, name='$name', productLink='$productLink', thumbnail='$thumbnail')"
+        return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', color='$color', category=$category, name='$name', productLink='$productLink', partnersLink='$partnersLink', thumbnail='$thumbnail')"
     }
 }

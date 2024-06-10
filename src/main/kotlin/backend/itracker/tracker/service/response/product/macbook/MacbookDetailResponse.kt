@@ -17,7 +17,7 @@ class MacbookDetailResponse(
     val storage: String,
     val memory: String,
     val color: String,
-    val label: String,
+    val label: Boolean,
     val imageUrl: String,
     val coupangUrl: String,
     val isOutOfStock: Boolean,
@@ -60,9 +60,9 @@ class MacbookDetailResponse(
                 storage = "${macbook.storage} SSD 저장 장치",
                 memory = "${macbook.memory} 통합 메모리",
                 color = macbook.color,
-                label = "역대최저가",
+                label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
-                coupangUrl = macbook.coupangLink.ifBlank { macbook.productLink },
+                coupangUrl = macbook.partnersLink.ifBlank { macbook.productLink },
                 isOutOfStock = macbook.isOutOfStock(),
                 priceInfos = macbook.getRecentPricesByPeriod(SIX_MONTH).macbookPrices
                     .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }

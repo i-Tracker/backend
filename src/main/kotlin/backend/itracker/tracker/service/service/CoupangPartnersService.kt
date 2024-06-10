@@ -1,6 +1,6 @@
 package backend.itracker.tracker.service.service
 
-import backend.itracker.crawl.macbook.domain.Macbook
+import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.tracker.service.response.Deeplink
 import org.springframework.stereotype.Service
@@ -10,35 +10,45 @@ private const val MAX_REQUEST_SIZE = 20
 @Service
 class CoupangPartnersService(
     private val coupangApiClient: CoupangApiClient,
-    private val macbookService: MacbookService
+    private val macbookService: MacbookService,
+    private val airPodsService: AirPodsService,
 ) {
 
-    fun updateAllMacbookCoupangLink(
+    fun updateAllMacbookPartnersLink(
         startId: Long,
         endId: Long,
     ): List<Deeplink> {
-        val macbooks = macbookService.findByIdBetween(startId, endId)
-        val coupangLinks = requestCoupangLinks(macbooks)
+        val macbookProductLinks = macbookService.findByIdBetween(startId, endId)
+            .map { it.productLink }
 
-        return coupangLinks
+        return requestDeepLinks(macbookProductLinks)
     }
 
-    private fun requestCoupangLinks(macbooks: List<Macbook>): MutableList<Deeplink> {
+    fun updateAllAirPodsPartnersLink(
+        startId: Long,
+        end: Long
+    ): List<Deeplink> {
+        val airPodsProductLinks = airPodsService.findByIdBetween(startId, end)
+            .map { it.productLink }
+        return requestDeepLinks(airPodsProductLinks)
+    }
+
+    private fun requestDeepLinks(productLinks: List<String>): MutableList<Deeplink> {
         val linkResults = mutableListOf<Deeplink>()
         val queue = ArrayDeque<String>()
 
-        macbooks.map { it.productLink }.forEach {
+        productLinks.forEach {
             queue.add(it)
             if (queue.size == MAX_REQUEST_SIZE) {
-                issueCoupangLinks(queue, linkResults)
+                issueDeepLinks(queue, linkResults)
             }
         }
-        issueCoupangLinks(queue, linkResults)
+        issueDeepLinks(queue, linkResults)
 
         return linkResults
     }
 
-    private fun issueCoupangLinks(
+    private fun issueDeepLinks(
         queue: ArrayDeque<String>,
         linkResults: MutableList<Deeplink>
     ) {
@@ -46,7 +56,7 @@ class CoupangPartnersService(
             return
         }
 
-        val response = coupangApiClient.issueCoupangLinks(queue.toList())
+        val response = coupangApiClient.issueDeepLinks(queue.toList())
         linkResults.addAll(response)
         queue.clear()
     }

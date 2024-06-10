@@ -49,6 +49,12 @@ class MacbookPrices(
         return macbookPrices.maxBy { it.createdAt }.isOutOfStock
     }
 
+    fun isAllTimeLowPrice(): Boolean {
+        val todayPrice = macbookPrices.maxBy { it.createdAt } .currentPrice
+
+        return  todayPrice <= findAllTimeLowPrice()
+    }
+
     fun getRecentPricesByPeriod(period: Period): MacbookPrices {
         val startDate = LocalDateTime.now().minus(period)
         val prices = macbookPrices.filter { it.createdAt.isAfter(startDate) }
