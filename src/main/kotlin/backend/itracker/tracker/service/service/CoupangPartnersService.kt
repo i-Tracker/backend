@@ -13,32 +13,32 @@ class CoupangPartnersService(
     private val macbookService: MacbookService
 ) {
 
-    fun updateAllMacbookCoupangLink(
+    fun updateAllMacbookPartnersLink(
         startId: Long,
         endId: Long,
     ): List<Deeplink> {
         val macbooks = macbookService.findByIdBetween(startId, endId)
-        val coupangLinks = requestCoupangLinks(macbooks)
+        val deepLinks = requestDeepLinks(macbooks)
 
-        return coupangLinks
+        return deepLinks
     }
 
-    private fun requestCoupangLinks(macbooks: List<Macbook>): MutableList<Deeplink> {
+    private fun requestDeepLinks(macbooks: List<Macbook>): MutableList<Deeplink> {
         val linkResults = mutableListOf<Deeplink>()
         val queue = ArrayDeque<String>()
 
         macbooks.map { it.productLink }.forEach {
             queue.add(it)
             if (queue.size == MAX_REQUEST_SIZE) {
-                issueCoupangLinks(queue, linkResults)
+                issueDeepLinks(queue, linkResults)
             }
         }
-        issueCoupangLinks(queue, linkResults)
+        issueDeepLinks(queue, linkResults)
 
         return linkResults
     }
 
-    private fun issueCoupangLinks(
+    private fun issueDeepLinks(
         queue: ArrayDeque<String>,
         linkResults: MutableList<Deeplink>
     ) {
@@ -46,7 +46,7 @@ class CoupangPartnersService(
             return
         }
 
-        val response = coupangApiClient.issueCoupangLinks(queue.toList())
+        val response = coupangApiClient.issueDeepLinks(queue.toList())
         linkResults.addAll(response)
         queue.clear()
     }

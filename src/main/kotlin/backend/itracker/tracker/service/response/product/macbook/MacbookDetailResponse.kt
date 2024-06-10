@@ -62,7 +62,7 @@ class MacbookDetailResponse(
                 color = macbook.color,
                 label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
-                coupangUrl = macbook.coupangLink.ifBlank { macbook.productLink },
+                coupangUrl = macbook.partnersLink.ifBlank { macbook.productLink },
                 isOutOfStock = macbook.isOutOfStock(),
                 priceInfos = macbook.getRecentPricesByPeriod(SIX_MONTH).macbookPrices
                     .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }

@@ -1,6 +1,6 @@
 package backend.itracker.crawl.macbook.service
 
-import backend.itracker.crawl.common.CoupangLinkInfo
+import backend.itracker.crawl.common.PartnersLinkInfo
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
@@ -26,13 +26,11 @@ class MacbookService(
         }
     }
 
-    fun updateAllCoupangLink(coupangLinks: List<CoupangLinkInfo>) {
+    fun updateAllPartnersLink(partnersLinkInformation: List<PartnersLinkInfo>) {
         val macbooks = macbookRepository.findAll()
-        coupangLinks.forEach { link ->
-            val coupangLink = link.partnersUrl
-
-            macbooks.filter { macbook -> macbook.productLink == link.originalUrl }
-                .map { it.changeCoupangLink(coupangLink) }
+        partnersLinkInformation.forEach { info ->
+            macbooks.filter { macbook -> macbook.productLink == info.originalUrl }
+                .map { it.changePartnersLink(info.partnersUrl) }
         }
     }
 
