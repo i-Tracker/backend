@@ -1,6 +1,6 @@
 package backend.itracker.tracker.service.request
 
-data class CoupangLinkRequest(
+data class DeepLinkRequest(
     val coupangUrls: List<String>,
     val subId: String = "itracker"
 )
