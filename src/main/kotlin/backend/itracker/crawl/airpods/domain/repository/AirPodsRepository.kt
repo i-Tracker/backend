@@ -17,4 +17,13 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
     )
     fun findByCoupangId(@Param("coupangId") coupangId: Long): Optional<AirPods>
+
+    @Query(
+        """
+            select a
+            from AirPods a
+            join fetch a.prices
+        """
+    )
+    fun findAllFetch(): List<AirPods>
 }

@@ -21,4 +21,9 @@ class AirPodsService(
             maybeAirPods.get().addAllPrices(airPods.prices)
         }
     }
+
+    @Transactional(readOnly = true)
+    fun findAllFetch(): List<AirPods> {
+        return airPodsRepository.findAllFetch()
+    }
 }

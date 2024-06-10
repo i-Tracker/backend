@@ -7,6 +7,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "airpods")
@@ -44,6 +45,34 @@ class AirPods(
     fun addPrice(airPodsPrice: AirPodsPrice) {
         prices.add(airPodsPrice)
         airPodsPrice.changeAirPods(this)
+    }
+
+    fun findCurrentPrice(): BigDecimal {
+        return prices.findCurrentPrice()
+    }
+
+    fun findAveragePrice(): BigDecimal {
+        return prices.findAveragePrice()
+    }
+
+    fun findAllTimeHighPrice(): BigDecimal {
+        return prices.findAllTimeHighPrice()
+    }
+
+    fun findAllTimeLowPrice(): BigDecimal {
+        return prices.findAllTimeLowPrice()
+    }
+
+    fun findDiscountPercentage(): Int {
+        return prices.findTodayDiscountPercentage()
+    }
+
+    fun isOutOfStock(): Boolean {
+        return prices.isOutOfStock()
+    }
+
+    fun isAllTimeLowPrice(): Boolean {
+        return prices.isAllTimeLowPrice()
     }
 
     override fun toString(): String {
