@@ -31,6 +31,9 @@ class AirPods(
     val productLink: String,
 
     @Column(columnDefinition = "TEXT")
+    var partnersLink: String = "",
+
+    @Column(columnDefinition = "TEXT")
     val thumbnail: String,
 
     @Embedded
@@ -76,11 +79,15 @@ class AirPods(
         return prices.isAllTimeLowPrice()
     }
 
+    fun changePartnersLink(partnersLink: String) {
+        this.partnersLink = partnersLink
+    }
+
     fun getRecentPricesByPeriod(period: Period): AirPodsPrices {
         return prices.getRecentPricesByPeriod(period)
     }
 
     override fun toString(): String {
-        return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', color='$color', category=$category, name='$name', productLink='$productLink', thumbnail='$thumbnail')"
+        return "AirPods(coupangId=$coupangId, company='$company', releaseYear=$releaseYear, generation=$generation, canWirelessCharging=$canWirelessCharging, chargingType='$chargingType', color='$color', category=$category, name='$name', productLink='$productLink', partnersLink='$partnersLink', thumbnail='$thumbnail')"
     }
 }

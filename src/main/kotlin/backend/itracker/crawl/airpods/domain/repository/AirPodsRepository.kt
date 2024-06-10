@@ -41,4 +41,6 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
     """
     )
     fun findByIdAllFetch(@Param("id") id: Long): Optional<AirPods>
+
+    fun findByIdBetween(startId: Long, endId: Long): List<AirPods>
 }
