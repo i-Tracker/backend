@@ -1,18 +1,19 @@
 package backend.itracker.tracker.controller.request
 
+private const val DEFAULT_PAGE_SIZE = 10
+
+private const val DEFAULT_PAGE_START_NUMBER = 1
+
 class PageParams(
-    private var page: Int = 1,
-    var limit: Int = 8
+    private var page: Int = DEFAULT_PAGE_START_NUMBER,
+    var limit: Int = DEFAULT_PAGE_SIZE
 ) {
 
     init {
-        require(page >= 1) { throw IllegalArgumentException("page는 1이상 입력해주세요. page=$page") }
-        require(limit >= 1) { throw IllegalArgumentException("limit는 1이상 입력해주세요. limit=$limit") }
+        require(page >= DEFAULT_PAGE_START_NUMBER) { throw IllegalArgumentException("page는 ${DEFAULT_PAGE_START_NUMBER}이상 입력해주세요. page=$page") }
+        require(limit >= DEFAULT_PAGE_START_NUMBER) { throw IllegalArgumentException("limit는 ${DEFAULT_PAGE_START_NUMBER}이상 입력해주세요. limit=$limit") }
     }
 
     val offset: Int
-        get() = page - 1
+        get() = page - DEFAULT_PAGE_START_NUMBER
 }
-
-
-
