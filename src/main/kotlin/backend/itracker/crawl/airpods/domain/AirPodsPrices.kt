@@ -52,7 +52,7 @@ class AirPodsPrices(
     fun isAllTimeLowPrice(): Boolean {
         val todayPrice = airPodsPrices.maxBy { it.createdAt }.currentPrice
 
-        return todayPrice <= findAllTimeLowPrice()
+        return todayPrice <= findAllTimeLowPrice() && findTodayDiscountPercentage() < 0
     }
 
     fun getRecentPricesByPeriod(period: Period): AirPodsPrices {
