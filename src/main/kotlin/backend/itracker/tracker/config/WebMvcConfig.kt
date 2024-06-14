@@ -1,4 +1,4 @@
-package backend.itracker.config
+package backend.itracker.tracker.config
 
 import backend.itracker.tracker.controller.converter.ProductCategoryConverter
 import org.springframework.context.annotation.Configuration
