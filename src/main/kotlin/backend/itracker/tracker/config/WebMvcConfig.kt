@@ -1,5 +1,6 @@
 package backend.itracker.tracker.config
 
+import backend.itracker.tracker.controller.converter.OauthServerTypeConverter
 import backend.itracker.tracker.controller.converter.ProductCategoryConverter
 import org.springframework.context.annotation.Configuration
 import org.springframework.format.FormatterRegistry
@@ -10,5 +11,6 @@ class WebMvcConfig : WebMvcConfigurer {
 
     override fun addFormatters(registry: FormatterRegistry) {
         registry.addConverter(ProductCategoryConverter())
+        registry.addConverter(OauthServerTypeConverter())
     }
 }
