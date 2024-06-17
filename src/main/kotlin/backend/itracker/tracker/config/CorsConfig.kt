@@ -1,4 +1,4 @@
-package backend.itracker.config
+package backend.itracker.tracker.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
