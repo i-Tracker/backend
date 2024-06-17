@@ -10,10 +10,8 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.MissingClaimException
 import io.jsonwebtoken.security.SignatureException
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
-@Profile("!test")
 @Component
 class JwtDecoder(
     private val jwtConfig: JwtConfig
