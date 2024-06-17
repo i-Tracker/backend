@@ -1,5 +1,6 @@
 package backend.itracker.logging
 
+import backend.itracker.tracker.infra.oauth.exception.OauthRequestException
 import org.springframework.beans.BeanInstantiationException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -14,12 +15,12 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
         return when (val ex = e.cause) {
             is IllegalArgumentException -> {
                 logger.info("사용자 입력 예외입니다. message : ", ex)
-                ResponseEntity.badRequest().body("message = ${ex.message}")
+                ResponseEntity.badRequest().body("사용자 입력 예외입니다.")
             }
 
             else -> {
                 logger.error("예상치 못한 예외입니다. message : ", ex)
-                ResponseEntity.internalServerError().body("message = ${ex?.message}")
+                ResponseEntity.internalServerError().body("일시적인 네트워크 오류입니다. 오류가 지속될 경우 관리자에게 문의해주세요.")
             }
         }
     }
@@ -28,7 +29,8 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
     fun handleIllealArgumentException(e: IllegalArgumentException): ResponseEntity<String> {
         logger.info("사용자 입력 예외입니다. message : ", e)
 
-        return ResponseEntity.badRequest().body("message = ${e.message}")
+        return ResponseEntity.badRequest().body("사용자 입력 예외입니다.")
+    }
 
     @ExceptionHandler(OauthRequestException::class)
     fun handleIllealArgumentException(e: OauthRequestException): ResponseEntity<String> {
@@ -41,7 +43,6 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
     fun handleException(e: Exception): ResponseEntity<String> {
         logger.error("예상치 못한 예외입니다. message : ", e)
 
-        return ResponseEntity.internalServerError().body("message = ${e.message}")
         return ResponseEntity.internalServerError().body("일시적인 네트워크 오류입니다. 오류가 지속될 경우 관리자에게 문의해주세요.")
     }
 
