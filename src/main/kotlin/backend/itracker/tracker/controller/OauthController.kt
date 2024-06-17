@@ -3,6 +3,7 @@ package backend.itracker.tracker.controller
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.service.oauth.OauthService
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -34,7 +35,10 @@ class OauthController(
         @PathVariable oauthServerType: OauthServerType,
         @RequestParam("code") code: String
     ): ResponseEntity<Long> {
-        val login = oauthService.login(oauthServerType, code)
-        return ResponseEntity.ok(login)
+        val accessToken = oauthService.login(oauthServerType, code)
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.AUTHORIZATION, accessToken)
+            .build()
     }
 }
