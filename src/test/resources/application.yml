@@ -26,3 +26,8 @@ oauth:
     client_secret: test
     scope: test
     
+jwt:
+  token:
+    secret: test_test_test_test_test_test_test_test_test_test
+    issuer: test
+    expire_minutes: 10

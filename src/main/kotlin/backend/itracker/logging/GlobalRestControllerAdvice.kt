@@ -29,6 +29,12 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
         logger.info("사용자 입력 예외입니다. message : ", e)
 
         return ResponseEntity.badRequest().body("message = ${e.message}")
+
+    @ExceptionHandler(OauthRequestException::class)
+    fun handleIllealArgumentException(e: OauthRequestException): ResponseEntity<String> {
+        logger.info("잘못된 로그인 방식입니다. message : ", e)
+
+        return ResponseEntity.badRequest().body("잘못된 로그인 방식입니다.")
     }
 
     @ExceptionHandler(Exception::class)
@@ -36,6 +42,7 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
         logger.error("예상치 못한 예외입니다. message : ", e)
 
         return ResponseEntity.internalServerError().body("message = ${e.message}")
+        return ResponseEntity.internalServerError().body("일시적인 네트워크 오류입니다. 오류가 지속될 경우 관리자에게 문의해주세요.")
     }
 
 }
