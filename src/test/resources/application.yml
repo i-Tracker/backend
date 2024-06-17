@@ -18,3 +18,16 @@ selenium:
 coupang:
   access-key: test
   secret-key: test
+
+oauth:
+  kakao:
+    client_id: test
+    redirect_uri: test
+    client_secret: test
+    scope: test
+    
+jwt:
+  token:
+    secret: test_test_test_test_test_test_test_test_test_test
+    issuer: test
+    expire_minutes: 10
