@@ -23,6 +23,7 @@ oauth:
   kakao:
     client_id: test
     redirect_uri: test
+    local_redirect_uri: test
     client_secret: test
     scope: test
     
