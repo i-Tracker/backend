@@ -1,7 +1,9 @@
 package backend.itracker.tracker.controller
 
 import backend.itracker.tracker.oauth.OauthServerType
+import backend.itracker.tracker.oauth.RedirectType
 import backend.itracker.tracker.service.oauth.OauthService
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -21,9 +23,16 @@ class OauthController(
     @GetMapping("/{oauthServerType}")
     fun redirectAuthCodeRequestUrl(
         @PathVariable oauthServerType: OauthServerType,
+        request: HttpServletRequest,
         response: HttpServletResponse
     ): ResponseEntity<Unit> {
-        oauthService.getAuthCodeRequestUrl(oauthServerType).let {
+        if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
+            oauthService.getAuthCodeRequestUrl(oauthServerType, RedirectType.LOCAL).let {
+                response.sendRedirect(it)
+            }
+            return ResponseEntity.status(HttpStatus.FOUND).build()
+        }
+        oauthService.getAuthCodeRequestUrl(oauthServerType, RedirectType.PROD).let {
             response.sendRedirect(it)
         }
 
@@ -33,9 +42,17 @@ class OauthController(
     @GetMapping("/login/{oauthServerType}")
     fun login(
         @PathVariable oauthServerType: OauthServerType,
-        @RequestParam("code") code: String
+        @RequestParam("code") code: String,
+        request: HttpServletRequest,
     ): ResponseEntity<Long> {
-        val accessToken = oauthService.login(oauthServerType, code)
+        if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
+            val accessToken = oauthService.login(oauthServerType, code, RedirectType.LOCAL)
+
+            return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .build()
+        }
+        val accessToken = oauthService.login(oauthServerType, code, RedirectType.PROD)
 
         return ResponseEntity.ok()
             .header(HttpHeaders.AUTHORIZATION, accessToken)
