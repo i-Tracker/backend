@@ -1,7 +1,10 @@
 package backend.itracker.tracker.oauth.service
 
+import backend.itracker.tracker.infra.oauth.AuthorizationHeader
+import backend.itracker.tracker.infra.oauth.jwt.JwtDecoder
 import backend.itracker.tracker.infra.oauth.jwt.JwtEncoder
 import backend.itracker.tracker.member.service.MemberService
+import backend.itracker.tracker.oauth.Member
 import backend.itracker.tracker.oauth.OauthId
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
@@ -15,7 +18,8 @@ class OauthService(
     private val authCodeRequestUrlProviderComposite: AuthCodeRequestUrlProviderComposite,
     private val oauthMemberClientComposite: OauthMemberClientComposite,
     private val memberService: MemberService,
-    private val jwtEncoder: JwtEncoder
+    private val jwtEncoder: JwtEncoder,
+    private val jwtDecoder: JwtDecoder
 ) {
 
     fun getAuthCodeRequestUrl(oauthServerType: OauthServerType, redirectType: RedirectType): String {
@@ -43,5 +47,10 @@ class OauthService(
                 "type" to oauthId.oauthServerType.name
             )
         )
+    }
+
+    fun findByOauthId(authorizationHeader: AuthorizationHeader): Member {
+        val oauthId = jwtDecoder.parseOauthId(authorizationHeader)
+        return memberService.getByOauthId(oauthId)
     }
 }
