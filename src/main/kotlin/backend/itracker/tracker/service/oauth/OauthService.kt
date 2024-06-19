@@ -6,14 +6,15 @@ import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
 import backend.itracker.tracker.oauth.authcode.AuthCodeRequestUrlProviderComposite
 import backend.itracker.tracker.oauth.client.OauthMemberClientComposite
-import backend.itracker.tracker.oauth.repository.MemberRepository
+import backend.itracker.tracker.service.MemberService
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class OauthService(
     private val authCodeRequestUrlProviderComposite: AuthCodeRequestUrlProviderComposite,
     private val oauthMemberClientComposite: OauthMemberClientComposite,
-    private val memberRepository: MemberRepository,
+    private val memberService: MemberService,
     private val jwtEncoder: JwtEncoder
 ) {
 
@@ -26,9 +27,11 @@ class OauthService(
         authCode: String,
         redirectType: RedirectType
     ): String {
-        val member = oauthMemberClientComposite.fetch(oauthServerType, authCode, redirectType)
-        val savedMember = memberRepository.findByOauthId(member.oauthId)
-            .orElseGet { memberRepository.save(member) }
+        val fetchMember = oauthMemberClientComposite.fetch(oauthServerType, authCode, redirectType)
+        val savedMember = memberService.findByOauthId(fetchMember.oauthId).getOrNull()
+            ?: memberService.save(fetchMember)
+
+        memberService.updateProfile(savedMember.oauthId, fetchMember)
 
         return createAccessToken(savedMember.oauthId)
     }
