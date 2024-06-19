@@ -1,6 +1,7 @@
 package backend.itracker.tracker.oauth
 
 import backend.itracker.crawl.common.BaseEntity
+import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -20,7 +21,10 @@ class Member(
     @Embedded
     val oauthId: OauthId,
 
-    val nickname: String,
+    var nickname: String,
+
+    @Column(columnDefinition = "text")
+    var profileImage: String,
 
     @Enumerated(EnumType.STRING)
     val authType: AuthType = AuthType.USER,
@@ -28,7 +32,12 @@ class Member(
     id: Long = 0L
 ) : BaseEntity(id) {
 
+    fun updateProfile(target: Member) {
+        this.nickname = target.nickname
+        this.profileImage = target.profileImage
+    }
+
     override fun toString(): String {
-        return "Member(oauthId=$oauthId, nickname='$nickname', authType=$authType)"
+        return "Member(id='$id' oauthId=$oauthId, nickname='$nickname', profileImage='$profileImage', authType=$authType)"
     }
 }

@@ -40,4 +40,8 @@ abstract class BaseEntity(
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+    override fun toString(): String {
+        return "BaseEntity(id=$id, createdAt=$createdAt, updatedAt=$updatedAt)"
+    }
 }
