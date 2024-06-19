@@ -21,16 +21,21 @@ class Member(
     @Embedded
     val oauthId: OauthId,
 
-    val nickname: String,
+    var nickname: String,
 
     @Column(columnDefinition = "text")
-    val profileImage: String,
+    var profileImage: String,
 
     @Enumerated(EnumType.STRING)
     val authType: AuthType = AuthType.USER,
 
     id: Long = 0L
 ) : BaseEntity(id) {
+
+    fun updateProfile(target: Member) {
+        this.nickname = target.nickname
+        this.profileImage = target.profileImage
+    }
 
     override fun toString(): String {
         return "Member(oauthId=$oauthId, nickname='$nickname', profileImage='$profileImage', authType=$authType)"
