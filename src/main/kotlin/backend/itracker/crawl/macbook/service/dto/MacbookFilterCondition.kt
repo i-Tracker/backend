@@ -1,6 +1,6 @@
 package backend.itracker.crawl.macbook.service.dto
 
-import backend.itracker.tracker.service.response.filter.CommonFilterModel
+import backend.itracker.tracker.product.response.filter.CommonFilterModel
 
 data class MacbookFilterCondition(
     val size: Int?,

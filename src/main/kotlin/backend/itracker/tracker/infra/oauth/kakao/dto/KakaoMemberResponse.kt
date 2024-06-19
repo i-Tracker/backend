@@ -18,7 +18,8 @@ data class KakaoMemberResponse(
     fun toDomain(): Member {
         return Member(
             oauthId = OauthId(id.toString(), OauthServerType.KAKAO),
-            nickname = kakaoAccount.profile.nickname
+            nickname = kakaoAccount.profile.nickname,
+            profileImage = kakaoAccount.profile.profileImageUrl,
         )
     }
 
@@ -54,7 +55,7 @@ data class KakaoMemberResponse(
     data class Profile(
         val nickname: String,
         val thumbnailImageUrl: String?,
-        val profileImageUrl: String?,
+        val profileImageUrl: String,
         val isDefaultImage: Boolean?
     )
 }

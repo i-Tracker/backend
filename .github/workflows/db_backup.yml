@@ -1,0 +1,13 @@
+name: db_backup
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  cron:
+    runs-on: [self-hosted, Linux, prod]
+
+    steps:
+      - name: Execute Backup Script
+        run: ~/backend/db/backup_cron.sh
