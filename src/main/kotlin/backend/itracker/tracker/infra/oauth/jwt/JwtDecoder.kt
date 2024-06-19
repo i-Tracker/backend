@@ -2,7 +2,8 @@ package backend.itracker.tracker.infra.oauth.jwt
 
 import backend.itracker.tracker.infra.oauth.AuthorizationHeader
 import backend.itracker.tracker.infra.oauth.exception.OauthRequestException
-import io.jsonwebtoken.Claims
+import backend.itracker.tracker.oauth.OauthId
+import backend.itracker.tracker.oauth.OauthServerType
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.IncorrectClaimException
 import io.jsonwebtoken.JwtParser
@@ -22,11 +23,12 @@ class JwtDecoder(
         .requireIssuer(jwtConfig.issuer)
         .build()
 
-    fun parseAuthorizationHeader(authorizationHeader: AuthorizationHeader): Claims {
+    fun parseOauthId(authorizationHeader: AuthorizationHeader): OauthId {
         try {
             val token: String = authorizationHeader.parseHeader()
 
-            return jwtParser.parseClaimsJws(token).body
+            val claims = jwtParser.parseClaimsJws(token).body
+            return OauthId(claims["serverId"].toString(), OauthServerType.from(claims["type"].toString()))
         } catch (e: SignatureException) {
             throw OauthRequestException("Signature 가 잘못되었습니다.")
         } catch (e: ExpiredJwtException) {

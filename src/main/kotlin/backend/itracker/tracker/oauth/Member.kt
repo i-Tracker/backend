@@ -38,6 +38,6 @@ class Member(
     }
 
     override fun toString(): String {
-        return "Member(oauthId=$oauthId, nickname='$nickname', profileImage='$profileImage', authType=$authType)"
+        return "Member(id='$id' oauthId=$oauthId, nickname='$nickname', profileImage='$profileImage', authType=$authType)"
     }
 }
