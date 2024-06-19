@@ -18,7 +18,7 @@ data class Pages<T>(
 
 }
 
-data class SinglePage<T>(
+data class SingleData<T>(
     val data: T
 )
 

@@ -3,7 +3,7 @@ package backend.itracker.tracker.product.controller
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.common.request.PageParams
 import backend.itracker.tracker.common.response.Pages
-import backend.itracker.tracker.common.response.SinglePage
+import backend.itracker.tracker.common.response.SingleData
 import backend.itracker.tracker.product.handler.ProductHandlerImpl
 import backend.itracker.tracker.product.response.CategoryResponses
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
@@ -44,9 +44,9 @@ class ProductController(
     fun findProductFilter(
         @PathVariable category: ProductCategory,
         @RequestParam filterConditon: Map<String, String>
-    ): ResponseEntity<SinglePage<CommonFilterModel>> {
+    ): ResponseEntity<SingleData<CommonFilterModel>> {
         val filter = productHandler.findFilter(category, ProductFilter(filterConditon))
-        return ResponseEntity.ok(SinglePage(filter))
+        return ResponseEntity.ok(SingleData(filter))
     }
 
     @GetMapping("/api/v1/products/{category}/search")
