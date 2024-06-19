@@ -20,13 +20,16 @@ class MemberService(
 
     fun updateProfile(oauthId: OauthId, target: Member) {
         val findMember = memberRepository.getByOauthId(oauthId)
-        println("findMember: $findMember")
-        println("target: $target")
         findMember.updateProfile(target)
     }
 
     @Transactional(readOnly = true)
     fun findByOauthId(oauthId: OauthId): Optional<Member> {
         return memberRepository.findByOauthId(oauthId)
+    }
+
+    @Transactional(readOnly = true)
+    fun getByOauthId(oauthId: OauthId): Member {
+        return memberRepository.getByOauthId(oauthId)
     }
 }
