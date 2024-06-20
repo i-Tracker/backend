@@ -38,19 +38,21 @@ class MacbookService(
     fun findAllFetchByCategory(
         category: MacbookCategory,
     ): List<Macbook> {
-        return macbookRepository.findAllFetchByProductCategory(category)
+        val findAllFetchByProductCategory = macbookRepository.findAllFetchByProductCategory(category)
+        return findAllFetchByProductCategory
     }
 
     @Transactional(readOnly = true)
-    fun findAllByProductCategoryAndFilter(
+    fun findAllByCategoryAndFilter(
         category: MacbookCategory,
         filterCondition: MacbookFilterCondition
     ): List<Macbook> {
-        return macbookRepository.findAllByFilterCondition(category, filterCondition)
+        val findAllByFilterCondition = macbookRepository.findAllByFilterCondition(category, filterCondition)
+        return findAllByFilterCondition
     }
 
     @Transactional(readOnly = true)
-    fun findAllProductsByFilter(
+    fun findAllFetchByCategoryAndFilter(
         category: MacbookCategory,
         macbookFilterCondition: MacbookFilterCondition,
     ): List<Macbook> {

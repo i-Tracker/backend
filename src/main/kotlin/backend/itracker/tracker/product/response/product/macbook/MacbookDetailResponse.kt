@@ -69,4 +69,46 @@ class MacbookDetailResponse(
             )
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MacbookDetailResponse
+
+        if (id != other.id) return false
+        if (title != other.title) return false
+        if (category != other.category) return false
+        if (size != other.size) return false
+        if (chip != other.chip) return false
+        if (cpu != other.cpu) return false
+        if (gpu != other.gpu) return false
+        if (storage != other.storage) return false
+        if (memory != other.memory) return false
+        if (color != other.color) return false
+        if (label != other.label) return false
+        if (imageUrl != other.imageUrl) return false
+        if (coupangUrl != other.coupangUrl) return false
+        if (isOutOfStock != other.isOutOfStock) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + category.hashCode()
+        result = 31 * result + size
+        result = 31 * result + chip.hashCode()
+        result = 31 * result + cpu.hashCode()
+        result = 31 * result + gpu.hashCode()
+        result = 31 * result + storage.hashCode()
+        result = 31 * result + memory.hashCode()
+        result = 31 * result + color.hashCode()
+        result = 31 * result + label.hashCode()
+        result = 31 * result + imageUrl.hashCode()
+        result = 31 * result + coupangUrl.hashCode()
+        result = 31 * result + isOutOfStock.hashCode()
+        return result
+    }
 }

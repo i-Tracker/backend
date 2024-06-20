@@ -27,7 +27,12 @@ class AirPodsHandler(
         productCategory: ProductCategory,
         limit: Int
     ): List<CommonProductModel> {
-        throw NotSupportedException("AirPodsHandler는 최저가 순위를 지원하지 않습니다.")
+        val airpods = airPodsService.findAllFetch()
+        val contents = airpods.map { AirPodsResponse.from(it) }
+            .sortedBy { it.discountPercentage }
+            .take(limit)
+
+        return contents
     }
 
     override fun findFilter(productCategory: ProductCategory, filterCondition: ProductFilter): CommonFilterModel {

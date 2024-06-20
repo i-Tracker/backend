@@ -20,7 +20,7 @@ interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCust
         """
             select m
             from Macbook m
-            join fetch m.prices.macbookPrices
+            left join fetch m.prices.macbookPrices
             where m.category = :category
         """
     )
@@ -30,7 +30,7 @@ interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCust
         """
             select m
             from Macbook m
-            join fetch m.prices.macbookPrices
+            left join fetch m.prices.macbookPrices
             where m.id = :id
         """
     )
