@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestExecutionListeners
 
 @TestExecutionListeners(value = [DatabaseTruncater::class], mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 abstract class ServiceTestConfig : RepositoryTestConfig() {
 
     @Autowired

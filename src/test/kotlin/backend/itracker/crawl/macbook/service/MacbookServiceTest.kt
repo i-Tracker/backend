@@ -196,10 +196,10 @@ class MacbookServiceTest : ServiceTestConfig() {
     @Test
     fun `id 범위로 맥북을 찾는다`() {
         // given
-        val macbook1 = saveMacbook(MacbookFixture.default())
+        saveMacbook(MacbookFixture.default())
         val startMacbook = saveMacbook(MacbookFixture.default())
         val endMacbook = saveMacbook(MacbookFixture.default())
-        val macbook4 = saveMacbook(MacbookFixture.default())
+        saveMacbook(MacbookFixture.default())
 
         // when
         val actual = macbookService.findByIdBetween(startMacbook.id, endMacbook.id)
