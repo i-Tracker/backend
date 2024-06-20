@@ -42,12 +42,16 @@ data class MacbookResponse(
                 storage = "${macbook.storage} SSD 저장 장치",
                 memory = "${macbook.memory} 통합 메모리",
                 color = macbook.color,
-                currentPrice = macbook.findCurrentPrice(),
+                currentPrice = macbook.findCurrentPrice().setScale(0),
                 label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
                 isOutOfStock = macbook.isOutOfStock()
             )
         }
+    }
+
+    override fun discountPercentage(): Int {
+        return discountPercentage
     }
 }
 

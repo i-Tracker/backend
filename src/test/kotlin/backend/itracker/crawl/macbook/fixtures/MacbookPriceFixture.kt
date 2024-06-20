@@ -9,13 +9,23 @@ abstract class MacbookPriceFixture {
         fun macbookPrice(
             discountPercentage: Int,
             basePrice: Long,
-            currentPrice: Long
+            currentPrice: Long,
+            isOutOfStock: Boolean
         ) = MacbookPrice(
             discountPercentage = discountPercentage,
             basePrice = BigDecimal.valueOf(basePrice),
             currentPrice = BigDecimal.valueOf(currentPrice),
-            isOutOfStock = false
+            isOutOfStock = isOutOfStock
         )
+
+        fun macbookPrice(
+            discountPercentage: Int,
+            basePrice: Long,
+            currentPrice: Long
+        ): MacbookPrice {
+            val macbookPrice = macbookPrice(discountPercentage, basePrice, currentPrice, false)
+            return macbookPrice
+        }
 
         fun macbookPrice(
             discountPercentage: Int,
@@ -23,7 +33,7 @@ abstract class MacbookPriceFixture {
             currentPrice: Long,
             beforeDay: Long
         ): MacbookPrice {
-            val macbookPrice = macbookPrice(discountPercentage, basePrice, currentPrice)
+            val macbookPrice = macbookPrice(discountPercentage, basePrice, currentPrice, false)
             macbookPrice.createdAt = macbookPrice.createdAt.minusDays(beforeDay)
             return macbookPrice
         }

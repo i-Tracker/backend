@@ -43,4 +43,8 @@ data class AirPodsResponse(
             )
         }
     }
+
+    override fun discountPercentage(): Int {
+        return discountPercentage
+    }
 }

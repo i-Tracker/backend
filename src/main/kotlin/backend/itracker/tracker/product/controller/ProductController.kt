@@ -27,7 +27,7 @@ class ProductController(
 ) {
 
     @GetMapping("/api/v1/products/{category}")
-    fun findProductsByCategory(
+    fun findTopDiscountPercentageProductsByCategory(
         @PathVariable category: ProductCategory,
         @RequestParam(defaultValue = "5") limit: Int,
     ): ResponseEntity<Pages<CommonProductModel>> {
@@ -50,7 +50,7 @@ class ProductController(
     }
 
     @GetMapping("/api/v1/products/{category}/search")
-    fun findFilterdMacbookAir(
+    fun findFilterdProducts(
         @PathVariable category: ProductCategory,
         @RequestParam filterCondition: Map<String, String>,
         @ModelAttribute pageParams: PageParams,
@@ -66,7 +66,7 @@ class ProductController(
     }
 
     @GetMapping("/api/v1/products/{category}/{productId}")
-    fun findFilterdMacbookAir(
+    fun findFilterdProductDetail(
         @PathVariable category: ProductCategory,
         @PathVariable productId: Long,
     ): ResponseEntity<CommonProductDetailModel> {
