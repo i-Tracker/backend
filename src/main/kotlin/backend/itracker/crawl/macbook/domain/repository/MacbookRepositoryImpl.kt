@@ -34,7 +34,7 @@ class MacbookRepositoryImpl(
     ): List<Macbook> {
         return jpaQueryFactory
             .selectFrom(macbook)
-            .join(macbook.prices.macbookPrices, macbookPrice).fetchJoin()
+            .leftJoin(macbook.prices.macbookPrices, macbookPrice).fetchJoin()
             .where(
                 equalSize(filterCondition.size),
                 equalColor(filterCondition.color),
