@@ -1,4 +1,4 @@
-package backend.itracker.crawl.config
+package backend.itracker.config
 
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService

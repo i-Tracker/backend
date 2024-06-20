@@ -1,7 +1,7 @@
 package backend.itracker.crawl.macbook.service
 
+import backend.itracker.config.ServiceTestConfig
 import backend.itracker.crawl.common.PartnersLinkInfo
-import backend.itracker.crawl.config.ServiceTestConfig
 import backend.itracker.crawl.macbook.domain.MacbookCategory
 import backend.itracker.crawl.macbook.domain.repository.findByIdAllFetch
 import backend.itracker.crawl.macbook.fixtures.MacbookFilterConditionFixture

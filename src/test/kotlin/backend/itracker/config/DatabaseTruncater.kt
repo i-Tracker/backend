@@ -1,4 +1,4 @@
-package backend.itracker.crawl.config
+package backend.itracker.config
 
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.TestContext

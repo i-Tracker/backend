@@ -1,4 +1,4 @@
-package backend.itracker.crawl.config
+package backend.itracker.config
 
 import backend.itracker.crawl.macbook.domain.repository.MacbookRepository
 import org.springframework.beans.factory.annotation.Autowired
