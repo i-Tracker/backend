@@ -20,7 +20,7 @@ class MacbookTest {
 
     @BeforeEach
     fun setUp() {
-        macbook = MacbookFixture.createDefaultMacbookAir()
+        macbook = MacbookFixture.default()
     }
 
     @Test

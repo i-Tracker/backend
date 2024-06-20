@@ -41,7 +41,7 @@ class MacbookHandler(
         category: ProductCategory,
         filter: ProductFilter
     ): CommonFilterModel {
-        val macbooks = macbookService.findAllByProductCategoryAndFilter(category.toMacbookCategory(), MacbookFilterCondition(filter.value))
+        val macbooks = macbookService.findAllByCategoryAndFilter(category.toMacbookCategory(), MacbookFilterCondition(filter.value))
 
         return MacbookFilterResponse.from(macbooks)
     }
@@ -51,7 +51,7 @@ class MacbookHandler(
         filter: ProductFilter,
         pageable: Pageable,
     ): Page<CommonProductModel> {
-        val macbooks = macbookService.findAllProductsByFilter(
+        val macbooks = macbookService.findAllFetchByCategoryAndFilter(
             category.toMacbookCategory(),
             MacbookFilterCondition(filter.value),
         )
