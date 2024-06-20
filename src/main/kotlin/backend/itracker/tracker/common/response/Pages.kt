@@ -10,6 +10,10 @@ data class Pages<T>(
 ) {
 
     companion object {
+        fun <T> withPagination(data: List<T>) = Pages(
+            data = data,
+            pageInfo = PageInfo(currentPage = 1, lastPage = 1, elementSize = data.size)
+        )
         fun <T> withPagination(pagesData: Page<T>) = Pages(
             data = pagesData.content,
             pageInfo = PageInfo.from(pagesData)

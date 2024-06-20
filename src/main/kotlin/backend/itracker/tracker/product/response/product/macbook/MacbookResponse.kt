@@ -49,5 +49,9 @@ data class MacbookResponse(
             )
         }
     }
+
+    override fun discountPercentage(): Int {
+        return discountPercentage
+    }
 }
 
