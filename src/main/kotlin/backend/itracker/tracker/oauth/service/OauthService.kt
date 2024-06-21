@@ -3,8 +3,8 @@ package backend.itracker.tracker.oauth.service
 import backend.itracker.tracker.infra.oauth.AuthorizationHeader
 import backend.itracker.tracker.infra.oauth.jwt.JwtDecoder
 import backend.itracker.tracker.infra.oauth.jwt.JwtEncoder
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.member.service.MemberService
-import backend.itracker.tracker.oauth.Member
 import backend.itracker.tracker.oauth.OauthId
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType

@@ -1,6 +1,6 @@
 package backend.itracker.tracker.infra.oauth.kakao.dto
 
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.oauth.OauthId
 import backend.itracker.tracker.oauth.OauthServerType
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy

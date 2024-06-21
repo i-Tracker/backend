@@ -1,6 +1,6 @@
 package backend.itracker.tracker.oauth.client
 
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
 
