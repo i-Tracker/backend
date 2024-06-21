@@ -4,6 +4,9 @@ import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
+import backend.itracker.tracker.member.domain.FavoriteProduct
+import backend.itracker.tracker.member.domain.Member
+import backend.itracker.tracker.member.domain.repository.FavoriteRepository
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.filter.MacbookFilterResponse
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
@@ -11,6 +14,7 @@ import backend.itracker.tracker.product.response.product.CommonProductModel
 import backend.itracker.tracker.product.response.product.macbook.MacbookDetailResponse
 import backend.itracker.tracker.product.response.product.macbook.MacbookResponse
 import backend.itracker.tracker.product.vo.ProductFilter
+import backend.itracker.tracker.product.vo.ProductInfo
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
@@ -20,6 +24,7 @@ import kotlin.math.min
 @Component
 class MacbookHandler(
     private val macbookService: MacbookService,
+    private val favoriteRepository: FavoriteRepository,
 ) : ProductHandleable {
 
     override fun supports(productCategory: ProductCategory): Boolean {
@@ -71,9 +76,14 @@ class MacbookHandler(
             .slice(startElementNumber until lastElementNumber)
     }
 
-    override fun findProductById(productId: Long): CommonProductDetailModel {
-        val macbook = macbookService.findMacbookById(productId)
+    override fun findProductById(productInfo: ProductInfo, member: Member): CommonProductDetailModel {
+        val macbook = macbookService.findMacbookById(productInfo.productId)
 
-        return MacbookDetailResponse.from(macbook)
+        val isFavorite = favoriteRepository.findByFavorite(
+            member.id,
+            FavoriteProduct(productInfo.productId, productInfo.productCategory)
+        ).isPresent
+
+        return MacbookDetailResponse.of(macbook, isFavorite)
     }
 }

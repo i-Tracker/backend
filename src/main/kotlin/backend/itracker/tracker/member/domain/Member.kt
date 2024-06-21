@@ -2,6 +2,7 @@ package backend.itracker.tracker.member.domain
 
 import backend.itracker.crawl.common.BaseEntity
 import backend.itracker.tracker.oauth.OauthId
+import backend.itracker.tracker.oauth.OauthServerType
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
@@ -43,7 +44,17 @@ class Member(
         this.profileImage = target.profileImage
     }
 
+    fun isAnonymous() = this.id == 0L
+
     override fun toString(): String {
         return "Member(id='$id' oauthId=$oauthId, nickname='$nickname', profileImage='$profileImage', authType=$authType)"
+    }
+
+    companion object {
+        fun anonymous() = Member(
+            oauthId = OauthId("anonymous", OauthServerType.KAKAO),
+            nickname = "익명",
+            profileImage = "익명",
+        )
     }
 }

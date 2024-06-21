@@ -4,6 +4,7 @@ import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.common.request.PageParams
 import backend.itracker.tracker.common.response.Pages
 import backend.itracker.tracker.common.response.SingleData
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.product.handler.ProductHandlerImpl
 import backend.itracker.tracker.product.response.CategoryResponses
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
@@ -11,6 +12,8 @@ import backend.itracker.tracker.product.response.product.CommonProductDetailMode
 import backend.itracker.tracker.product.response.product.CommonProductModel
 import backend.itracker.tracker.product.vo.Limit
 import backend.itracker.tracker.product.vo.ProductFilter
+import backend.itracker.tracker.product.vo.ProductInfo
+import backend.itracker.tracker.resolver.AnonymousMember
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -67,10 +70,11 @@ class ProductController(
 
     @GetMapping("/api/v1/products/{category}/{productId}")
     fun findFilterdProductDetail(
+        @AnonymousMember member: Member,
         @PathVariable category: ProductCategory,
         @PathVariable productId: Long,
     ): ResponseEntity<CommonProductDetailModel> {
-        val product = productHandler.findProductById(category, productId)
+        val product = productHandler.findProductById(ProductInfo(category, productId), member)
 
         return ResponseEntity.ok(product)
     }

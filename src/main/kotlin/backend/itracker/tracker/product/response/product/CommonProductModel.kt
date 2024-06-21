@@ -12,6 +12,7 @@ interface CommonProductModel {
 
 
 abstract class CommonProductDetailModel(
+    val isFavorite: Boolean,
     val discountPercentage: Int,
     val currentPrice: BigDecimal,
     val allTimeHighPrice: BigDecimal,
