@@ -2,7 +2,7 @@ package backend.itracker.tracker.member.controller
 
 import backend.itracker.tracker.common.response.SingleData
 import backend.itracker.tracker.member.controller.response.MyInfoResponse
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.resolver.LoginMember
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

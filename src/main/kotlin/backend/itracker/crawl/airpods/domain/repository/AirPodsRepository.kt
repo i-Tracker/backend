@@ -17,7 +17,7 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
             select a
             from AirPods a
-            join fetch a.prices.airPodsPrices
+            left join fetch a.prices.airPodsPrices
             where a.coupangId = :coupangId
         """
     )
@@ -27,7 +27,7 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
             select a
             from AirPods a
-            join fetch a.prices.airPodsPrices
+            left join fetch a.prices.airPodsPrices
         """
     )
     fun findAllFetch(): List<AirPods>
@@ -36,11 +36,21 @@ interface AirPodsRepository : JpaRepository<AirPods, Long> {
         """
             select a
             from AirPods a
-            join fetch a.prices.airPodsPrices
+            left join fetch a.prices.airPodsPrices
             where a.id = :id
     """
     )
     fun findByIdAllFetch(@Param("id") id: Long): Optional<AirPods>
 
     fun findByIdBetween(startId: Long, endId: Long): List<AirPods>
+
+    @Query(
+        """
+            select a
+            from AirPods a
+            left join fetch a.prices.airPodsPrices
+            where a.id in :ids
+        """
+    )
+    fun findAllInIds(@Param("ids") ids: List<Long>): List<AirPods>
 }

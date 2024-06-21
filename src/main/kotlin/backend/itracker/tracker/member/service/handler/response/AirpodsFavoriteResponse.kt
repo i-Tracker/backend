@@ -1,12 +1,12 @@
-package backend.itracker.tracker.product.response.product.airpods
+package backend.itracker.tracker.member.service.handler.response
 
 import backend.itracker.crawl.airpods.domain.AirPods
 import backend.itracker.crawl.airpods.domain.AirPodsCategory
-import backend.itracker.tracker.product.response.product.CommonPriceInfo
-import backend.itracker.tracker.product.response.product.CommonProductDetailModel
+import backend.itracker.tracker.member.domain.Favorite
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
-class AirPodsDetailResponse(
+class AirpodsFavoriteResponse(
     val id: Long,
     val title: String,
     val generation: Int,
@@ -16,36 +16,21 @@ class AirPodsDetailResponse(
     val color: String,
     val label: Boolean,
     val imageUrl: String,
-    val coupangUrl: String,
+    val discountPercentage: Int,
+    val currentPrice: BigDecimal,
     val isOutOfStock: Boolean,
 
-    isFavorite: Boolean,
-    discountPercentage: Int,
-    currentPrice: BigDecimal,
-    allTimeHighPrice: BigDecimal,
-    allTimeLowPrice: BigDecimal,
-    averagePrice: BigDecimal,
-    priceInfos: List<CommonPriceInfo>,
-) : CommonProductDetailModel(
-    isFavorite,
-    discountPercentage,
-    currentPrice,
-    allTimeHighPrice,
-    allTimeLowPrice,
-    averagePrice,
-    priceInfos
-) {
+    createdAt: LocalDateTime
+): CommonFavoriteProductModel(createdAt){
+
     companion object {
-        fun of(
-            airPods: AirPods,
-            isFavorite: Boolean = false
-        ): CommonProductDetailModel {
+        fun of(airPods: AirPods, favorite: Favorite): AirpodsFavoriteResponse {
             val name = when (airPods.category) {
                 AirPodsCategory.AIRPODS -> "에어팟"
                 AirPodsCategory.AIRPODS_PRO -> "에어팟 프로"
                 AirPodsCategory.AIRPODS_MAX -> "에어팟 맥스"
             }
-            return AirPodsDetailResponse(
+            return AirpodsFavoriteResponse(
                 id = airPods.id,
                 title = "${airPods.company} ${airPods.releaseYear} $name ${airPods.generation}세대",
                 generation = airPods.generation,
@@ -55,16 +40,10 @@ class AirPodsDetailResponse(
                 color = airPods.color,
                 label = airPods.isAllTimeLowPrice(),
                 imageUrl = airPods.thumbnail,
-                coupangUrl = airPods.partnersLink.ifBlank { airPods.productLink },
-                isFavorite = isFavorite,
                 discountPercentage = airPods.findDiscountPercentage(),
                 currentPrice = airPods.findCurrentPrice(),
                 isOutOfStock = airPods.isOutOfStock(),
-                allTimeHighPrice = airPods.findAllTimeHighPrice(),
-                allTimeLowPrice = airPods.findAllTimeLowPrice(),
-                averagePrice = airPods.findAveragePrice(),
-                priceInfos = airPods.getRecentPricesByPeriod(SIX_MONTH).airPodsPrices
-                    .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }
+                createdAt = favorite.createdAt
             )
         }
     }

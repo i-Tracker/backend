@@ -22,6 +22,7 @@ class MacbookDetailResponse(
     val coupangUrl: String,
     val isOutOfStock: Boolean,
 
+    isFavorite: Boolean,
     discountPercentage: Int,
     currentPrice: BigDecimal,
     allTimeHighPrice: BigDecimal,
@@ -29,6 +30,7 @@ class MacbookDetailResponse(
     averagePrice: BigDecimal,
     priceInfos: List<CommonPriceInfo>,
 ) : CommonProductDetailModel(
+    isFavorite,
     discountPercentage,
     currentPrice,
     allTimeHighPrice,
@@ -38,7 +40,7 @@ class MacbookDetailResponse(
 ) {
 
     companion object {
-        fun from(macbook: Macbook): MacbookDetailResponse {
+        fun of(macbook: Macbook, isFavorite: Boolean = false): MacbookDetailResponse {
             val koreanCategory = when (macbook.category) {
                 MacbookCategory.MACBOOK_AIR -> "맥북 에어"
                 MacbookCategory.MACBOOK_PRO -> "맥북 프로"
@@ -63,6 +65,7 @@ class MacbookDetailResponse(
                 label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
                 coupangUrl = macbook.partnersLink.ifBlank { macbook.productLink },
+                isFavorite = isFavorite,
                 isOutOfStock = macbook.isOutOfStock(),
                 priceInfos = macbook.getRecentPricesByPeriod(SIX_MONTH).macbookPrices
                     .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }

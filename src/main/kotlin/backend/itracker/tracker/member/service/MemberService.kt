@@ -1,6 +1,6 @@
 package backend.itracker.tracker.member.service
 
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.oauth.OauthId
 import backend.itracker.tracker.oauth.repository.MemberRepository
 import backend.itracker.tracker.oauth.repository.getByOauthId

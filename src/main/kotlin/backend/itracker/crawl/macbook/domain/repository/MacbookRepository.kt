@@ -37,4 +37,14 @@ interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCust
     fun findAllPricesByMacbookId(@Param("id") id: Long): Optional<Macbook>
 
     fun findByIdBetween(startId: Long, endId: Long): List<Macbook>
+
+    @Query(
+        """
+            select m
+            from Macbook m
+            left join fetch m.prices.macbookPrices
+            where m.id in :ids
+        """
+    )
+    fun findAllInIds(@Param("ids") ids: List<Long>): List<Macbook>
 }

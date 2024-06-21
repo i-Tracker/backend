@@ -13,7 +13,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
 @Component
-class OauthArgumentResolver(
+class LoginMemberArgumentResolver(
     private val oauthService: OauthService
 ) : HandlerMethodArgumentResolver {
 
