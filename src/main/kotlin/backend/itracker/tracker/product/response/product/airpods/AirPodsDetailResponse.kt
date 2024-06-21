@@ -19,6 +19,7 @@ class AirPodsDetailResponse(
     val coupangUrl: String,
     val isOutOfStock: Boolean,
 
+    isFavorite: Boolean,
     discountPercentage: Int,
     currentPrice: BigDecimal,
     allTimeHighPrice: BigDecimal,
@@ -26,6 +27,7 @@ class AirPodsDetailResponse(
     averagePrice: BigDecimal,
     priceInfos: List<CommonPriceInfo>,
 ) : CommonProductDetailModel(
+    isFavorite,
     discountPercentage,
     currentPrice,
     allTimeHighPrice,
@@ -34,7 +36,10 @@ class AirPodsDetailResponse(
     priceInfos
 ) {
     companion object {
-        fun from(airPods: AirPods): CommonProductDetailModel {
+        fun of(
+            airPods: AirPods,
+            isFavorite: Boolean = false
+        ): CommonProductDetailModel {
             val name = when (airPods.category) {
                 AirPodsCategory.AIRPODS -> "에어팟"
                 AirPodsCategory.AIRPODS_PRO -> "에어팟 프로"
@@ -51,6 +56,7 @@ class AirPodsDetailResponse(
                 label = airPods.isAllTimeLowPrice(),
                 imageUrl = airPods.thumbnail,
                 coupangUrl = airPods.partnersLink.ifBlank { airPods.productLink },
+                isFavorite = isFavorite,
                 discountPercentage = airPods.findDiscountPercentage(),
                 currentPrice = airPods.findCurrentPrice(),
                 isOutOfStock = airPods.isOutOfStock(),

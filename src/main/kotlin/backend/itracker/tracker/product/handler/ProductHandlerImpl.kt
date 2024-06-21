@@ -1,11 +1,13 @@
 package backend.itracker.tracker.product.handler
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
 import backend.itracker.tracker.product.response.product.CommonProductModel
 import backend.itracker.tracker.product.vo.Limit
 import backend.itracker.tracker.product.vo.ProductFilter
+import backend.itracker.tracker.product.vo.ProductInfo
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
@@ -47,11 +49,12 @@ class ProductHandlerImpl(
     }
 
     fun findProductById(
-        category: ProductCategory, productId: Long
+        productInfo: ProductInfo,
+        anonymousMember: Member
     ): CommonProductDetailModel {
-        val productHandler = productHandlers.find { it.supports(category) }
-            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
+        val productHandler = productHandlers.find { it.supports(productInfo.productCategory) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: ${productInfo.productCategory}")
 
-        return productHandler.findProductById(productId)
+        return productHandler.findProductById(productInfo, anonymousMember)
     }
 }

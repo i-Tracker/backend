@@ -131,7 +131,7 @@ class ProductMacbookAssuredTest : AssuredTestConfig() {
             .`as`(object : TypeRef<MacbookDetailResponse>() {})
 
         // then
-        assertThat(response).isEqualTo(MacbookDetailResponse.from(expected))
+        assertThat(response).isEqualTo(MacbookDetailResponse.of(expected))
     }
 
     @ParameterizedTest

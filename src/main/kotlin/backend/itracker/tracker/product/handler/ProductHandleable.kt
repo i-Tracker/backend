@@ -1,10 +1,12 @@
 package backend.itracker.tracker.product.handler
 
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
 import backend.itracker.tracker.product.response.product.CommonProductModel
 import backend.itracker.tracker.product.vo.ProductFilter
+import backend.itracker.tracker.product.vo.ProductInfo
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
@@ -32,5 +34,5 @@ interface ProductHandleable {
         pageable: Pageable,
     ): Page<CommonProductModel>
 
-    fun findProductById(productId: Long): CommonProductDetailModel
+    fun findProductById(productInfo: ProductInfo, anonymousMember: Member): CommonProductDetailModel
 }
