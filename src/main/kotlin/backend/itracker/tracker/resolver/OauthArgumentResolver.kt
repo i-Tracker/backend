@@ -2,7 +2,7 @@ package backend.itracker.tracker.resolver
 
 import backend.itracker.tracker.infra.oauth.AuthorizationHeader
 import backend.itracker.tracker.infra.oauth.exception.OauthRequestException
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.oauth.service.OauthService
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpHeaders.AUTHORIZATION

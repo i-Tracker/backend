@@ -1,11 +1,14 @@
-package backend.itracker.tracker.oauth
+package backend.itracker.tracker.member.domain
 
 import backend.itracker.crawl.common.BaseEntity
+import backend.itracker.tracker.oauth.OauthId
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
 
@@ -28,6 +31,9 @@ class Member(
 
     @Enumerated(EnumType.STRING)
     val authType: AuthType = AuthType.USER,
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    val favorites: List<Favorite> = mutableListOf(),
 
     id: Long = 0L
 ) : BaseEntity(id) {

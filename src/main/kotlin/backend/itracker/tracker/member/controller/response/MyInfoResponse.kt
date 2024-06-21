@@ -1,6 +1,6 @@
 package backend.itracker.tracker.member.controller.response
 
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 
 data class MyInfoResponse(
     val id: Long,

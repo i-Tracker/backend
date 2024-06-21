@@ -1,7 +1,7 @@
 package backend.itracker.tracker.infra.oauth.kakao
 
 import backend.itracker.tracker.infra.oauth.kakao.client.KakaoApiClient
-import backend.itracker.tracker.oauth.Member
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
 import backend.itracker.tracker.oauth.client.OauthMemberClient
