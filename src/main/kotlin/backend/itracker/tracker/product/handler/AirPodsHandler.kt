@@ -2,12 +2,16 @@ package backend.itracker.tracker.product.handler
 
 import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.tracker.member.domain.FavoriteProduct
+import backend.itracker.tracker.member.domain.Member
+import backend.itracker.tracker.member.domain.repository.FavoriteRepository
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
 import backend.itracker.tracker.product.response.product.CommonProductModel
 import backend.itracker.tracker.product.response.product.airpods.AirPodsDetailResponse
 import backend.itracker.tracker.product.response.product.airpods.AirPodsResponse
 import backend.itracker.tracker.product.vo.ProductFilter
+import backend.itracker.tracker.product.vo.ProductInfo
 import jakarta.transaction.NotSupportedException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -17,7 +21,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class AirPodsHandler(
-    private val airPodsService: AirPodsService
+    private val airPodsService: AirPodsService,
+    private val favoriteRepository: FavoriteRepository,
 ) : ProductHandleable {
     override fun supports(productCategory: ProductCategory): Boolean {
         return ProductCategory.AIRPODS == productCategory
@@ -56,9 +61,14 @@ class AirPodsHandler(
         return PageImpl(contents, PageRequest.of(0, airpods.size), airpods.size.toLong())
     }
 
-    override fun findProductById(productId: Long): CommonProductDetailModel {
-        val airPods = airPodsService.findByIdAllFetch(productId)
+    override fun findProductById(productInfo: ProductInfo, member: Member): CommonProductDetailModel {
+        val airPods = airPodsService.findByIdAllFetch(productInfo.productId)
 
-        return AirPodsDetailResponse.from(airPods)
+        val isFavorite = favoriteRepository.findByFavorite(
+            member.id,
+            FavoriteProduct(productInfo.productId, productInfo.productCategory)
+        ).isPresent
+
+        return AirPodsDetailResponse.of(airPods, isFavorite)
     }
 }
