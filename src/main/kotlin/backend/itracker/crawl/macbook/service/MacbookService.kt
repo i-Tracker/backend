@@ -68,4 +68,9 @@ class MacbookService(
     fun findByIdBetween(startId: Long, endId: Long): List<Macbook> {
         return macbookRepository.findByIdBetween(startId, endId)
     }
+
+    @Transactional(readOnly = true)
+    fun findAllInIds(ids: List<Long>): List<Macbook> {
+        return macbookRepository.findAllInIds(ids)
+    }
 }
