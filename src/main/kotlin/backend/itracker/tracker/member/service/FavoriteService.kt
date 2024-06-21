@@ -1,21 +1,24 @@
 package backend.itracker.tracker.member.service
 
 import backend.itracker.tracker.member.domain.Favorite
+import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.member.domain.repository.FavoriteRepository
-import io.github.oshai.kotlinlogging.KotlinLogging
+import backend.itracker.tracker.member.service.handler.FavoriteComposite
+import backend.itracker.tracker.member.service.handler.response.CommonFavoriteProductModel
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @Service
 class FavoriteService(
-    private val favoriteRepository: FavoriteRepository
+    private val favoriteRepository: FavoriteRepository,
+    private val favoriteComposite: FavoriteComposite,
 ) {
 
     fun patchFavorite(favorite: Favorite) {
-        val logger = KotlinLogging.logger{}
-        logger.warn { "patchFavorite: $favorite"}
-
         val maybeFavorite =
             favoriteRepository.findByFavorite(favorite.member.id, favorite.product)
 
@@ -23,5 +26,21 @@ class FavoriteService(
             { favoriteRepository.delete(it) },
             { favoriteRepository.save(favorite) }
         )
+    }
+
+    @Transactional(readOnly = true)
+    fun findAllFavoritesByMember(
+        member: Member, pageable: Pageable
+    ): Page<CommonFavoriteProductModel> {
+        val pageFavorites = favoriteRepository.findAllByMember(member, pageable)
+        val favorites = pageFavorites.content
+            .groupBy { it.product.productCategory }
+        val productsContents = favorites.flatMap { (productCategory, favorites) ->
+            favoriteComposite.findAllByIds(productCategory, favorites)
+        }
+            .sortedBy { it.createdAt }
+            .reversed().toList()
+
+        return PageImpl(productsContents, pageFavorites.pageable, productsContents.size.toLong())
     }
 }
