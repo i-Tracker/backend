@@ -105,7 +105,7 @@ class Crawler(
                 val targetButton = buttons.firstOrNull {
                     helper.findGrandParentElement(it)
                         .findElement(By.className("carousel-header__title")).text == subcategory
-                } ?: throw CrawlException("해당 subcategory의 버튼을 찾을 수 없습니다. subcategory: $subcategory")
+                } ?: return products
 
                 var clickCount = 0
                 while (clickCount++ < maxClicks) {

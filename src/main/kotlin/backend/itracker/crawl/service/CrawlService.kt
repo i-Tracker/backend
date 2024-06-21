@@ -26,7 +26,7 @@ class CrawlService(
 
     fun crawlIpad(): List<Ipad> {
         val url = getCrawlUrl(CrawlTargetCategory.IPAD)
-        val products = crawler.crawl(url)
+        val products = crawler.crawlWithClick(url)
         return crawlMapper.toIpad(products)
     }
 
