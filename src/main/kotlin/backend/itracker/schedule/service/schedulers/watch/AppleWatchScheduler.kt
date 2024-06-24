@@ -1,10 +1,10 @@
-package backend.itracker.schedule.service.crawlers.airpods
+package backend.itracker.schedule.service.schedulers.watch
 
-import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.service.CrawlResultService
 import backend.itracker.crawl.service.CrawlService
 import backend.itracker.crawl.service.CrawlTargetCategory
-import backend.itracker.schedule.service.crawlers.Schedulable
+import backend.itracker.crawl.watch.service.AppleWatchService
+import backend.itracker.schedule.service.schedulers.Schedulable
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
 import kotlin.time.measureTime
@@ -12,23 +12,23 @@ import kotlin.time.measureTime
 private val logger = KotlinLogging.logger {}
 
 @Component
-class AirpodsScheduler(
-    private val airPodsService: AirPodsService,
+class AppleWatchScheduler(
+    private val appleWatchService: AppleWatchService,
     private val crawlResultService: CrawlResultService,
     private val crawlService: CrawlService,
 ) : Schedulable(crawlResultService, crawlService) {
 
     override fun supports(): CrawlTargetCategory {
-        return CrawlTargetCategory.AIRPODS
+        return CrawlTargetCategory.APPLE_WATCH
     }
 
     override fun doSchedule() {
-        logger.info { "에어팟 크롤링 시작. " }
+        logger.info { "애플워치 크롤링 시작. " }
         val times = measureTime {
-            val airPods = crawlService.crawlAirPods()
-            airPodsService.saveAll(airPods)
+            val appleWatches = crawlService.crawlAppleWatch()
+            appleWatchService.saveAll(appleWatches)
         }
-        crawlResultService.updateCrawlResult(CrawlTargetCategory.AIRPODS)
-        logger.info { "에어팟 크롤링 끝. 시간: $times" }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.APPLE_WATCH)
+        logger.info { "애플워치 크롤링 끝. 시간: $times" }
     }
 }

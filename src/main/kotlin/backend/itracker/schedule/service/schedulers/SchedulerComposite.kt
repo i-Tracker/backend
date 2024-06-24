@@ -1,10 +1,10 @@
-package backend.itracker.schedule.service.crawlers
+package backend.itracker.schedule.service.schedulers
 
 import backend.itracker.crawl.service.CrawlTargetCategory
 import org.springframework.stereotype.Component
 
 @Component
-class CrawlComposite(
+class SchedulerComposite(
     private val schedulables: Set<Schedulable>
 ) {
 
