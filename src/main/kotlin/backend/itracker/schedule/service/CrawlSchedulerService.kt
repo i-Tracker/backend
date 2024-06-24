@@ -5,7 +5,9 @@ import backend.itracker.crawl.ipad.service.IpadService
 import backend.itracker.crawl.iphone.service.IphoneService
 import backend.itracker.crawl.mac.service.MacService
 import backend.itracker.crawl.macbook.service.MacbookService
+import backend.itracker.crawl.service.CrawlResultService
 import backend.itracker.crawl.service.CrawlService
+import backend.itracker.crawl.service.CrawlTargetCategory
 import backend.itracker.crawl.watch.service.AppleWatchService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
@@ -19,6 +21,7 @@ private val logger = KotlinLogging.logger {}
 
 @Component
 class CrawlSchedulerService(
+    private val crawlResultService: CrawlResultService,
     private val crawlService: CrawlService,
     private val macbookService: MacbookService,
     private val ipadService: IpadService,
@@ -35,6 +38,7 @@ class CrawlSchedulerService(
             val macbooks = crawlService.crawlMacbook()
             macbookService.saveAll(macbooks)
         }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.MACBOOK)
         logger.info { "맥북 크롤링 끝. 시간: $times" }
     }
 
@@ -45,6 +49,7 @@ class CrawlSchedulerService(
             val ipads = crawlService.crawlIpad()
             ipadService.saveAll(ipads)
         }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.IPAD)
         logger.info { "아이패드 크롤링 끝. 시간: $times" }
     }
 
@@ -55,6 +60,7 @@ class CrawlSchedulerService(
             val appleWatches = crawlService.crawlAppleWatch()
             appleWatchService.saveAll(appleWatches)
         }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.APPLE_WATCH)
         logger.info { "애플워치 크롤링 끝. 시간: $times" }
     }
 
@@ -65,6 +71,7 @@ class CrawlSchedulerService(
             val macs = crawlService.crawlMac()
             macService.saveAll(macs)
         }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.MAC)
         logger.info { "맥 크롤링 끝. 시간: $times" }
     }
 
@@ -75,6 +82,7 @@ class CrawlSchedulerService(
             val airPods = crawlService.crawlAirPods()
             airPodsService.saveAll(airPods)
         }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.AIRPODS)
         logger.info { "에어팟 크롤링 끝. 시간: $times" }
     }
 
@@ -85,6 +93,7 @@ class CrawlSchedulerService(
             val iphones = crawlService.crawlIphone()
             iphoneService.saveAll(iphones)
         }
+        crawlResultService.updateCrawlResult(CrawlTargetCategory.IPHONE)
         logger.info { "아이폰 크롤링 끝. 시간: $times" }
     }
 }
