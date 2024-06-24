@@ -1,6 +1,6 @@
 package backend.itracker
 
-import backend.itracker.config.AuditConfig
+import backend.itracker.schedule.config.AuditConfig
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
