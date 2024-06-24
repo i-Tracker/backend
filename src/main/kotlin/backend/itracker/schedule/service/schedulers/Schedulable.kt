@@ -1,4 +1,4 @@
-package backend.itracker.schedule.service.crawlers
+package backend.itracker.schedule.service.schedulers
 
 import backend.itracker.crawl.service.CrawlResultService
 import backend.itracker.crawl.service.CrawlService

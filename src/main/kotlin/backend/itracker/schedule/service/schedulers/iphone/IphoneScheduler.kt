@@ -1,10 +1,10 @@
-package backend.itracker.schedule.service.crawlers.iphone
+package backend.itracker.schedule.service.schedulers.iphone
 
 import backend.itracker.crawl.iphone.service.IphoneService
 import backend.itracker.crawl.service.CrawlResultService
 import backend.itracker.crawl.service.CrawlService
 import backend.itracker.crawl.service.CrawlTargetCategory
-import backend.itracker.schedule.service.crawlers.Schedulable
+import backend.itracker.schedule.service.schedulers.Schedulable
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
 import kotlin.time.measureTime
