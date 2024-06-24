@@ -15,13 +15,6 @@ class ScheduleController(
     @Async
     @PostMapping("/api/v1/schedule/update")
     fun manualCrawl(@RequestParam category: CrawlTargetCategory) {
-        when (category) {
-            CrawlTargetCategory.MACBOOK -> crawlSchedulerService.crawlMacbook()
-            CrawlTargetCategory.IPAD -> crawlSchedulerService.crawlIpad()
-            CrawlTargetCategory.APPLE_WATCH -> crawlSchedulerService.crawlAppleWatch()
-            CrawlTargetCategory.MAC -> crawlSchedulerService.crawlMac()
-            CrawlTargetCategory.AIRPODS -> crawlSchedulerService.crawlAirPods()
-            CrawlTargetCategory.IPHONE -> crawlSchedulerService.crawlIphone()
-        }
+        crawlSchedulerService.crawlManual(category)
     }
 }

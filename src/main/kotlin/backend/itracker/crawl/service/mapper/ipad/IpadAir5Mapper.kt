@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 private const val IPAD_AIR_5_GEN = "iPad Air 5세대"
 
 @Component
-class IpadAirMapper : IpadMappingComponent {
+class IpadAir5Mapper : IpadMappingComponent {
 
     override fun supports(subCategory: String): Boolean {
         return IPAD_AIR_5_GEN == subCategory

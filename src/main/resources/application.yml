@@ -19,3 +19,6 @@ cors:
 
 selenium:
   driver-url: http://localhost:4444
+
+server:
+  shutdown: graceful
