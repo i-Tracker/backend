@@ -60,6 +60,6 @@ jobs:
 
       - name: Docker Compose
         run: |
-          ~/backend/deploy.sh
+          ~/backend/zero-downtime-deploy.sh
           docker container prune -f
           sudo docker image prune -af
