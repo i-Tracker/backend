@@ -81,7 +81,7 @@ class MacbookHandler(
 
         val isFavorite = favoriteRepository.findByFavorite(
             member.id,
-            FavoriteProduct(productInfo.productId, productInfo.productFilterCategory)
+            FavoriteProduct(productInfo.productId, productInfo.productCategory)
         ).isPresent
 
         return MacbookDetailResponse.of(macbook, isFavorite)

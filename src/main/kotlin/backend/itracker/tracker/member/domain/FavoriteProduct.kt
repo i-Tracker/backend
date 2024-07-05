@@ -1,5 +1,6 @@
 package backend.itracker.tracker.member.domain
 
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.common.ProductFilterCategory
 import jakarta.persistence.Embeddable
 import jakarta.persistence.EnumType
@@ -11,10 +12,16 @@ class FavoriteProduct(
     val productId: Long,
 
     @Enumerated(EnumType.STRING)
-    val productFilterCategory: ProductFilterCategory,
+    val productCategory: ProductCategory,
 ) {
 
+    companion object {
+        fun of(productId: Long, productFilterCategory: ProductFilterCategory): FavoriteProduct {
+            return FavoriteProduct(productId, ProductCategory.from(productFilterCategory))
+        }
+    }
+
     override fun toString(): String {
-        return "FavoriteProduct(productId=$productId, productCategory=$productFilterCategory)"
+        return "FavoriteProduct(productId=$productId, productCategory=$productCategory)"
     }
 }

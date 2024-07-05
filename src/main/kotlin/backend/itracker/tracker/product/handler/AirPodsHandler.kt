@@ -66,7 +66,7 @@ class AirPodsHandler(
 
         val isFavorite = favoriteRepository.findByFavorite(
             member.id,
-            FavoriteProduct(productInfo.productId, productInfo.productFilterCategory)
+            FavoriteProduct(productInfo.productId, productInfo.productCategory)
         ).isPresent
 
         return AirPodsDetailResponse.of(airPods, isFavorite)

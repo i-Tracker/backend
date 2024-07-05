@@ -1,6 +1,6 @@
 package backend.itracker.tracker.member.service.handler
 
-import backend.itracker.crawl.common.ProductFilterCategory
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.tracker.member.domain.Favorite
 import backend.itracker.tracker.member.service.handler.response.CommonFavoriteProductModel
 import org.springframework.stereotype.Component
@@ -11,7 +11,7 @@ class FavoriteComposite(
 ) {
 
     fun findAllByIds(
-        category: ProductFilterCategory,
+        category: ProductCategory,
         favorites: List<Favorite>
     ) : List<CommonFavoriteProductModel> {
         val favoriteHandler = favoriteHandlers.find { it.supports(category) }

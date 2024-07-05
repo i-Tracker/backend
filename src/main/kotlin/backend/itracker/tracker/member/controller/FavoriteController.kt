@@ -11,11 +11,7 @@ import backend.itracker.tracker.member.service.handler.response.CommonFavoritePr
 import backend.itracker.tracker.resolver.LoginMember
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 private const val FAVORITE_DEFAULT_SIZE = 6
 
@@ -32,7 +28,7 @@ class FavoriteController(
         val favoriteInfo = request.toFavoriteInfo()
         val favorite = Favorite(
             member = member,
-            product = FavoriteProduct(productId = favoriteInfo.productId, productFilterCategory = favoriteInfo.category)
+            product = FavoriteProduct.of(favoriteInfo.productId, favoriteInfo.category)
         )
         favoriteService.patchFavorite(favorite)
 

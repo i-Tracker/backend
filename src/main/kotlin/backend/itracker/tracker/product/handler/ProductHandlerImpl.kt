@@ -53,7 +53,7 @@ class ProductHandlerImpl(
         anonymousMember: Member
     ): CommonProductDetailModel {
         val productHandler = productHandlers.find { it.supports(productInfo.productFilterCategory) }
-            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: ${productInfo.productFilterCategory}")
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: ${productInfo.productCategory}")
 
         return productHandler.findProductById(productInfo, anonymousMember)
     }

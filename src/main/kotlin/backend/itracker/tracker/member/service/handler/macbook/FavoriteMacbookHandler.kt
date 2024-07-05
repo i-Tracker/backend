@@ -1,6 +1,6 @@
 package backend.itracker.tracker.member.service.handler.macbook
 
-import backend.itracker.crawl.common.ProductFilterCategory
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.tracker.member.domain.Favorite
 import backend.itracker.tracker.member.service.handler.FavoriteHandleable
@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component
 class FavoriteMacbookHandler(
     private val macbookService: MacbookService
 ) : FavoriteHandleable {
-    override fun supports(category: ProductFilterCategory): Boolean {
-        return category == ProductFilterCategory.MACBOOK_PRO || category == ProductFilterCategory.MACBOOK_AIR
+
+    override fun supports(category: ProductCategory): Boolean {
+        return category == ProductCategory.MACBOOK
     }
 
     override fun findAllByIds(favorites: List<Favorite>): List<CommonFavoriteProductModel> {

@@ -1,9 +1,9 @@
 package backend.itracker.tracker.member.service.vo
 
-import backend.itracker.crawl.common.ProductFilterCategory
+import backend.itracker.crawl.common.ProductCategory
 
 data class FavoriteCount(
     val productId: Long,
-    val category: ProductFilterCategory,
+    val category: ProductCategory,
     val count: Long
 )

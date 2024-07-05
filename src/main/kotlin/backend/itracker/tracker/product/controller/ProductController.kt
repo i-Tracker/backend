@@ -65,12 +65,12 @@ class ProductController(
     }
 
     @GetMapping("/api/v1/products/{category}/{productId}")
-    fun findFilterdProductDetail(
+    fun findFilteredProductDetail(
         @AnonymousMember member: Member,
         @PathVariable category: ProductFilterCategory,
         @PathVariable productId: Long,
     ): ResponseEntity<CommonProductDetailModel> {
-        val product = productHandler.findProductById(ProductInfo(category, productId), member)
+        val product = productHandler.findProductById(ProductInfo.of(category, productId), member)
 
         return ResponseEntity.ok(product)
     }
