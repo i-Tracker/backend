@@ -25,7 +25,6 @@ class ProductController(
     private val productHandler: ProductHandlerImpl,
 ) {
 
-    //todo 필터카테고리와 productcategory나누기
     @GetMapping("/api/v1/products/{category}")
     fun findTopDiscountPercentageProductsByCategory(
         @PathVariable category: ProductFilterCategory,
@@ -43,9 +42,9 @@ class ProductController(
     @GetMapping("/api/v1/products/{category}/filter")
     fun findProductFilter(
         @PathVariable category: ProductFilterCategory,
-        @RequestParam filterConditon: Map<String, String>
+        @RequestParam filterCondition: Map<String, String>
     ): ResponseEntity<SingleData<CommonFilterModel>> {
-        val filter = productHandler.findFilter(category, ProductFilter(filterConditon))
+        val filter = productHandler.findFilter(category, ProductFilter(filterCondition))
         return ResponseEntity.ok(SingleData(filter))
     }
 
