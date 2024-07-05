@@ -1,21 +1,24 @@
 package backend.itracker.crawl.common
 
-import backend.itracker.crawl.macbook.domain.MacbookCategory
-
 enum class ProductCategory {
-    MACBOOK_AIR,
-    MACBOOK_PRO,
+    MACBOOK,
     MAC,
     I_PHONE,
     I_PAD,
     AIRPODS,
     APPLE_WATCH;
 
-    fun toMacbookCategory(): MacbookCategory {
-        return when (this) {
-            MACBOOK_AIR -> MacbookCategory.MACBOOK_AIR
-            MACBOOK_PRO -> MacbookCategory.MACBOOK_PRO
-            else -> throw IllegalArgumentException("MacbookCategory로 변환할 수 없는 ProductCategory 입니다. category: $this")
+    companion object {
+        fun from(productFilterCategory: ProductFilterCategory): ProductCategory {
+            return when (productFilterCategory) {
+                ProductFilterCategory.MACBOOK_AIR,
+                ProductFilterCategory.MACBOOK_PRO -> MACBOOK
+                ProductFilterCategory.MAC -> MAC
+                ProductFilterCategory.I_PHONE -> I_PHONE
+                ProductFilterCategory.I_PAD -> I_PAD
+                ProductFilterCategory.AIRPODS -> AIRPODS
+                ProductFilterCategory.APPLE_WATCH -> APPLE_WATCH
+            }
         }
     }
 }

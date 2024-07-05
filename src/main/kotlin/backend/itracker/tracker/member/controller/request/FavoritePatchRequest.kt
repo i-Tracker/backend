@@ -1,6 +1,6 @@
 package backend.itracker.tracker.member.controller.request
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.service.vo.FavoriteInfo
 
 data class FavoritePatchRequest(
@@ -12,7 +12,7 @@ data class FavoritePatchRequest(
     {
         return FavoriteInfo(
             productId = productId,
-            category = ProductCategory.valueOf(productCategory.uppercase())
+            category = ProductFilterCategory.valueOf(productCategory.uppercase())
         )
     }
 }

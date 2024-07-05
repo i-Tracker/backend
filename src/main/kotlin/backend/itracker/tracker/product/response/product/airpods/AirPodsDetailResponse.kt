@@ -25,6 +25,7 @@ class AirPodsDetailResponse(
     allTimeHighPrice: BigDecimal,
     allTimeLowPrice: BigDecimal,
     averagePrice: BigDecimal,
+    notificationCount: Long,
     priceInfos: List<CommonPriceInfo>,
 ) : CommonProductDetailModel(
     isFavorite,
@@ -33,12 +34,14 @@ class AirPodsDetailResponse(
     allTimeHighPrice,
     allTimeLowPrice,
     averagePrice,
+    notificationCount,
     priceInfos
 ) {
     companion object {
         fun of(
             airPods: AirPods,
-            isFavorite: Boolean = false
+            notificationCount: Long,
+            isFavorite: Boolean = false,
         ): CommonProductDetailModel {
             val name = when (airPods.category) {
                 AirPodsCategory.AIRPODS -> "에어팟"
@@ -63,6 +66,7 @@ class AirPodsDetailResponse(
                 allTimeHighPrice = airPods.findAllTimeHighPrice(),
                 allTimeLowPrice = airPods.findAllTimeLowPrice(),
                 averagePrice = airPods.findAveragePrice(),
+                notificationCount = notificationCount,
                 priceInfos = airPods.getRecentPricesByPeriod(SIX_MONTH).airPodsPrices
                     .map { CommonPriceInfo.of(it.createdAt, it.currentPrice) }
             )
