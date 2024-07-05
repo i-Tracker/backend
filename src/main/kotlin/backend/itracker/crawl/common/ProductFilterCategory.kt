@@ -2,7 +2,7 @@ package backend.itracker.crawl.common
 
 import backend.itracker.crawl.macbook.domain.MacbookCategory
 
-enum class ProductCategory {
+enum class ProductFilterCategory {
     MACBOOK_AIR,
     MACBOOK_PRO,
     MAC,

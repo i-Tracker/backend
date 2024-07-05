@@ -1,6 +1,6 @@
 package backend.itracker.tracker.product.handler
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
@@ -18,27 +18,27 @@ class ProductHandlerImpl(
 ) {
 
     fun findTopDiscountPercentageProducts(
-        productCategory: ProductCategory,
+        productFilterCategory: ProductFilterCategory,
         limit: Limit
     ): List<CommonProductModel> {
-        val productHandler = (productHandlers.find { it.supports(productCategory) }
-            ?: throw IllegalArgumentException("지원하지 않는 카테고리 입니다. category: $productCategory"))
+        val productHandler = (productHandlers.find { it.supports(productFilterCategory) }
+            ?: throw IllegalArgumentException("지원하지 않는 카테고리 입니다. category: $productFilterCategory"))
 
-        return productHandler.findTopDiscountPercentageProducts(productCategory, limit.value)
+        return productHandler.findTopDiscountPercentageProducts(productFilterCategory, limit.value)
     }
 
     fun findFilter(
-        productCategory: ProductCategory,
+        productFilterCategory: ProductFilterCategory,
         productFilter: ProductFilter,
     ): CommonFilterModel {
-        val productHandler = productHandlers.find { it.supports(productCategory) }
-            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $productCategory")
+        val productHandler = productHandlers.find { it.supports(productFilterCategory) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $productFilterCategory")
 
-        return productHandler.findFilter(productCategory, productFilter)
+        return productHandler.findFilter(productFilterCategory, productFilter)
     }
 
     fun findFilteredProducts(
-        category: ProductCategory,
+        category: ProductFilterCategory,
         productFilter: ProductFilter,
         pageable: PageRequest
     ): Page<CommonProductModel> {
@@ -52,8 +52,8 @@ class ProductHandlerImpl(
         productInfo: ProductInfo,
         anonymousMember: Member
     ): CommonProductDetailModel {
-        val productHandler = productHandlers.find { it.supports(productInfo.productCategory) }
-            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: ${productInfo.productCategory}")
+        val productHandler = productHandlers.find { it.supports(productInfo.productFilterCategory) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: ${productInfo.productFilterCategory}")
 
         return productHandler.findProductById(productInfo, anonymousMember)
     }

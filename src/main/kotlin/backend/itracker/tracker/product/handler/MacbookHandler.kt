@@ -1,6 +1,6 @@
 package backend.itracker.tracker.product.handler
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
@@ -27,23 +27,23 @@ class MacbookHandler(
     private val favoriteRepository: FavoriteRepository,
 ) : ProductHandleable {
 
-    override fun supports(productCategory: ProductCategory): Boolean {
-        return productCategory == ProductCategory.MACBOOK_AIR ||
-                productCategory == ProductCategory.MACBOOK_PRO
+    override fun supports(productFilterCategory: ProductFilterCategory): Boolean {
+        return productFilterCategory == ProductFilterCategory.MACBOOK_AIR ||
+                productFilterCategory == ProductFilterCategory.MACBOOK_PRO
     }
 
     override fun findTopDiscountPercentageProducts(
-        productCategory: ProductCategory,
+        productFilterCategory: ProductFilterCategory,
         limit: Int
     ): List<CommonProductModel> {
-        val macbooks = macbookService.findAllFetchByCategory(productCategory.toMacbookCategory())
+        val macbooks = macbookService.findAllFetchByCategory(productFilterCategory.toMacbookCategory())
         return macbooks.map { MacbookResponse.from(it) }
             .sortedBy { it.discountPercentage }
             .take(limit)
     }
 
     override fun findFilter(
-        category: ProductCategory,
+        category: ProductFilterCategory,
         filter: ProductFilter
     ): CommonFilterModel {
         val macbooks = macbookService.findAllByCategoryAndFilter(category.toMacbookCategory(), MacbookFilterCondition(filter.value))
@@ -52,7 +52,7 @@ class MacbookHandler(
     }
 
     override fun findFilteredProductsOrderByDiscountRate(
-        category: ProductCategory,
+        category: ProductFilterCategory,
         filter: ProductFilter,
         pageable: Pageable,
     ): Page<CommonProductModel> {
@@ -81,7 +81,7 @@ class MacbookHandler(
 
         val isFavorite = favoriteRepository.findByFavorite(
             member.id,
-            FavoriteProduct(productInfo.productId, productInfo.productCategory)
+            FavoriteProduct(productInfo.productId, productInfo.productFilterCategory)
         ).isPresent
 
         return MacbookDetailResponse.of(macbook, isFavorite)

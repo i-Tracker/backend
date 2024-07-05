@@ -36,7 +36,7 @@ class FavoriteService(
     ): Page<CommonFavoriteProductModel> {
         val pageFavorites = favoriteRepository.findAllByMember(member, pageable)
         val favorites = pageFavorites.content
-            .groupBy { it.product.productCategory }
+            .groupBy { it.product.productFilterCategory }
         val productsContents = favorites.flatMap { (productCategory, favorites) ->
             favoriteComposite.findAllByIds(productCategory, favorites)
         }
@@ -53,7 +53,7 @@ class FavoriteService(
         val count = favoriteRepository.findCountByProduct(favoriteProduct)
         return FavoriteCount(
             productId = favoriteProduct.productId,
-            category = favoriteProduct.productCategory,
+            category = favoriteProduct.productFilterCategory,
             count = count
         )
     }

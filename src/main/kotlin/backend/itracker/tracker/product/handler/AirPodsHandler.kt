@@ -1,7 +1,7 @@
 package backend.itracker.tracker.product.handler
 
 import backend.itracker.crawl.airpods.service.AirPodsService
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.domain.FavoriteProduct
 import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.member.domain.repository.FavoriteRepository
@@ -24,12 +24,12 @@ class AirPodsHandler(
     private val airPodsService: AirPodsService,
     private val favoriteRepository: FavoriteRepository,
 ) : ProductHandleable {
-    override fun supports(productCategory: ProductCategory): Boolean {
-        return ProductCategory.AIRPODS == productCategory
+    override fun supports(productFilterCategory: ProductFilterCategory): Boolean {
+        return ProductFilterCategory.AIRPODS == productFilterCategory
     }
 
     override fun findTopDiscountPercentageProducts(
-        productCategory: ProductCategory,
+        productFilterCategory: ProductFilterCategory,
         limit: Int
     ): List<CommonProductModel> {
         val airpods = airPodsService.findAllFetch()
@@ -40,7 +40,7 @@ class AirPodsHandler(
         return contents
     }
 
-    override fun findFilter(productCategory: ProductCategory, filterCondition: ProductFilter): CommonFilterModel {
+    override fun findFilter(productFilterCategory: ProductFilterCategory, filterCondition: ProductFilter): CommonFilterModel {
         throw NotSupportedException("AirPodsHandler는 필터링를 지원하지 않습니다.")
     }
 
@@ -50,7 +50,7 @@ class AirPodsHandler(
      * @return 현재 전체 에어팟을 반환 중
      */
     override fun findFilteredProductsOrderByDiscountRate(
-        category: ProductCategory,
+        category: ProductFilterCategory,
         filter: ProductFilter,
         pageable: Pageable
     ): Page<CommonProductModel> {
@@ -66,7 +66,7 @@ class AirPodsHandler(
 
         val isFavorite = favoriteRepository.findByFavorite(
             member.id,
-            FavoriteProduct(productInfo.productId, productInfo.productCategory)
+            FavoriteProduct(productInfo.productId, productInfo.productFilterCategory)
         ).isPresent
 
         return AirPodsDetailResponse.of(airPods, isFavorite)

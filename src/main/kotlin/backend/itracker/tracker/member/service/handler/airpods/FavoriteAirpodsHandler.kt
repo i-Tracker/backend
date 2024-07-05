@@ -1,7 +1,7 @@
 package backend.itracker.tracker.member.service.handler.airpods
 
 import backend.itracker.crawl.airpods.service.AirPodsService
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.domain.Favorite
 import backend.itracker.tracker.member.service.handler.FavoriteHandleable
 import backend.itracker.tracker.member.service.handler.response.AirpodsFavoriteResponse
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component
 class FavoriteAirpodsHandler(
     private val airpodsService: AirPodsService
 ) : FavoriteHandleable {
-    override fun supports(category: ProductCategory): Boolean {
-        return ProductCategory.AIRPODS == category
+    override fun supports(category: ProductFilterCategory): Boolean {
+        return ProductFilterCategory.AIRPODS == category
     }
 
     override fun findAllByIds(favorites: List<Favorite>): List<CommonFavoriteProductModel> {

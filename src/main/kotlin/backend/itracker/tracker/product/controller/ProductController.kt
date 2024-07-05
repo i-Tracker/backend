@@ -1,6 +1,6 @@
 package backend.itracker.tracker.product.controller
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.common.request.PageParams
 import backend.itracker.tracker.common.response.Pages
 import backend.itracker.tracker.common.response.SingleData
@@ -16,22 +16,19 @@ import backend.itracker.tracker.product.vo.ProductInfo
 import backend.itracker.tracker.resolver.AnonymousMember
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
-private val productCategories = ProductCategory.entries
+private val productCategories = ProductFilterCategory.entries
 
 @RestController
 class ProductController(
     private val productHandler: ProductHandlerImpl,
 ) {
 
+    //todo 필터카테고리와 productcategory나누기
     @GetMapping("/api/v1/products/{category}")
     fun findTopDiscountPercentageProductsByCategory(
-        @PathVariable category: ProductCategory,
+        @PathVariable category: ProductFilterCategory,
         @RequestParam(defaultValue = "5") limit: Int,
     ): ResponseEntity<Pages<CommonProductModel>> {
         val products = productHandler.findTopDiscountPercentageProducts(category, Limit(limit))
@@ -45,7 +42,7 @@ class ProductController(
 
     @GetMapping("/api/v1/products/{category}/filter")
     fun findProductFilter(
-        @PathVariable category: ProductCategory,
+        @PathVariable category: ProductFilterCategory,
         @RequestParam filterConditon: Map<String, String>
     ): ResponseEntity<SingleData<CommonFilterModel>> {
         val filter = productHandler.findFilter(category, ProductFilter(filterConditon))
@@ -54,7 +51,7 @@ class ProductController(
 
     @GetMapping("/api/v1/products/{category}/search")
     fun findFilterdProducts(
-        @PathVariable category: ProductCategory,
+        @PathVariable category: ProductFilterCategory,
         @RequestParam filterCondition: Map<String, String>,
         @ModelAttribute pageParams: PageParams,
     ): ResponseEntity<Pages<CommonProductModel>> {
@@ -71,7 +68,7 @@ class ProductController(
     @GetMapping("/api/v1/products/{category}/{productId}")
     fun findFilterdProductDetail(
         @AnonymousMember member: Member,
-        @PathVariable category: ProductCategory,
+        @PathVariable category: ProductFilterCategory,
         @PathVariable productId: Long,
     ): ResponseEntity<CommonProductDetailModel> {
         val product = productHandler.findProductById(ProductInfo(category, productId), member)

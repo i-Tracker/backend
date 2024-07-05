@@ -32,7 +32,7 @@ class FavoriteController(
         val favoriteInfo = request.toFavoriteInfo()
         val favorite = Favorite(
             member = member,
-            product = FavoriteProduct(productId = favoriteInfo.productId, productCategory = favoriteInfo.category)
+            product = FavoriteProduct(productId = favoriteInfo.productId, productFilterCategory = favoriteInfo.category)
         )
         favoriteService.patchFavorite(favorite)
 
