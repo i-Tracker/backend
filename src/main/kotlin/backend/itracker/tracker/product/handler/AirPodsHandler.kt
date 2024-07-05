@@ -2,6 +2,7 @@ package backend.itracker.tracker.product.handler
 
 import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.domain.FavoriteProduct
 import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.member.domain.repository.FavoriteRepository
@@ -24,23 +25,28 @@ class AirPodsHandler(
     private val airPodsService: AirPodsService,
     private val favoriteRepository: FavoriteRepository,
 ) : ProductHandleable {
-    override fun supports(productCategory: ProductCategory): Boolean {
-        return ProductCategory.AIRPODS == productCategory
+    override fun supports(productFilterCategory: ProductFilterCategory): Boolean {
+        return ProductFilterCategory.AIRPODS == productFilterCategory
     }
 
     override fun findTopDiscountPercentageProducts(
-        productCategory: ProductCategory,
+        productFilterCategory: ProductFilterCategory,
         limit: Int
     ): List<CommonProductModel> {
         val airpods = airPodsService.findAllFetch()
-        val contents = airpods.map { AirPodsResponse.from(it) }
+        val contents = airpods.map {
+            AirPodsResponse.of(
+                it,
+                favoriteRepository.findCountByProduct(FavoriteProduct(it.id, ProductCategory.AIRPODS))
+            )
+        }
             .sortedBy { it.discountPercentage }
             .take(limit)
 
         return contents
     }
 
-    override fun findFilter(productCategory: ProductCategory, filterCondition: ProductFilter): CommonFilterModel {
+    override fun findFilter(productFilterCategory: ProductFilterCategory, filterCondition: ProductFilter): CommonFilterModel {
         throw NotSupportedException("AirPodsHandler는 필터링를 지원하지 않습니다.")
     }
 
@@ -50,12 +56,17 @@ class AirPodsHandler(
      * @return 현재 전체 에어팟을 반환 중
      */
     override fun findFilteredProductsOrderByDiscountRate(
-        category: ProductCategory,
+        category: ProductFilterCategory,
         filter: ProductFilter,
         pageable: Pageable
     ): Page<CommonProductModel> {
         val airpods = airPodsService.findAllFetch()
-        val contents = airpods.map { AirPodsResponse.from(it) }
+        val contents = airpods.map {
+            AirPodsResponse.of(
+                it,
+                favoriteRepository.findCountByProduct(FavoriteProduct(it.id, ProductCategory.AIRPODS))
+            )
+        }
             .sortedBy { it.discountPercentage }
 
         return PageImpl(contents, PageRequest.of(0, airpods.size), airpods.size.toLong())
@@ -68,7 +79,10 @@ class AirPodsHandler(
             member.id,
             FavoriteProduct(productInfo.productId, productInfo.productCategory)
         ).isPresent
+        val notificationCount = favoriteRepository.findCountByProduct(
+            FavoriteProduct(productInfo.productId, productInfo.productCategory)
+        )
 
-        return AirPodsDetailResponse.of(airPods, isFavorite)
+        return AirPodsDetailResponse.of(airPods, notificationCount, isFavorite)
     }
 }

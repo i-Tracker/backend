@@ -17,11 +17,12 @@ data class AirPodsResponse(
     val imageUrl: String,
     val discountPercentage: Int,
     val currentPrice: BigDecimal,
-    val isOutOfStock: Boolean
+    val isOutOfStock: Boolean,
+    val notificationCount: Long,
 ) : CommonProductModel {
 
     companion object {
-        fun from(airPods: AirPods): AirPodsResponse {
+        fun of(airPods: AirPods, notificationCount: Long): AirPodsResponse {
             val name = when (airPods.category) {
                 AirPodsCategory.AIRPODS -> "에어팟"
                 AirPodsCategory.AIRPODS_PRO -> "에어팟 프로"
@@ -39,7 +40,8 @@ data class AirPodsResponse(
                 imageUrl = airPods.thumbnail,
                 discountPercentage = airPods.findDiscountPercentage(),
                 currentPrice = airPods.findCurrentPrice(),
-                isOutOfStock = airPods.isOutOfStock()
+                isOutOfStock = airPods.isOutOfStock(),
+                notificationCount = notificationCount,
             )
         }
     }

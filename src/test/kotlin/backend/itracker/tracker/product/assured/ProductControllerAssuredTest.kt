@@ -1,7 +1,7 @@
 package backend.itracker.tracker.product.assured
 
 import backend.itracker.config.AssuredTestConfig
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.product.response.CategoryResponses
 import io.restassured.common.mapper.TypeRef
 import org.assertj.core.api.Assertions.assertThat
@@ -16,7 +16,7 @@ class ProductControllerAssuredTest : AssuredTestConfig() {
             .`as`(object : TypeRef<CategoryResponses>() {})
 
         // then
-        val expected = ProductCategory.entries.map { it.name.lowercase() }.toList()
+        val expected = ProductFilterCategory.entries.map { it.name.lowercase() }.toList()
         assertThat(response.categories).isEqualTo(expected)
     }
 }

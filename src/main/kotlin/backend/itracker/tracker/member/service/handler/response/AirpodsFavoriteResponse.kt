@@ -20,11 +20,12 @@ class AirpodsFavoriteResponse(
     val currentPrice: BigDecimal,
     val isOutOfStock: Boolean,
 
+    notificationCount: Long,
     createdAt: LocalDateTime
-): CommonFavoriteProductModel(createdAt){
+): CommonFavoriteProductModel(notificationCount, createdAt){
 
     companion object {
-        fun of(airPods: AirPods, favorite: Favorite): AirpodsFavoriteResponse {
+        fun of(airPods: AirPods, notificationCount: Long, favorite: Favorite): AirpodsFavoriteResponse {
             val name = when (airPods.category) {
                 AirPodsCategory.AIRPODS -> "에어팟"
                 AirPodsCategory.AIRPODS_PRO -> "에어팟 프로"
@@ -43,6 +44,7 @@ class AirpodsFavoriteResponse(
                 discountPercentage = airPods.findDiscountPercentage(),
                 currentPrice = airPods.findCurrentPrice(),
                 isOutOfStock = airPods.isOutOfStock(),
+                notificationCount = notificationCount,
                 createdAt = favorite.createdAt
             )
         }

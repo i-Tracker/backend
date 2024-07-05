@@ -1,6 +1,6 @@
 package backend.itracker.tracker.product.handler
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
@@ -13,23 +13,23 @@ import org.springframework.data.domain.Pageable
 
 interface ProductHandleable {
 
-    fun supports(productCategory: ProductCategory): Boolean
+    fun supports(productFilterCategory: ProductFilterCategory): Boolean
 
     /**
-     * @param productCategory 상품 카테고리  -> 맥북에서만 사용
+     * @param productFilterCategory 상품 카테고리  -> 맥북에서만 사용
      */
-    fun findTopDiscountPercentageProducts(productCategory: ProductCategory, limit: Int): List<CommonProductModel>
+    fun findTopDiscountPercentageProducts(productFilterCategory: ProductFilterCategory, limit: Int): List<CommonProductModel>
 
     /**
-     * @param productCategory 상품 카테고리  -> 맥북에서만 사용
+     * @param productFilterCategory 상품 카테고리  -> 맥북에서만 사용
      */
-    fun findFilter(productCategory: ProductCategory, filterCondition: ProductFilter): CommonFilterModel
+    fun findFilter(productFilterCategory: ProductFilterCategory, filterCondition: ProductFilter): CommonFilterModel
 
     /**
      * @param category 상품 카테고리  -> 맥북에서만 사용
      */
     fun findFilteredProductsOrderByDiscountRate(
-        category: ProductCategory,
+        category: ProductFilterCategory,
         filter: ProductFilter,
         pageable: Pageable,
     ): Page<CommonProductModel>

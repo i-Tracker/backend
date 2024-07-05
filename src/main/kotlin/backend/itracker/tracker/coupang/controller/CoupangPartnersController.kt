@@ -2,7 +2,7 @@ package backend.itracker.tracker.coupang.controller
 
 import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.common.PartnersLinkInfo
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.tracker.coupang.service.CoupangPartnersService
 import org.springframework.http.ResponseEntity
@@ -20,18 +20,18 @@ class CoupangPartnersController(
 
     @PatchMapping("/api/v1/coupang/deeplink/{category}")
     fun updatePartnersLink(
-        @PathVariable category: ProductCategory,
+        @PathVariable category: ProductFilterCategory,
         @RequestParam start: Long,
         @RequestParam end: Long,
     ): ResponseEntity<Unit> {
         return when (category) {
-            ProductCategory.MACBOOK_AIR, ProductCategory.MACBOOK_PRO -> {
+            ProductFilterCategory.MACBOOK_AIR, ProductFilterCategory.MACBOOK_PRO -> {
                 val partnersLink = coupangPartnersService.updateAllMacbookPartnersLink(start, end)
                 macbookService.updateAllPartnersLink(partnersLink.map { PartnersLinkInfo(it.originalUrl, it.shortenUrl)})
                 ResponseEntity.ok().build()
             }
 
-            ProductCategory.AIRPODS -> {
+            ProductFilterCategory.AIRPODS -> {
                 val partnersLink = coupangPartnersService.updateAllAirPodsPartnersLink(start, end)
                 airPodsService.updateAllPartnersLink(partnersLink.map { PartnersLinkInfo(it.originalUrl, it.shortenUrl)})
                 ResponseEntity.ok().build()

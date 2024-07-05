@@ -26,4 +26,13 @@ interface FavoriteRepository : JpaRepository<Favorite, Long> {
     ): Optional<Favorite>
 
     fun findAllByMember(member: Member, pageable: Pageable): Page<Favorite>
+
+    @Query(
+        """
+            select count(f)
+            from Favorite f
+            where f.product = :product
+        """
+    )
+    fun findCountByProduct(@Param("product") favoriteProduct: FavoriteProduct): Long
 }

@@ -18,6 +18,7 @@ abstract class CommonProductDetailModel(
     val allTimeHighPrice: BigDecimal,
     val allTimeLowPrice: BigDecimal,
     val averagePrice: BigDecimal,
+    val notificationCount: Long,
     val priceInfos: List<CommonPriceInfo>
 ) {
 
