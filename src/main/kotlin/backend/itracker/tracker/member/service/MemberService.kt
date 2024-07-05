@@ -32,4 +32,9 @@ class MemberService(
     fun getByOauthId(oauthId: OauthId): Member {
         return memberRepository.getByOauthId(oauthId)
     }
+
+    @Transactional(readOnly = true)
+    fun isDuplicatedPhoneNumber(phoneNumber: String): Boolean {
+        return memberRepository.isDuplicatedPhoneNumber(phoneNumber)
+    }
 }
