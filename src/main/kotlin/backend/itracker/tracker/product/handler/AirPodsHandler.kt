@@ -79,7 +79,10 @@ class AirPodsHandler(
             member.id,
             FavoriteProduct(productInfo.productId, productInfo.productCategory)
         ).isPresent
+        val notificationCount = favoriteRepository.findCountByProduct(
+            FavoriteProduct(productInfo.productId, productInfo.productCategory)
+        )
 
-        return AirPodsDetailResponse.of(airPods, isFavorite)
+        return AirPodsDetailResponse.of(airPods, notificationCount, isFavorite)
     }
 }
