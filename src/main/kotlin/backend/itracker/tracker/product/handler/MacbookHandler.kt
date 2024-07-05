@@ -1,5 +1,6 @@
 package backend.itracker.tracker.product.handler
 
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService
@@ -37,7 +38,12 @@ class MacbookHandler(
         limit: Int
     ): List<CommonProductModel> {
         val macbooks = macbookService.findAllFetchByCategory(productFilterCategory.toMacbookCategory())
-        return macbooks.map { MacbookResponse.from(it) }
+        return macbooks.map {
+            MacbookResponse.of(
+                it,
+                favoriteRepository.findCountByProduct(FavoriteProduct(it.id, ProductCategory.MACBOOK))
+            )
+        }
             .sortedBy { it.discountPercentage }
             .take(limit)
     }
@@ -71,7 +77,12 @@ class MacbookHandler(
             return emptyList()
         }
 
-        return macbooks.map { MacbookResponse.from(it) }
+        return macbooks.map {
+            MacbookResponse.of(
+                it,
+                favoriteRepository.findCountByProduct(FavoriteProduct(it.id, ProductCategory.MACBOOK))
+            )
+        }
             .sortedBy { it.discountPercentage }
             .slice(startElementNumber until lastElementNumber)
     }

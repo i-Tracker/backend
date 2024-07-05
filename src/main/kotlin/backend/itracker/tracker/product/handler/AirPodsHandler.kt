@@ -1,6 +1,7 @@
 package backend.itracker.tracker.product.handler
 
 import backend.itracker.crawl.airpods.service.AirPodsService
+import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.member.domain.FavoriteProduct
 import backend.itracker.tracker.member.domain.Member
@@ -33,7 +34,12 @@ class AirPodsHandler(
         limit: Int
     ): List<CommonProductModel> {
         val airpods = airPodsService.findAllFetch()
-        val contents = airpods.map { AirPodsResponse.from(it) }
+        val contents = airpods.map {
+            AirPodsResponse.of(
+                it,
+                favoriteRepository.findCountByProduct(FavoriteProduct(it.id, ProductCategory.AIRPODS))
+            )
+        }
             .sortedBy { it.discountPercentage }
             .take(limit)
 
@@ -55,7 +61,12 @@ class AirPodsHandler(
         pageable: Pageable
     ): Page<CommonProductModel> {
         val airpods = airPodsService.findAllFetch()
-        val contents = airpods.map { AirPodsResponse.from(it) }
+        val contents = airpods.map {
+            AirPodsResponse.of(
+                it,
+                favoriteRepository.findCountByProduct(FavoriteProduct(it.id, ProductCategory.AIRPODS))
+            )
+        }
             .sortedBy { it.discountPercentage }
 
         return PageImpl(contents, PageRequest.of(0, airpods.size), airpods.size.toLong())

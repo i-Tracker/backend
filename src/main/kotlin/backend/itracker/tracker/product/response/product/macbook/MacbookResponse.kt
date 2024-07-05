@@ -20,11 +20,12 @@ data class MacbookResponse(
     val color: String,
     val label: Boolean,
     val imageUrl: String,
-    val isOutOfStock: Boolean
+    val isOutOfStock: Boolean,
+    val notificationCount: Long,
 ) : CommonProductModel {
 
     companion object {
-        fun from(macbook: Macbook): MacbookResponse {
+        fun of(macbook: Macbook, notificationCount: Long): MacbookResponse {
             val koreanCategory = when (macbook.category) {
                 MacbookCategory.MACBOOK_AIR -> "맥북 에어"
                 MacbookCategory.MACBOOK_PRO -> "맥북 프로"
@@ -45,7 +46,8 @@ data class MacbookResponse(
                 currentPrice = macbook.findCurrentPrice().setScale(0),
                 label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
-                isOutOfStock = macbook.isOutOfStock()
+                isOutOfStock = macbook.isOutOfStock(),
+                notificationCount = notificationCount,
             )
         }
     }
