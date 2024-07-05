@@ -23,11 +23,12 @@ class MacbookFavoriteResponse(
     val imageUrl: String,
     val isOutOfStock: Boolean,
 
+    notificationCount: Long,
     createdAt: LocalDateTime
-) : CommonFavoriteProductModel(createdAt) {
+) : CommonFavoriteProductModel(notificationCount, createdAt) {
 
     companion object {
-        fun of(macbook: Macbook, favorite: Favorite): MacbookFavoriteResponse {
+        fun of(macbook: Macbook, notificationCount: Long, favorite: Favorite): MacbookFavoriteResponse {
             val koreanCategory = when (macbook.category) {
                 MacbookCategory.MACBOOK_AIR -> "맥북 에어"
                 MacbookCategory.MACBOOK_PRO -> "맥북 프로"
@@ -49,6 +50,7 @@ class MacbookFavoriteResponse(
                 label = macbook.isAllTimeLowPrice(),
                 imageUrl = macbook.thumbnail,
                 isOutOfStock = macbook.isOutOfStock(),
+                notificationCount = notificationCount,
                 createdAt = favorite.createdAt
             )
         }
