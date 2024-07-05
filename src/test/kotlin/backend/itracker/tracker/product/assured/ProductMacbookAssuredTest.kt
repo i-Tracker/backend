@@ -92,11 +92,11 @@ class ProductMacbookAssuredTest : AssuredTestConfig() {
         })
 
         val expected = listOf(
-            MacbookResponse.from(first),
-            MacbookResponse.from(second),
-            MacbookResponse.from(third),
-            MacbookResponse.from(fourth),
-            MacbookResponse.from(fifth),
+            MacbookResponse.of(first, 0),
+            MacbookResponse.of(second, 0),
+            MacbookResponse.of(third, 0),
+            MacbookResponse.of(fourth, 0),
+            MacbookResponse.of(fifth, 0),
         )
 
         // when
@@ -131,7 +131,7 @@ class ProductMacbookAssuredTest : AssuredTestConfig() {
             .`as`(object : TypeRef<MacbookDetailResponse>() {})
 
         // then
-        assertThat(response).isEqualTo(MacbookDetailResponse.of(expected))
+        assertThat(response).isEqualTo(MacbookDetailResponse.of(expected, 0))
     }
 
     @ParameterizedTest
@@ -169,7 +169,7 @@ class ProductMacbookAssuredTest : AssuredTestConfig() {
         // then
         assertAll(
             { assertThat(response.data).hasSize(1) },
-            { assertThat(response.data).containsExactly(MacbookResponse.from(expected)) }
+            { assertThat(response.data).containsExactly(MacbookResponse.of(expected, 0)) }
         )
     }
 

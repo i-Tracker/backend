@@ -1,6 +1,6 @@
 package backend.itracker.tracker.product.controller
 
-import backend.itracker.crawl.common.ProductCategory
+import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.tracker.common.response.Pages
 import backend.itracker.tracker.product.handler.ProductHandlerImpl
 import backend.itracker.tracker.product.response.product.CommonProductModel
@@ -20,11 +20,11 @@ class HomeController(
         @RequestParam(defaultValue = "10") limit: Int
     ): ResponseEntity<Pages<CommonProductModel>> {
         val macbookAirs =
-            productHandler.findTopDiscountPercentageProducts(ProductCategory.MACBOOK_AIR, Limit(limit))
+            productHandler.findTopDiscountPercentageProducts(ProductFilterCategory.MACBOOK_AIR, Limit(limit))
         val macbookPros =
-            productHandler.findTopDiscountPercentageProducts(ProductCategory.MACBOOK_PRO, Limit(limit))
+            productHandler.findTopDiscountPercentageProducts(ProductFilterCategory.MACBOOK_PRO, Limit(limit))
         val airPods =
-            productHandler.findTopDiscountPercentageProducts(ProductCategory.AIRPODS, Limit(limit))
+            productHandler.findTopDiscountPercentageProducts(ProductFilterCategory.AIRPODS, Limit(limit))
 
         val allProducts = macbookAirs + macbookPros + airPods
         return ResponseEntity.ok(Pages.withPagination(allProducts.sortedBy { it.discountPercentage() }

@@ -3,15 +3,7 @@ package backend.itracker.tracker.member.domain
 import backend.itracker.crawl.common.BaseEntity
 import backend.itracker.tracker.oauth.OauthId
 import backend.itracker.tracker.oauth.OauthServerType
-import jakarta.persistence.Column
-import jakarta.persistence.Embedded
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.FetchType
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
-import jakarta.persistence.UniqueConstraint
+import jakarta.persistence.*
 
 @Entity
 @Table(
@@ -26,6 +18,7 @@ class Member(
     val oauthId: OauthId,
 
     var nickname: String,
+    val phoneNumber: String,
 
     @Column(columnDefinition = "text")
     var profileImage: String,
@@ -47,13 +40,14 @@ class Member(
     fun isAnonymous() = this.id == 0L
 
     override fun toString(): String {
-        return "Member(id='$id' oauthId=$oauthId, nickname='$nickname', profileImage='$profileImage', authType=$authType)"
+        return "Member(oauthId=$oauthId, nickname='$nickname', phoneNumber='$phoneNumber', profileImage='$profileImage', authType=$authType, favorites=$favorites)"
     }
 
     companion object {
         fun anonymous() = Member(
             oauthId = OauthId("anonymous", OauthServerType.KAKAO),
             nickname = "익명",
+            phoneNumber = "01012345678",
             profileImage = "익명",
         )
     }

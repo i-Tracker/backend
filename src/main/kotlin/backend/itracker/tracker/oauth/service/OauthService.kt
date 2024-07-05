@@ -53,4 +53,8 @@ class OauthService(
         val oauthId = jwtDecoder.parseOauthId(authorizationHeader)
         return memberService.getByOauthId(oauthId)
     }
+
+    fun validatePhoneNumber(phoneNumber: String): Boolean {
+        return memberService.isDuplicatedPhoneNumber(phoneNumber)
+    }
 }
