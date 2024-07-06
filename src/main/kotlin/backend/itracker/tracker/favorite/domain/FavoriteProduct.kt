@@ -1,4 +1,4 @@
-package backend.itracker.tracker.member.domain
+package backend.itracker.tracker.favorite.domain
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.common.ProductFilterCategory

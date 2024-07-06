@@ -1,8 +1,8 @@
-package backend.itracker.tracker.member.service.handler
+package backend.itracker.tracker.favorite.service.handler
 
 import backend.itracker.crawl.common.ProductCategory
-import backend.itracker.tracker.member.domain.Favorite
-import backend.itracker.tracker.member.service.handler.response.CommonFavoriteProductModel
+import backend.itracker.tracker.favorite.domain.Favorite
+import backend.itracker.tracker.favorite.service.handler.response.CommonFavoriteProductModel
 import org.springframework.stereotype.Component
 
 @Component

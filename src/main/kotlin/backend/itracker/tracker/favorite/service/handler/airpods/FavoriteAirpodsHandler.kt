@@ -1,12 +1,12 @@
-package backend.itracker.tracker.member.service.handler.airpods
+package backend.itracker.tracker.favorite.service.handler.airpods
 
 import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.common.ProductCategory
-import backend.itracker.tracker.member.domain.Favorite
-import backend.itracker.tracker.member.domain.repository.FavoriteRepository
-import backend.itracker.tracker.member.service.handler.FavoriteHandleable
-import backend.itracker.tracker.member.service.handler.response.AirpodsFavoriteResponse
-import backend.itracker.tracker.member.service.handler.response.CommonFavoriteProductModel
+import backend.itracker.tracker.favorite.domain.Favorite
+import backend.itracker.tracker.favorite.domain.repository.FavoriteRepository
+import backend.itracker.tracker.favorite.service.handler.FavoriteHandleable
+import backend.itracker.tracker.favorite.service.handler.response.AirpodsFavoriteResponse
+import backend.itracker.tracker.favorite.service.handler.response.CommonFavoriteProductModel
 import org.springframework.stereotype.Component
 
 @Component

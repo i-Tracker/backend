@@ -1,4 +1,4 @@
-package backend.itracker.tracker.member.service.handler.response
+package backend.itracker.tracker.favorite.service.handler.response
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDateTime

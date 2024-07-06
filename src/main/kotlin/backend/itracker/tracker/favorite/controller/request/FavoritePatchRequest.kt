@@ -1,7 +1,7 @@
-package backend.itracker.tracker.member.controller.request
+package backend.itracker.tracker.favorite.controller.request
 
 import backend.itracker.crawl.common.ProductFilterCategory
-import backend.itracker.tracker.member.service.vo.FavoriteInfo
+import backend.itracker.tracker.favorite.service.vo.FavoriteInfo
 
 data class FavoritePatchRequest(
     val productId: Long,

@@ -1,12 +1,12 @@
-package backend.itracker.tracker.member.service
+package backend.itracker.tracker.favorite.service
 
-import backend.itracker.tracker.member.domain.Favorite
-import backend.itracker.tracker.member.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.Favorite
+import backend.itracker.tracker.favorite.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.repository.FavoriteRepository
+import backend.itracker.tracker.favorite.service.handler.FavoriteComposite
+import backend.itracker.tracker.favorite.service.handler.response.CommonFavoriteProductModel
+import backend.itracker.tracker.favorite.service.vo.FavoriteCount
 import backend.itracker.tracker.member.domain.Member
-import backend.itracker.tracker.member.domain.repository.FavoriteRepository
-import backend.itracker.tracker.member.service.handler.FavoriteComposite
-import backend.itracker.tracker.member.service.handler.response.CommonFavoriteProductModel
-import backend.itracker.tracker.member.service.vo.FavoriteCount
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable

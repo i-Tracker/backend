@@ -1,6 +1,7 @@
 package backend.itracker.tracker.member.domain
 
 import backend.itracker.crawl.common.BaseEntity
+import backend.itracker.tracker.favorite.domain.Favorite
 import backend.itracker.tracker.oauth.OauthId
 import backend.itracker.tracker.oauth.OauthServerType
 import jakarta.persistence.*
