@@ -46,7 +46,7 @@ class AirPodsHandler(
         return contents
     }
 
-    override fun findFilter(productFilterCategory: ProductFilterCategory, filterCondition: ProductFilter): CommonFilterModel {
+    override fun findFilter(category: ProductFilterCategory, filter: ProductFilter): CommonFilterModel {
         throw NotSupportedException("AirPodsHandler는 필터링를 지원하지 않습니다.")
     }
 
