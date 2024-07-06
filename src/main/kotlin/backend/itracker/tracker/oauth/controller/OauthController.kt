@@ -1,26 +1,22 @@
 package backend.itracker.tracker.oauth.controller
 
-import backend.itracker.tracker.common.response.SingleData
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
-import backend.itracker.tracker.oauth.controller.response.PhoneNumberValidateResponse
 import backend.itracker.tracker.oauth.service.OauthService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("/api/v1/oauth")
 class OauthController(
     private val oauthService: OauthService
 ) {
 
-    @GetMapping("/api/v1/oauth/{oauthServerType}")
+    @GetMapping("/{oauthServerType}")
     fun redirectAuthCodeRequestUrl(
         @PathVariable oauthServerType: OauthServerType,
         request: HttpServletRequest,
@@ -39,7 +35,7 @@ class OauthController(
         return ResponseEntity.status(HttpStatus.FOUND).build()
     }
 
-    @GetMapping("/api/v1/oauth/login/{oauthServerType}")
+    @GetMapping("/login/{oauthServerType}")
     fun login(
         @PathVariable oauthServerType: OauthServerType,
         @RequestParam("code") code: String,
@@ -57,14 +53,5 @@ class OauthController(
         return ResponseEntity.ok()
             .header(HttpHeaders.AUTHORIZATION, accessToken)
             .build()
-    }
-
-    @GetMapping("/api/v1/login/validate")
-    fun validatePhoneNumber(
-        @RequestParam("phoneNumber") phoneNumber: String,
-    ): ResponseEntity<SingleData<PhoneNumberValidateResponse>> {
-        val isDuplicatedPhoneNumber = oauthService.validatePhoneNumber(phoneNumber)
-
-        return ResponseEntity.ok(SingleData(PhoneNumberValidateResponse(isDuplicatedPhoneNumber)))
     }
 }
