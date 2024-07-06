@@ -21,9 +21,9 @@ interface ProductHandleable {
     fun findTopDiscountPercentageProducts(productFilterCategory: ProductFilterCategory, limit: Int): List<CommonProductModel>
 
     /**
-     * @param productFilterCategory 상품 카테고리  -> 맥북에서만 사용
+     * @param category 상품 카테고리  -> 맥북에서만 사용
      */
-    fun findFilter(productFilterCategory: ProductFilterCategory, filterCondition: ProductFilter): CommonFilterModel
+    fun findFilter(category: ProductFilterCategory, filter: ProductFilter): CommonFilterModel
 
     /**
      * @param category 상품 카테고리  -> 맥북에서만 사용
@@ -34,5 +34,5 @@ interface ProductHandleable {
         pageable: Pageable,
     ): Page<CommonProductModel>
 
-    fun findProductById(productInfo: ProductInfo, anonymousMember: Member): CommonProductDetailModel
+    fun findProductById(productInfo: ProductInfo, member: Member): CommonProductDetailModel
 }

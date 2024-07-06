@@ -27,8 +27,8 @@ class MacMiniM2Mapper : MacMappingComponent {
         val color = ""
 
         val chipAndCpu = names[1].split(" ")
-        var chip = ""
-        var cpu = ""
+        val chip: String
+        val cpu: String
         if (chipAndCpu.size == 3) {
             chip = "${chipAndCpu[0]} ${chipAndCpu[1]}"
             cpu = chipAndCpu.last().replace("코어", "")

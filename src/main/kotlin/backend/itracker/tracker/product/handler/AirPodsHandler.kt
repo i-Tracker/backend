@@ -3,9 +3,9 @@ package backend.itracker.tracker.product.handler
 import backend.itracker.crawl.airpods.service.AirPodsService
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.common.ProductFilterCategory
-import backend.itracker.tracker.member.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.repository.FavoriteRepository
 import backend.itracker.tracker.member.domain.Member
-import backend.itracker.tracker.member.domain.repository.FavoriteRepository
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel
 import backend.itracker.tracker.product.response.product.CommonProductModel
@@ -46,7 +46,7 @@ class AirPodsHandler(
         return contents
     }
 
-    override fun findFilter(productFilterCategory: ProductFilterCategory, filterCondition: ProductFilter): CommonFilterModel {
+    override fun findFilter(category: ProductFilterCategory, filter: ProductFilter): CommonFilterModel {
         throw NotSupportedException("AirPodsHandler는 필터링를 지원하지 않습니다.")
     }
 

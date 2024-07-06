@@ -1,8 +1,8 @@
-package backend.itracker.tracker.member.service.handler.response
+package backend.itracker.tracker.favorite.service.handler.response
 
 import backend.itracker.crawl.airpods.domain.AirPods
 import backend.itracker.crawl.airpods.domain.AirPodsCategory
-import backend.itracker.tracker.member.domain.Favorite
+import backend.itracker.tracker.favorite.domain.Favorite
 import java.math.BigDecimal
 import java.time.LocalDateTime
 

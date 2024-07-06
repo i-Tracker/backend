@@ -1,13 +1,8 @@
-package backend.itracker.tracker.member.domain
+package backend.itracker.tracker.favorite.domain
 
 import backend.itracker.crawl.common.BaseEntity
-import jakarta.persistence.Embedded
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
-import jakarta.persistence.UniqueConstraint
+import backend.itracker.tracker.member.domain.Member
+import jakarta.persistence.*
 
 @Entity
 @Table(
