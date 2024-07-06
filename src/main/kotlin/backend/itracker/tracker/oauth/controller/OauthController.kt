@@ -42,13 +42,41 @@ class OauthController(
         request: HttpServletRequest,
     ): ResponseEntity<Long> {
         if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
-            val accessToken = oauthService.login(oauthServerType, code, RedirectType.LOCAL)
+            val member = oauthService.login(oauthServerType, code, RedirectType.LOCAL)
+            val accessToken = oauthService.issueToken(member)
 
             return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .build()
         }
-        val accessToken = oauthService.login(oauthServerType, code, RedirectType.PROD)
+
+        val member = oauthService.login(oauthServerType, code, RedirectType.PROD)
+        val accessToken = oauthService.issueToken(member)
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.AUTHORIZATION, accessToken)
+            .build()
+    }
+
+    @GetMapping("/login/{oauthServerType}/new")
+    fun firstLogin(
+        @PathVariable oauthServerType: OauthServerType,
+        @RequestParam("code") code: String,
+        request: HttpServletRequest,
+    ): ResponseEntity<Long> {
+        if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
+            val member = oauthService.firstLogin(oauthServerType, code, RedirectType.LOCAL)
+            oauthService.register(member)
+            val accessToken = oauthService.issueToken(member)
+
+            return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .build()
+        }
+
+        val member = oauthService.firstLogin(oauthServerType, code, RedirectType.PROD)
+        oauthService.register(member)
+        val accessToken = oauthService.issueToken(member)
 
         return ResponseEntity.ok()
             .header(HttpHeaders.AUTHORIZATION, accessToken)
