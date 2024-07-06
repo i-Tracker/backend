@@ -5,9 +5,9 @@ import backend.itracker.crawl.common.ProductFilterCategory
 import backend.itracker.crawl.macbook.domain.Macbook
 import backend.itracker.crawl.macbook.service.MacbookService
 import backend.itracker.crawl.macbook.service.dto.MacbookFilterCondition
-import backend.itracker.tracker.member.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.repository.FavoriteRepository
 import backend.itracker.tracker.member.domain.Member
-import backend.itracker.tracker.member.domain.repository.FavoriteRepository
 import backend.itracker.tracker.product.response.filter.CommonFilterModel
 import backend.itracker.tracker.product.response.filter.MacbookFilterResponse
 import backend.itracker.tracker.product.response.product.CommonProductDetailModel

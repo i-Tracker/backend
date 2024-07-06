@@ -1,9 +1,9 @@
 package backend.itracker.tracker.member.service
 
 import backend.itracker.tracker.member.domain.Member
+import backend.itracker.tracker.member.domain.repository.MemberRepository
+import backend.itracker.tracker.member.domain.repository.getByOauthId
 import backend.itracker.tracker.oauth.OauthId
-import backend.itracker.tracker.oauth.repository.MemberRepository
-import backend.itracker.tracker.oauth.repository.getByOauthId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*

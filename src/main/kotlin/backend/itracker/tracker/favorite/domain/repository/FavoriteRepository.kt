@@ -1,7 +1,7 @@
-package backend.itracker.tracker.member.domain.repository
+package backend.itracker.tracker.favorite.domain.repository
 
-import backend.itracker.tracker.member.domain.Favorite
-import backend.itracker.tracker.member.domain.FavoriteProduct
+import backend.itracker.tracker.favorite.domain.Favorite
+import backend.itracker.tracker.favorite.domain.FavoriteProduct
 import backend.itracker.tracker.member.domain.Member
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

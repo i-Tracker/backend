@@ -1,4 +1,4 @@
-package backend.itracker.tracker.oauth.repository
+package backend.itracker.tracker.member.domain.repository
 
 import backend.itracker.tracker.member.domain.Member
 import backend.itracker.tracker.oauth.OauthId

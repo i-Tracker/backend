@@ -1,6 +1,10 @@
 package backend.itracker.logging
 
+import backend.itracker.exception.ClientException
+import backend.itracker.logging.response.ErrorResponse
 import backend.itracker.tracker.infra.oauth.exception.OauthRequestException
+import backend.itracker.tracker.oauth.exception.DuplicatedMemberException
+import backend.itracker.tracker.oauth.exception.FirstLoginException
 import org.springframework.beans.BeanInstantiationException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -9,6 +13,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
+
+    @ExceptionHandler(FirstLoginException::class, DuplicatedMemberException::class)
+    fun handleFirstLoginException(e: ClientException): ResponseEntity<ErrorResponse> {
+        logger.info("message : ", e)
+
+        return ResponseEntity.status(e.errorCode.httpStatus)
+            .body(ErrorResponse.from(e.errorCode))
+    }
 
     @ExceptionHandler(BeanInstantiationException::class)
     fun handleBeanInstantiationException(e: BeanInstantiationException): ResponseEntity<String> {

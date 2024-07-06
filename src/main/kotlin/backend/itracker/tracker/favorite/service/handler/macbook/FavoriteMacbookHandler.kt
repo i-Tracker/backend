@@ -1,12 +1,12 @@
-package backend.itracker.tracker.member.service.handler.macbook
+package backend.itracker.tracker.favorite.service.handler.macbook
 
 import backend.itracker.crawl.common.ProductCategory
 import backend.itracker.crawl.macbook.service.MacbookService
-import backend.itracker.tracker.member.domain.Favorite
-import backend.itracker.tracker.member.domain.repository.FavoriteRepository
-import backend.itracker.tracker.member.service.handler.FavoriteHandleable
-import backend.itracker.tracker.member.service.handler.response.CommonFavoriteProductModel
-import backend.itracker.tracker.member.service.handler.response.MacbookFavoriteResponse
+import backend.itracker.tracker.favorite.domain.Favorite
+import backend.itracker.tracker.favorite.domain.repository.FavoriteRepository
+import backend.itracker.tracker.favorite.service.handler.FavoriteHandleable
+import backend.itracker.tracker.favorite.service.handler.response.CommonFavoriteProductModel
+import backend.itracker.tracker.favorite.service.handler.response.MacbookFavoriteResponse
 import org.springframework.stereotype.Component
 
 @Component
