@@ -2,6 +2,7 @@ package backend.itracker.tracker.oauth.controller
 
 import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
+import backend.itracker.tracker.oauth.service.LoginFacade
 import backend.itracker.tracker.oauth.service.OauthService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/oauth")
 class OauthController(
+    private val loginFacade: LoginFacade,
     private val oauthService: OauthService
 ) {
 
@@ -42,16 +44,14 @@ class OauthController(
         request: HttpServletRequest,
     ): ResponseEntity<Long> {
         if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
-            val member = oauthService.login(oauthServerType, code, RedirectType.LOCAL)
-            val accessToken = oauthService.issueToken(member)
+            val accessToken = loginFacade.login(oauthServerType, code, RedirectType.LOCAL)
 
             return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .build()
         }
 
-        val member = oauthService.login(oauthServerType, code, RedirectType.PROD)
-        val accessToken = oauthService.issueToken(member)
+        val accessToken = loginFacade.login(oauthServerType, code, RedirectType.PROD)
 
         return ResponseEntity.ok()
             .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -65,18 +65,14 @@ class OauthController(
         request: HttpServletRequest,
     ): ResponseEntity<Long> {
         if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
-            val member = oauthService.firstLogin(oauthServerType, code, RedirectType.LOCAL)
-            oauthService.register(member)
-            val accessToken = oauthService.issueToken(member)
+            val accessToken = loginFacade.firstLogin(oauthServerType, code, RedirectType.LOCAL)
 
             return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .build()
         }
 
-        val member = oauthService.firstLogin(oauthServerType, code, RedirectType.PROD)
-        oauthService.register(member)
-        val accessToken = oauthService.issueToken(member)
+        val accessToken = loginFacade.firstLogin(oauthServerType, code, RedirectType.PROD)
 
         return ResponseEntity.ok()
             .header(HttpHeaders.AUTHORIZATION, accessToken)
