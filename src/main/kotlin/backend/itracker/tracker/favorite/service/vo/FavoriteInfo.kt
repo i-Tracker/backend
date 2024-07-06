@@ -1,4 +1,4 @@
-package backend.itracker.tracker.member.service.vo
+package backend.itracker.tracker.favorite.service.vo
 
 import backend.itracker.crawl.common.ProductFilterCategory
 
