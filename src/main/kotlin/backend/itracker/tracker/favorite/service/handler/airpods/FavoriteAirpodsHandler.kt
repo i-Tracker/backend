@@ -32,4 +32,15 @@ class FavoriteAirpodsHandler(
             AirpodsFavoriteResponse.of(airpod, notificationCount, favorite)
         }
     }
+
+    override fun findAllDecreasingPrice(favorites: List<Favorite>): List<Favorite> {
+        return airpodsService.findAllInIds(
+            favorites.map { it.product.productId }
+                .toList())
+            .filter { it.isDecreasingPrice() }
+            .map { airpod ->
+                favorites.find { it.product.productId == airpod.id }
+                    ?: throw IllegalStateException("찜한 상품을 찾을 수 없습니다.")
+            }
+    }
 }

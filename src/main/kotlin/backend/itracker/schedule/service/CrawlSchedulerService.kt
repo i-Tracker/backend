@@ -5,7 +5,7 @@ import backend.itracker.schedule.service.schedulers.SchedulerComposite
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
-private const val CRAWLING_TIME = "30 31 17 * * *"
+private const val CRAWLING_TIME = "0 0 3 * * *"
 private const val TIME_ZONE = "Asia/Seoul"
 
 private val CRAWL_TARGETS = CrawlTargetCategory.entries
