@@ -57,4 +57,14 @@ class FavoriteService(
             count = count
         )
     }
+
+    @Transactional(readOnly = true)
+    fun findDecreasedPriceAll(): List<Favorite> {
+        val favorites = favoriteRepository.findAllFetch()
+            .groupBy { it.product.productCategory }
+
+        return favorites.flatMap { (productCategory, favorites) ->
+            favoriteComposite.findAllDecreasingPrice(productCategory, favorites)
+        }
+    }
 }

@@ -55,6 +55,31 @@ class MacbookPrices(
         return todayPrice <= findAllTimeLowPrice() && findTodayDiscountPercentage() < 0
     }
 
+    fun isDecreasingPrice(): Boolean {
+        return todayPrice().isSmallerThan(yesterdayPrice())
+    }
+
+    fun findPriceDiffFromYesterday(): BigDecimal {
+        return yesterdayPrice().currentPrice.minus(todayPrice().currentPrice)
+    }
+
+    fun findDiscountRateDiffFromYesterday(): Int {
+        val todayPrice = todayPrice().currentPrice
+        val yesterdayPrice = yesterdayPrice().currentPrice
+
+        val priceDiff = todayPrice.minus(yesterdayPrice) / yesterdayPrice
+        return priceDiff.multiply(PERCENT_BASE).toInt()
+    }
+
+    private fun todayPrice(): MacbookPrice {
+        return macbookPrices.maxBy { it.createdAt }
+    }
+
+    private fun yesterdayPrice(): MacbookPrice {
+        val sortedPrices = macbookPrices.sortedBy { it.createdAt }
+        return sortedPrices[sortedPrices.size - 2]
+    }
+
     fun getRecentPricesByPeriod(period: Period): MacbookPrices {
         val startDate = LocalDateTime.now().minus(period)
         val prices = macbookPrices.filter { it.createdAt.isAfter(startDate) }

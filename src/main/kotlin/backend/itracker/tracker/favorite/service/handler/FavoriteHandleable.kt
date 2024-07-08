@@ -9,4 +9,6 @@ interface FavoriteHandleable {
     fun supports(category: ProductCategory): Boolean
 
     fun findAllByIds(favorites: List<Favorite>): List<CommonFavoriteProductModel>
+
+    fun findAllDecreasingPrice(favorites: List<Favorite>): List<Favorite>
 }
