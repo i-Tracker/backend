@@ -35,4 +35,13 @@ interface FavoriteRepository : JpaRepository<Favorite, Long> {
         """
     )
     fun findCountByProduct(@Param("product") favoriteProduct: FavoriteProduct): Long
+
+    @Query(
+        """
+            select f
+            from Favorite f
+            join fetch f.member
+        """
+    )
+    fun findAllFetch(): List<Favorite>
 }

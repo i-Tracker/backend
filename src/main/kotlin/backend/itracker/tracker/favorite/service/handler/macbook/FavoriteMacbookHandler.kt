@@ -33,4 +33,14 @@ class FavoriteMacbookHandler(
             MacbookFavoriteResponse.of(macbook, notificationCount, favorite)
         }
     }
+
+    override fun findAllDecreasingPrice(favorites: List<Favorite>): List<Favorite> {
+        return macbookService.findAllInIds(favorites.map { it.product.productId }
+            .toList())
+            .filter { it.isDecreasingPrice() }
+            .map { macbook ->
+                favorites.find { it.product.productId == macbook.id }
+                    ?: throw IllegalStateException("찜한 상품을 찾을 수 없습니다.")
+            }
+    }
 }

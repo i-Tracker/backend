@@ -19,4 +19,11 @@ class FavoriteComposite(
 
         return favoriteHandler.findAllByIds(favorites)
     }
+
+    fun findAllDecreasingPrice(category: ProductCategory, favorites: List<Favorite>): List<Favorite> {
+        val favoriteHandler = favoriteHandlers.find { it.supports(category) }
+            ?: throw IllegalArgumentException("핸들러가 지원하지 않는 카테고리 입니다. category: $category")
+
+        return favoriteHandler.findAllDecreasingPrice(favorites)
+    }
 }

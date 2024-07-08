@@ -19,7 +19,7 @@ data class KakaoMemberResponse(
         return Member(
             oauthId = OauthId(id.toString(), OauthServerType.KAKAO),
             nickname = kakaoAccount.profile.nickname,
-            phoneNumber = kakaoAccount.phoneNumber ?: "01000000000",
+            phoneNumber = kakaoAccount.phoneNumber,
             profileImage = kakaoAccount.profile.profileImageUrl,
         )
     }
