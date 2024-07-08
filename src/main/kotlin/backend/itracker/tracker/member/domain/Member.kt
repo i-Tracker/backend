@@ -19,7 +19,7 @@ class Member(
     val oauthId: OauthId,
 
     var nickname: String,
-    val phoneNumber: String,
+    val phoneNumber: String?,
 
     @Column(columnDefinition = "text")
     var profileImage: String,
@@ -48,7 +48,7 @@ class Member(
         fun anonymous() = Member(
             oauthId = OauthId("anonymous", OauthServerType.KAKAO),
             nickname = "익명",
-            phoneNumber = "01012345678",
+            phoneNumber = null,
             profileImage = "익명",
         )
     }

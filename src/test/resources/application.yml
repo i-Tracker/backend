@@ -26,9 +26,21 @@ oauth:
     local_redirect_uri: test
     client_secret: test
     scope: test
-    
+
 jwt:
   token:
     secret: test_test_test_test_test_test_test_test_test_test
     issuer: test
     expire_minutes: 10
+
+nurigo:
+  message:
+    api-key: test
+    api-secret-key: test
+    domain: https://test.com
+  kakao:
+    channel:
+      pf-id: test
+      price-change-notification-template-id: test
+      primary-phone-number: test
+      sending-hour: 1
