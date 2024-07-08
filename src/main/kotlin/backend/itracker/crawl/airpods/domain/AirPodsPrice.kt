@@ -1,12 +1,7 @@
 package backend.itracker.crawl.airpods.domain
 
 import backend.itracker.crawl.common.BaseEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.ForeignKey
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.math.BigDecimal
 
 @Entity
@@ -27,6 +22,10 @@ class AirPodsPrice(
 
     fun changeAirPods(airPods: AirPods) {
         this.airPods = airPods
+    }
+
+    fun isSmallerThan(targetPrice: AirPodsPrice): Boolean {
+        return this.currentPrice < targetPrice.currentPrice
     }
 
     override fun toString(): String {

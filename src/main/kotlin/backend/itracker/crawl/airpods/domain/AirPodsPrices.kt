@@ -55,6 +55,31 @@ class AirPodsPrices(
         return todayPrice <= findAllTimeLowPrice() && findTodayDiscountPercentage() < 0
     }
 
+    fun isDecreasingPrice(): Boolean {
+        return todayPrice().isSmallerThan(yesterdayPrice())
+    }
+
+    fun findPriceDiffFromYesterday(): BigDecimal {
+        return yesterdayPrice().currentPrice.minus(todayPrice().currentPrice)
+    }
+
+    fun findDiscountRateDiffFromYesterday(): Int {
+        val todayPrice = todayPrice().currentPrice
+        val yesterdayPrice = yesterdayPrice().currentPrice
+
+        val priceDiff = todayPrice.minus(yesterdayPrice) / yesterdayPrice
+        return priceDiff.multiply(PERCENT_BASE).toInt()
+    }
+
+    private fun todayPrice(): AirPodsPrice {
+        return airPodsPrices.maxBy { it.createdAt }
+    }
+
+    private fun yesterdayPrice(): AirPodsPrice {
+        val sortedPrices = airPodsPrices.sortedBy { it.createdAt }
+        return sortedPrices[sortedPrices.size - 2]
+    }
+
     fun getRecentPricesByPeriod(period: Period): AirPodsPrices {
         val startDate = LocalDateTime.now().minus(period)
         val prices = airPodsPrices.filter { it.createdAt.isAfter(startDate) }
