@@ -7,4 +7,5 @@ data class NurigoKakaoChannelConfig(
     val pfId: String,
     val priceChangeNotificationTemplateId: String,
     val primaryPhoneNumber: String,
+    val sendingHour: Int,
 )

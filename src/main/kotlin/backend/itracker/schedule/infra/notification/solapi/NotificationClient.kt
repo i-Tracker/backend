@@ -41,7 +41,7 @@ class NotificationClient(
             )
         }
 
-        val reservationTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(18, 0))
+        val reservationTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(nurigoKakaoChannelConfig.sendingHour, 0))
         val scheduledDateTime = reservationTime.toInstant(ZoneOffset.of("+9"))!!
 
         try {
