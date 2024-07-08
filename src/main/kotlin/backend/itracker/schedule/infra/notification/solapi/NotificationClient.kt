@@ -8,6 +8,7 @@ import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException
 import net.nurigo.sdk.message.model.KakaoOption
 import net.nurigo.sdk.message.model.Message
 import net.nurigo.sdk.message.service.DefaultMessageService
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -16,6 +17,7 @@ import java.time.ZoneOffset
 
 val logger = KotlinLogging.logger {}
 
+@Profile("!test")
 @Component
 class NotificationClient(
     private val messageService: DefaultMessageService,
