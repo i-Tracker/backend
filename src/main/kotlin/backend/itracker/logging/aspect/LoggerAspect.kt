@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.AfterReturning
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.aspectj.lang.annotation.Pointcut
-import org.slf4j.MDC
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
@@ -37,8 +36,7 @@ class LoggerAspect {
                 @annotation(org.springframework.web.bind.annotation.PutMapping) ||
                 @annotation(org.springframework.web.bind.annotation.DeleteMapping)"""
     )
-    fun apiInfo() {
-    }
+    fun apiInfo() { }
 
     @Before("apiInfo()")
     fun beforeApiRequest(joinPoint: JoinPoint) {
@@ -47,11 +45,9 @@ class LoggerAspect {
         LOGGER.info {
             """
             [ API Start ]
-            - Request ID: ${getRequestId()}
             - Method: ${request.method}
             - URI: ${getURI(request)}
             - IP: ${getClientIP(request)}
-            - Referer: ${request.getHeader(HttpHeaders.REFERER)}
             - Signature: ${getSignature(joinPoint)}
         """.trimIndent()
         }
@@ -62,14 +58,9 @@ class LoggerAspect {
         LOGGER.info {
             """
             [ API End ]
-            - Request ID: ${getRequestId()}
             - Response: $response
         """.trimIndent()
         }
-    }
-
-    private fun getRequestId(): String {
-        return MDC.get("request_id")
     }
 
     private fun getURI(request: HttpServletRequest): String {
