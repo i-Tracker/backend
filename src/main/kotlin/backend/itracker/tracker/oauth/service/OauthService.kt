@@ -7,8 +7,6 @@ import backend.itracker.tracker.oauth.OauthServerType
 import backend.itracker.tracker.oauth.RedirectType
 import backend.itracker.tracker.oauth.authcode.AuthCodeRequestUrlProviderComposite
 import backend.itracker.tracker.oauth.client.OauthMemberClientComposite
-import backend.itracker.tracker.oauth.exception.DuplicatedMemberException
-import backend.itracker.tracker.oauth.exception.FirstLoginException
 import org.springframework.stereotype.Service
 import kotlin.jvm.optionals.getOrNull
 
@@ -23,28 +21,14 @@ class OauthService(
         return authCodeRequestUrlProviderComposite.provide(oauthServerType, redirectType)
     }
 
-    fun login(
+    fun fetchMember(
         oauthServerType: OauthServerType,
         authCode: String,
         redirectType: RedirectType
     ): Member {
-        val fetchMember = oauthMemberClientComposite.fetch(oauthServerType, authCode, redirectType)
-        return memberService.findByOauthId(fetchMember.oauthId).getOrNull()
-            ?: throw FirstLoginException(message = "첫번째 로그인 대상입니다. member: $fetchMember")
+        return oauthMemberClientComposite.fetch(oauthServerType, authCode, redirectType)
     }
 
-    fun firstLogin(
-        oauthServerType: OauthServerType,
-        authCode: String,
-        redirectType: RedirectType
-    ): Member {
-        val fetchMember = oauthMemberClientComposite.fetch(oauthServerType, authCode, redirectType)
-        if (memberService.findByOauthId(fetchMember.oauthId).isPresent) {
-            throw DuplicatedMemberException(message = "이미 가입된 회원입니다. member: $fetchMember")
-        }
-
-        return fetchMember
-    }
 
     fun register(
         member: Member

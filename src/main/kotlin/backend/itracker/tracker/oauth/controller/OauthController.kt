@@ -57,25 +57,4 @@ class OauthController(
             .header(HttpHeaders.AUTHORIZATION, accessToken)
             .build()
     }
-
-    @GetMapping("/login/{oauthServerType}/new")
-    fun firstLogin(
-        @PathVariable oauthServerType: OauthServerType,
-        @RequestParam("code") code: String,
-        request: HttpServletRequest,
-    ): ResponseEntity<Long> {
-        if (request.getHeader(HttpHeaders.REFERER).contains("localhost")) {
-            val accessToken = loginFacade.firstLogin(oauthServerType, code, RedirectType.LOCAL)
-
-            return ResponseEntity.ok()
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
-                .build()
-        }
-
-        val accessToken = loginFacade.firstLogin(oauthServerType, code, RedirectType.PROD)
-
-        return ResponseEntity.ok()
-            .header(HttpHeaders.AUTHORIZATION, accessToken)
-            .build()
-    }
 }
