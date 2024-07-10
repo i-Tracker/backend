@@ -56,6 +56,9 @@ dependencies {
 	// solapi
 	implementation 'net.nurigo:sdk:4.2.7'
 
+	// loggin
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
@@ -97,4 +100,11 @@ tasks.register('copySecret', Copy) {
 // @ConfigurationProperties
 tasks.named('compileJava') {
     inputs.files(tasks.named('processResources'))
+}
+
+// logging
+configurations {
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
 }
