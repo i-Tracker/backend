@@ -31,8 +31,8 @@ class NotificationAirpodsHandler(
             productDetail = """
                 ${airPods.company} ${airPods.releaseYear} $name ${airPods.generation}세대
             """.trimIndent(),
-            priceDropFromYesterday = airPods.findPriceDiffFromYesterday(),
-            discountRateDropFromYesterday = airPods.findDiscountRateDiffFromYesterday(),
+            priceDrop = airPods.findPriceDiffFromYesterday(),
+            rateDrop = airPods.findDiscountRateDiffFromYesterday(),
             currentPrice = airPods.findCurrentPrice(),
             category = ProductCategory.AIRPODS.toString(),
             productId = airPods.id,
