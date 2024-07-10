@@ -14,7 +14,7 @@ class LoginFacade(
         authCode: String,
         redirectType: RedirectType
     ): String {
-        val member = oauthService.fetchMember(oauthServerType, authCode, RedirectType.LOCAL)
+        val member = oauthService.fetchMember(oauthServerType, authCode, redirectType)
         oauthService.register(member)
 
         return oauthService.issueToken(member)

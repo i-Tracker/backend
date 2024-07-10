@@ -51,6 +51,7 @@ class LoggerAspect {
             - Method: ${request.method}
             - URI: ${getURI(request)}
             - IP: ${getClientIP(request)}
+            - Referer: ${request.getHeader(HttpHeaders.REFERER)}
             - Signature: ${getSignature(joinPoint)}
         """.trimIndent()
         }
