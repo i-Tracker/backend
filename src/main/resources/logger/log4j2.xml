@@ -16,15 +16,15 @@
 
         <RollingFile name="dailyFile">
             <FileName>${BASE_DIR}/${FILE_NAME}.log</FileName>
-            <FilePattern>${BASE_DIR}/${FILE_NAME}-%d{yyyy-MM-dd hh:mm}.log</FilePattern>
+            <FilePattern>${BASE_DIR}/${FILE_NAME}-%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
             <PatternLayout pattern="${PATTERN}" />
             <Policies>
                 <SizeBasedTriggeringPolicy size="50MB"/>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
-            <DefaultRolloverStrategy>
+            <DefaultRolloverStrategy max="7" fileIndex="max">
                 <Delete basePath="${BASE_DIR}" maxDepth="1">
-                    <IfLastModified age = "3d"/>
+                    <IfLastModified age = "15d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
