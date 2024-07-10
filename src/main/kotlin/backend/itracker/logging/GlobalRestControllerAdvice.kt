@@ -16,7 +16,7 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(FirstLoginException::class, DuplicatedMemberException::class)
     fun handleFirstLoginException(e: ClientException): ResponseEntity<ErrorResponse> {
-        logger.info("message : ", e)
+        logger.error("message : ", e)
 
         return ResponseEntity.status(e.errorCode.httpStatus)
             .body(ErrorResponse.from(e.errorCode))
@@ -26,7 +26,7 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
     fun handleBeanInstantiationException(e: BeanInstantiationException): ResponseEntity<String> {
         return when (val ex = e.cause) {
             is IllegalArgumentException -> {
-                logger.info("사용자 입력 예외입니다. message : ", ex)
+                logger.error("사용자 입력 예외입니다. message : ", ex)
                 ResponseEntity.badRequest().body("사용자 입력 예외입니다.")
             }
 
@@ -39,14 +39,14 @@ class GlobalRestControllerAdvice : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllealArgumentException(e: IllegalArgumentException): ResponseEntity<String> {
-        logger.info("사용자 입력 예외입니다. message : ", e)
+        logger.error("사용자 입력 예외입니다. message : ", e)
 
         return ResponseEntity.badRequest().body("사용자 입력 예외입니다.")
     }
 
     @ExceptionHandler(OauthRequestException::class)
     fun handleIllealArgumentException(e: OauthRequestException): ResponseEntity<String> {
-        logger.info("잘못된 로그인 방식입니다. message : ", e)
+        logger.error("잘못된 로그인 방식입니다. message : ", e)
 
         return ResponseEntity.badRequest().body("잘못된 로그인 방식입니다.")
     }

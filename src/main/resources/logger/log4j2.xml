@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="FILE_NAME">daily-log</Property>
+        <Property name="WARN_FILE_NAME">warn-log</Property>
+        <Property name="ERROR_FILE_NAME">error-log</Property>
+        <Property name="BASE_DIR">logs</Property>
+        <Property name="COLOR_PATTERN">%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable</Property>
+        <Property name="PATTERN">[%equals{%X{request_id}}{}{startup}] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${COLOR_PATTERN}" charset="UTF-8"/>
+        </Console>
+
+        <RollingFile name="dailyFile">
+            <FileName>${BASE_DIR}/${FILE_NAME}.log</FileName>
+            <FilePattern>${BASE_DIR}/${FILE_NAME}-%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
+            <PatternLayout pattern="${PATTERN}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="50MB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7" fileIndex="max">
+                <Delete basePath="${BASE_DIR}" maxDepth="1">
+                    <IfLastModified age = "15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="dailyFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
