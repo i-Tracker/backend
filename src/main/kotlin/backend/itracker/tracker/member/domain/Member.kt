@@ -19,7 +19,7 @@ class Member(
     val oauthId: OauthId,
 
     var nickname: String,
-    val phoneNumber: String?,
+    var phoneNumber: String?,
 
     @Column(columnDefinition = "text")
     var profileImage: String,
@@ -36,6 +36,7 @@ class Member(
     fun updateProfile(target: Member) {
         this.nickname = target.nickname
         this.profileImage = target.profileImage
+        this.phoneNumber = target.phoneNumber
     }
 
     fun isAnonymous() = this.id == 0L

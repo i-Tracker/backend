@@ -18,7 +18,6 @@ class KakaoAuthCodeRequestUrlProvider(
 
     override fun provide(redirectType: RedirectType): String {
         if (redirectType == RedirectType.LOCAL) {
-            println(kakaoOauthConfig.localRedirectUri)
             return UriComponentsBuilder
                 .fromUriString("https://kauth.kakao.com/oauth/authorize")
                 .queryParam("response_type", "code")

@@ -37,8 +37,8 @@ class NotificationMacbookHandler(
                 ${macbook.memory} 통합 메모리,
                 ${macbook.color}
             """.trimIndent(),
-            priceDropFromYesterday = macbook.findPriceDiffFromYesterday(),
-            discountRateDropFromYesterday = macbook.findDiscountRateDiffFromYesterday(),
+            priceDrop = macbook.findPriceDiffFromYesterday(),
+            rateDrop = macbook.findDiscountRateDiffFromYesterday(),
             currentPrice = macbook.findCurrentPrice(),
             category = macbook.category.toString(),
             productId = macbook.id,
