@@ -16,70 +16,24 @@
 
         <RollingFile name="dailyFile">
             <FileName>${BASE_DIR}/${FILE_NAME}.log</FileName>
-            <FilePattern>${BASE_DIR}/${FILE_NAME}-%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
+            <FilePattern>${BASE_DIR}/${FILE_NAME}-%d{yyyy-MM-dd hh:mm}.log</FilePattern>
             <PatternLayout pattern="${PATTERN}" />
-            <LevelRangeFilter minLevel="ERROR" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="100MB"/>
-                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+                <SizeBasedTriggeringPolicy size="50MB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
             <DefaultRolloverStrategy>
                 <Delete basePath="${BASE_DIR}" maxDepth="1">
-                    <IfAccumulatedFileCount exceeds="3"/>
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile>
-
-        <RollingFile name="warnFile">
-            <FileName>${BASE_DIR}/${WARN_FILE_NAME}.log</FileName>
-            <FilePattern>${BASE_DIR}/${WARN_FILE_NAME}-%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
-            <PatternLayout pattern="${PATTERN}" />
-            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10MB"/>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-            </Policies>
-            <DefaultRolloverStrategy max="25" fileIndex="min" >
-                <Delete basePath="${BASE_DIR}">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="10d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile>
-
-        <RollingFile name="errorFile">
-            <FileName>${BASE_DIR}/${ERROR_FILE_NAME}.log</FileName>
-            <FilePattern>${BASE_DIR}/${ERROR_FILE_NAME}-%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
-            <PatternLayout pattern="${PATTERN}" />
-            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1" /><!-- 일별 로그 파일 생성-->
-            </Policies>
-            <DefaultRolloverStrategy max="25" fileIndex="min" >
-                <Delete basePath="${BASE_DIR}">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="10d" />
+                    <IfLastModified age = "3d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
     </Appenders>
 
     <Loggers>
-
         <Root level="INFO" additivity="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="dailyFile"/>
-            <AppenderRef ref="warnFile"/>
-            <AppenderRef ref="errorFile"/>
         </Root>
-
-        <Logger name="itracker" level="INFO" additivity="false" >
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="dailyFile"/>
-            <AppenderRef ref="warnFile"/>
-            <AppenderRef ref="errorFile"/>
-        </Logger>
-
     </Loggers>
 </Configuration>
