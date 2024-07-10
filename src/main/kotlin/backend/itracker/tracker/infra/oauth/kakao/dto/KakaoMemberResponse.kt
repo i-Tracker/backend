@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import java.time.LocalDateTime
 
+private const val KAKAO_KOREAN_AREA_CODE = "+82 "
+
 @JsonNaming(SnakeCaseStrategy::class)
 data class KakaoMemberResponse(
     val id: Long,
@@ -16,10 +18,13 @@ data class KakaoMemberResponse(
 ) {
 
     fun toDomain(): Member {
+        val changePhoneNumber = kakaoAccount.phoneNumber!!.replace(KAKAO_KOREAN_AREA_CODE, "0")
+            .replace("-", "")
+
         return Member(
             oauthId = OauthId(id.toString(), OauthServerType.KAKAO),
             nickname = kakaoAccount.profile.nickname,
-            phoneNumber = kakaoAccount.phoneNumber,
+            phoneNumber = changePhoneNumber,
             profileImage = kakaoAccount.profile.profileImageUrl,
         )
     }
