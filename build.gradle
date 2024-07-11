@@ -56,8 +56,11 @@ dependencies {
 	// solapi
 	implementation 'net.nurigo:sdk:4.2.7'
 
-	// loggin
+	// logging
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	// slack
+	implementation 'com.slack.api:slack-api-client:1.40.2'
 
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
