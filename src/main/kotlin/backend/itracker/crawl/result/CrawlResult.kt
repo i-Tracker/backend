@@ -29,6 +29,34 @@ class CrawlResult(
         this.appleWatch += result.appleWatch
     }
 
+    fun alreadyCrawlAirpods(): Boolean {
+        return airpods > 0
+    }
+
+    fun alreadyCrawlIpad(): Boolean {
+        return ipad > 0
+    }
+
+    fun alreadyCrawlIphone(): Boolean {
+        return iphone > 0
+    }
+
+    fun alreadyCrawlMac(): Boolean {
+        return mac > 0
+    }
+
+    fun alreadyCrawlMacbook(): Boolean {
+        return macbook > 0
+    }
+
+    fun alreadyCrawlAppleWatch(): Boolean {
+        return appleWatch > 0
+    }
+
+    fun hasError(): Boolean {
+        return !(alreadyCrawlMacbook() && alreadyCrawlIpad() && alreadyCrawlAppleWatch() && alreadyCrawlMac() && alreadyCrawlAirpods() && alreadyCrawlIphone())
+    }
+
     companion object {
         fun from(crawlCategory: CrawlTargetCategory): CrawlResult =
             when (crawlCategory) {
