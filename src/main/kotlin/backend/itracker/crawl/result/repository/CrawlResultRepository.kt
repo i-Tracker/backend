@@ -13,4 +13,12 @@ interface CrawlResultRepository : JpaRepository<CrawlResult, Long> {
         where cr.createdAt between :today and :tomorrow
     """)
     fun findByCreatedAtBetween(today: LocalDateTime, tomorrow: LocalDateTime) : List<CrawlResult>
+
+    @Query("""
+        select cr
+        from CrawlResult cr
+        order by cr.createdAt desc
+        limit 1
+    """)
+    fun findRecentCrawlResult(): CrawlResult
 }

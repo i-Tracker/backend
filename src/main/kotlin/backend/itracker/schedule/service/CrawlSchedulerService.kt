@@ -1,7 +1,9 @@
 package backend.itracker.schedule.service
 
 import backend.itracker.crawl.service.CrawlTargetCategory
+import backend.itracker.schedule.service.event.CrawlEndEvent
 import backend.itracker.schedule.service.schedulers.SchedulerComposite
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
@@ -13,6 +15,7 @@ private val CRAWL_TARGETS = CrawlTargetCategory.entries
 @Component
 class CrawlSchedulerService(
     private val crawlers: SchedulerComposite,
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     fun crawlManual(category: CrawlTargetCategory) {
@@ -24,5 +27,7 @@ class CrawlSchedulerService(
         CRAWL_TARGETS.forEach {
             crawlManual(it)
         }
+
+        eventPublisher.publishEvent(CrawlEndEvent())
     }
 }
