@@ -24,4 +24,9 @@ class CrawlResultService(
         val latest = results.last()
         latest.update(CrawlResult.from(crawlCategory))
     }
+
+    @Transactional(readOnly = true)
+    fun findRecentCrawlResult(): CrawlResult {
+        return crawlResultRepository.findRecentCrawlResult()
+    }
 }

@@ -44,3 +44,8 @@ nurigo:
       price-change-notification-template-id: test
       primary-phone-number: test
       sending-hour: 1
+
+slack:
+  web-hook:
+    url: test
+
