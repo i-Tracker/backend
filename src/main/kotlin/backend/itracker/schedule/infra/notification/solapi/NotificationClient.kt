@@ -1,5 +1,6 @@
 package backend.itracker.schedule.infra.notification.solapi
 
+import backend.itracker.schedule.infra.notification.event.MessageSendFailEvent
 import backend.itracker.schedule.infra.notification.solapi.config.NurigoKakaoChannelConfig
 import backend.itracker.schedule.service.notification.NotificationSender
 import backend.itracker.schedule.service.notification.dto.PriceChangeNotificationInfo
@@ -8,6 +9,7 @@ import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException
 import net.nurigo.sdk.message.model.KakaoOption
 import net.nurigo.sdk.message.model.Message
 import net.nurigo.sdk.message.service.DefaultMessageService
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -22,6 +24,7 @@ val logger = KotlinLogging.logger {}
 class NotificationClient(
     private val messageService: DefaultMessageService,
     private val nurigoKakaoChannelConfig: NurigoKakaoChannelConfig,
+    private val eventPublisher: ApplicationEventPublisher,
 ) : NotificationSender {
 
     override fun sendPriceChangeNotification(
@@ -53,10 +56,16 @@ class NotificationClient(
                 """
                 [ 메세지 전송 실패 ]
                 실패 리스트 : ${exception.failedMessageList}
-                실패 메세지${exception.message}
-            """.trimIndent()
+                실패 메세지 : ${exception.message}
+                """.trimIndent()
             }
+
+            eventPublisher.publishEvent(
+                MessageSendFailEvent.of(
+                    exception.failedMessageList,
+                    exception.message
+                )
+            )
         }
     }
-
 }
