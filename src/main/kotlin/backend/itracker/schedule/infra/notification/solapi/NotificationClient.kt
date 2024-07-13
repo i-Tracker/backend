@@ -1,6 +1,7 @@
 package backend.itracker.schedule.infra.notification.solapi
 
 import backend.itracker.schedule.infra.notification.event.MessageSendFailEvent
+import backend.itracker.schedule.infra.notification.event.MessageSendSuccessEvent
 import backend.itracker.schedule.infra.notification.solapi.config.NurigoKakaoChannelConfig
 import backend.itracker.schedule.service.notification.NotificationSender
 import backend.itracker.schedule.service.notification.dto.PriceChangeNotificationInfo
@@ -51,6 +52,14 @@ class NotificationClient(
 
         try {
             messageService.send(messages, scheduledDateTime)
+            val balance = messageService.getBalance()
+            eventPublisher.publishEvent(
+                MessageSendSuccessEvent(
+                    point = balance.point!!,
+                    balance = balance.balance!!,
+                    successMessageCount = messages.size
+                )
+            )
         } catch (exception: NurigoMessageNotReceivedException) {
             logger.error {
                 """
