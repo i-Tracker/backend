@@ -24,7 +24,7 @@ class NotificationSchedulerService(
         productCategoryMap.forEach { (product, members) ->
             val priceChangeNotificationInfo = notificationComposite.getPriceChangeNotificationInfo(product)
             val receiverPhoneNumbers = members.mapNotNull { it.phoneNumber }
-            notificationSender.sendPriceChangeNotification(priceChangeNotificationInfo, receiverPhoneNumbers)
+            notificationSender.reserveNotificationOfPriceChange(priceChangeNotificationInfo, receiverPhoneNumbers)
         }
     }
 }

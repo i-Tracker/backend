@@ -4,7 +4,7 @@ import backend.itracker.schedule.service.notification.dto.PriceChangeNotificatio
 
 interface NotificationSender {
 
-    fun sendPriceChangeNotification(
+    fun reserveNotificationOfPriceChange(
         priceChangeTemplate: PriceChangeNotificationInfo,
         receiverPhoneNumbers: List<String>,
     )
