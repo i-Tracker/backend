@@ -3,7 +3,7 @@ package backend.itracker.alarm.service
 import backend.itracker.alarm.infra.slack.Color
 import backend.itracker.alarm.infra.slack.SlackClient
 import backend.itracker.alarm.service.event.FailedNotificationEvent
-import backend.itracker.alarm.service.event.SuccessNotificationEvent
+import backend.itracker.alarm.service.event.SuccessReservationOfNotificationEvent
 import backend.itracker.crawl.service.CrawlResultService
 import backend.itracker.schedule.service.event.CrawlEndEvent
 import org.springframework.context.event.EventListener
@@ -46,18 +46,19 @@ class AlarmService (
         )
     }
 
-    @EventListener(SuccessNotificationEvent::class)
-    fun alarmNotificationSuccessEvent(event: SuccessNotificationEvent) {
+    @EventListener(SuccessReservationOfNotificationEvent::class)
+    fun alarmNotificationSuccessEvent(event: SuccessReservationOfNotificationEvent) {
         slackClient.sendNotification(
             """
             |*[ 알림 예약 성공 ]*
+            |*예약 시간* : ${event.reservationTime()}
             """.trimMargin(),
             Color.GREEN,
             listOf(
                 """
-                |*전송한 메세지 수* : ${event.getSuccessMessageCount()}
-                |*남은 포인트* : ${event.getPoint()}
-                |*잔액* : ${event.getBalance()}
+                |*전송한 메세지 수* : ${event.successMessageCount()}
+                |*남은 포인트* : ${event.point()}
+                |*잔액* : ${event.balance()}
                 """.trimIndent()
             )
         )

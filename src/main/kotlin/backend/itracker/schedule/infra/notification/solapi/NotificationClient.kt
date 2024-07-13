@@ -1,7 +1,7 @@
 package backend.itracker.schedule.infra.notification.solapi
 
+import backend.itracker.schedule.infra.notification.event.MessageReservationSuccessEvent
 import backend.itracker.schedule.infra.notification.event.MessageSendFailEvent
-import backend.itracker.schedule.infra.notification.event.MessageSendSuccessEvent
 import backend.itracker.schedule.infra.notification.solapi.config.NurigoKakaoChannelConfig
 import backend.itracker.schedule.service.notification.NotificationSender
 import backend.itracker.schedule.service.notification.dto.PriceChangeNotificationInfo
@@ -28,7 +28,7 @@ class NotificationClient(
     private val eventPublisher: ApplicationEventPublisher,
 ) : NotificationSender {
 
-    override fun sendPriceChangeNotification(
+    override fun reserveNotificationOfPriceChange(
         priceChangeTemplate: PriceChangeNotificationInfo,
         receiverPhoneNumbers: List<String>,
     ) {
@@ -54,7 +54,8 @@ class NotificationClient(
             messageService.send(messages, scheduledDateTime)
             val balance = messageService.getBalance()
             eventPublisher.publishEvent(
-                MessageSendSuccessEvent(
+                MessageReservationSuccessEvent(
+                    reservationTime = reservationTime!!,
                     point = balance.point!!,
                     balance = balance.balance!!,
                     successMessageCount = messages.size
