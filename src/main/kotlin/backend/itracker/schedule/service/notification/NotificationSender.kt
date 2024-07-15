@@ -7,5 +7,7 @@ interface NotificationSender {
     fun reserveNotificationOfPriceChange(
         priceChangeTemplate: PriceChangeNotificationInfo,
         receiverPhoneNumbers: List<String>,
-    )
+    ): Int
+
+    fun checkBalance(reservationCount: Int)
 }
