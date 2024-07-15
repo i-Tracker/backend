@@ -56,9 +56,9 @@ class AlarmService (
             Color.GREEN,
             listOf(
                 """
-                |*전송한 메세지 수* : ${event.successMessageCount()}
-                |*남은 포인트* : ${event.point()}
-                |*잔액* : ${event.balance()}
+                *전송한 메세지 수* : ${event.successMessageCount()}
+                *남은 포인트* : ${event.point()}
+                *잔액* : ${event.balance()}
                 """.trimIndent()
             )
         )
