@@ -3,6 +3,8 @@ package backend.itracker.schedule.infra.notification.event
 import backend.itracker.alarm.service.event.SuccessReservationOfNotificationEvent
 import java.time.LocalDateTime
 
+private const val SOLAPI_KAKAO_ALARAM_COST = 9L
+
 data class MessageReservationSuccessEvent(
     val reservationTime: LocalDateTime,
     val successMessageCount: Int,
@@ -24,5 +26,9 @@ data class MessageReservationSuccessEvent(
 
     override fun balance(): Float {
         return balance
+    }
+
+    override fun cost(): Long {
+        return successMessageCount * SOLAPI_KAKAO_ALARAM_COST
     }
 }

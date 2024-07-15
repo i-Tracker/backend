@@ -20,6 +20,8 @@ import java.time.ZoneOffset
 
 val logger = KotlinLogging.logger {}
 
+private const val RESERVE_FAIlED = 0
+
 @Profile("!test")
 @Component
 class NotificationClient(
@@ -31,7 +33,7 @@ class NotificationClient(
     override fun reserveNotificationOfPriceChange(
         priceChangeTemplate: PriceChangeNotificationInfo,
         receiverPhoneNumbers: List<String>,
-    ) {
+    ): Int {
         val option = KakaoOption(
             pfId = nurigoKakaoChannelConfig.pfId,
             templateId = nurigoKakaoChannelConfig.priceChangeNotificationTemplateId,
@@ -47,20 +49,11 @@ class NotificationClient(
             )
         }
 
-        val reservationTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(nurigoKakaoChannelConfig.sendingHour, 0))
-        val scheduledDateTime = reservationTime.toInstant(ZoneOffset.of("+9"))!!
+        val scheduledDateTime = getReservationTime().toInstant(ZoneOffset.of("+9"))!!
 
         try {
             messageService.send(messages, scheduledDateTime)
-            val balance = messageService.getBalance()
-            eventPublisher.publishEvent(
-                MessageReservationSuccessEvent(
-                    reservationTime = reservationTime!!,
-                    point = balance.point!!,
-                    balance = balance.balance!!,
-                    successMessageCount = messages.size
-                )
-            )
+            return messages.size
         } catch (exception: NurigoMessageNotReceivedException) {
             logger.error {
                 """
@@ -76,6 +69,33 @@ class NotificationClient(
                     exception.message
                 )
             )
+
+            return RESERVE_FAIlED
         }
+    }
+
+    override fun checkBalance(reservationCount: Int) {
+        try {
+            val balance = messageService.getBalance()
+            eventPublisher.publishEvent(
+                MessageReservationSuccessEvent(
+                    reservationTime = getReservationTime(),
+                    point = balance.point!!,
+                    balance = balance.balance!!,
+                    successMessageCount = reservationCount
+                )
+            )
+        } catch (exception: NurigoMessageNotReceivedException) {
+            logger.error { "잔액 확인 실패 cause : $exception" }
+        }
+    }
+
+    private fun getReservationTime(): LocalDateTime {
+        return LocalDateTime.of(
+            LocalDate.now(), LocalTime.of(
+                nurigoKakaoChannelConfig.sendingHour,
+                0
+            )
+        )
     }
 }
