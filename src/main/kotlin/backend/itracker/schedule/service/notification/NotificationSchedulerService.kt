@@ -21,10 +21,15 @@ class NotificationSchedulerService(
             .groupBy { it.product}
             .mapValues { entry -> entry.value.map { it.member } }
 
+        var reservationCount = 0
         productCategoryMap.forEach { (product, members) ->
             val priceChangeNotificationInfo = notificationComposite.getPriceChangeNotificationInfo(product)
             val receiverPhoneNumbers = members.mapNotNull { it.phoneNumber }
-            notificationSender.reserveNotificationOfPriceChange(priceChangeNotificationInfo, receiverPhoneNumbers)
+            reservationCount += notificationSender.reserveNotificationOfPriceChange(priceChangeNotificationInfo, receiverPhoneNumbers)
+        }
+
+        if (reservationCount > 0) {
+            notificationSender.checkBalance(reservationCount)
         }
     }
 }
