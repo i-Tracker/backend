@@ -4,6 +4,7 @@ import backend.itracker.crawl.exception.CrawlException
 import backend.itracker.crawl.service.util.helper.DriverConnector
 import backend.itracker.crawl.service.util.helper.PriceParser
 import backend.itracker.crawl.service.util.helper.WebElementHelper
+import backend.itracker.crawl.service.vo.DefaultPrice
 import backend.itracker.crawl.service.vo.DefaultProduct
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.openqa.selenium.By
@@ -55,6 +56,10 @@ class Crawler(
                     }
 
 
+                    val price = priceParser.getDefaultPrice(element)
+                    if (DefaultPrice.none() == price) {
+                        continue
+                    }
                     products[productId] = DefaultProduct(
                         productId = productId.toLong(),
                         subCategory = helper.findClassName(
@@ -62,7 +67,7 @@ class Crawler(
                             "product-list-header__title"
                         ),
                         name = element.text.split(System.lineSeparator())[0],
-                        price = priceParser.getDefaultPrice(element),
+                        price = price,
                         productLink = helper.findByTagAndAttribute(element, "a", "href"),
                         thumbnailLink = helper.findByTagAndAttribute(element, "img", "src")
                     )

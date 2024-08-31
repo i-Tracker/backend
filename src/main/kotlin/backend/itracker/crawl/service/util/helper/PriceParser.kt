@@ -1,6 +1,7 @@
 package backend.itracker.crawl.service.util.helper
 
 import backend.itracker.crawl.service.vo.DefaultPrice
+import backend.itracker.schedule.infra.notification.solapi.logger
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.springframework.stereotype.Component
@@ -21,15 +22,24 @@ class PriceParser(
         var discountPercentage = 0
         var basePrice = BigDecimal.ZERO
         if (helper.hasClass(element, DISCOUNT_PERCENTAGE)) {
+            val discountPercentageElement = element.findElement(By.className(DISCOUNT_PERCENTAGE)).text
+            val basePriceElement = element.findElement(By.className(BASE_PRICE)).text
+            if (discountPercentageElement.isBlank() || basePriceElement.isBlank()) {
+                return DefaultPrice.none()
+            }
             discountPercentage =
-                element.findElement(By.className(DISCOUNT_PERCENTAGE)).text.split(System.lineSeparator())[0]
-                    .replace("%", "").toInt()
-            basePrice = element.findElement(By.className(BASE_PRICE)).text
+                discountPercentageElement.split(System.lineSeparator())[0]
+                    .replace("%", "").toIntOrNull() ?: loggingElement("discountPercent", discountPercentageElement)
+            basePrice = basePriceElement
                 .replace(",", "")
                 .removeSuffix("원").toBigDecimal()
         }
 
-        val currentPrice = element.findElement(By.className(CURRENT_PRICE)).text
+        val currentPriceElement = element.findElement(By.className(CURRENT_PRICE)).text
+        if (currentPriceElement.isBlank()) {
+            return DefaultPrice.none()
+        }
+        val currentPrice = currentPriceElement
             .replace(",", "")
             .removeSuffix("원").toBigDecimal()
 
@@ -44,5 +54,10 @@ class PriceParser(
             discountPrice = currentPrice,
             isOutOfStock = isOutOfStock
         )
+    }
+
+    private fun loggingElement(name: String, element: String?): Int {
+        logger.error { "할인율 파싱 중 오류가 발생했습니다. $name: $element" }
+        return 0
     }
 }
