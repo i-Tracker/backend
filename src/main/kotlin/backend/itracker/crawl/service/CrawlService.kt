@@ -32,7 +32,7 @@ class CrawlService(
 
     fun crawlAppleWatch(): List<AppleWatch> {
         val url = getCrawlUrl(CrawlTargetCategory.APPLE_WATCH)
-        val products = crawler.crawl(url)
+        val products = crawler.crawlWithClick(url)
         return crawlMapper.toAppleWatch(products)
     }
 
@@ -44,7 +44,7 @@ class CrawlService(
 
     fun crawlAirPods(): List<AirPods> {
         val url = getCrawlUrl(CrawlTargetCategory.AIRPODS)
-        val products = crawler.crawl(url)
+        val products = crawler.crawlWithClick(url)
         return crawlMapper.toAirPods(products)
     }
 
