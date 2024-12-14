@@ -13,15 +13,24 @@ private const val MAC_BOOK_AIR_M3_15_CTO = "MacBook Air 15 M3 CTO"
 
 @Component
 class MacbookAirM3Mapper : MacbookMappingComponent {
+    companion object {
+        private val ALL_MAC_BOOK_AIR_M3 = listOf(
+            MAC_BOOK_AIR_M3_13,
+            MAC_BOOK_AIR_M3_13_CTO,
+            MAC_BOOK_AIR_M3_15,
+            MAC_BOOK_AIR_M3_15_CTO
+        )
+    }
 
     override fun supports(subCategory: String): Boolean {
-        return subCategory == MAC_BOOK_AIR_M3_13 ||
-                subCategory == MAC_BOOK_AIR_M3_13_CTO ||
-                subCategory == MAC_BOOK_AIR_M3_15 ||
-                subCategory == MAC_BOOK_AIR_M3_15_CTO
+        return subCategory in ALL_MAC_BOOK_AIR_M3
     }
 
     override fun toDomain(product: DefaultProduct): Macbook {
+        if (!product.name.contains("M3")) { // 쿠팡에서 M2지만 카테고리가 M3로 표기되는 경우가 있음
+            return Macbook.empty()
+        }
+        
         val names = product.name.split(",")
             .map { it.trim() }
             .toList()

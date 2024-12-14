@@ -41,6 +41,29 @@ class Macbook(
 
     id: Long = 0L
 ) : BaseEntity(id) {
+    companion object {
+        fun empty(): Macbook {
+            return Macbook(
+                coupangId = 0,
+                company = "",
+                name = "",
+                chip = "",
+                cpu = "",
+                gpu = "",
+                storage = "",
+                memory = "",
+                language = "",
+                color = "",
+                size = 0,
+                releaseYear = 0,
+                category = MacbookCategory.MACBOOK_AIR,
+                productLink = "",
+                thumbnail = ""
+            ).apply {
+                id = -1
+            }
+        }
+    }
 
     fun addAllPrices(targetPrices: MacbookPrices) {
         targetPrices.macbookPrices.forEach(this::addPrice)

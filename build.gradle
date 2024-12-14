@@ -63,7 +63,7 @@ dependencies {
 	implementation 'com.slack.api:slack-api-client:1.40.2'
 
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'com.mysql:mysql-connector-j'
 
 	// RestAssured
 	testImplementation 'io.rest-assured:rest-assured'

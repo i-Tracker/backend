@@ -31,7 +31,7 @@ class MacbookAirM213Mapper : MacbookMappingComponent {
         val gpu = names[3].split(" ").last()
         val storage = names[4]
         val memory = names[5]
-        val language = names[7]
+        val language = names.getOrElse(7) { "" }
 
         return MacbookCrawlResponse(
             coupangId = product.productId,

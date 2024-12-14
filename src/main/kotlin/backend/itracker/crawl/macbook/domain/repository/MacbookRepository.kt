@@ -14,7 +14,7 @@ fun MacbookRepository.findByIdAllFetch(macbookId: Long): Macbook = findAllPrices
 
 interface MacbookRepository: JpaRepository<Macbook, Long>, MacbookRepositoryCustom {
 
-    fun findByCoupangId(coupangId: Long): Optional<Macbook>
+    fun findByCoupangId(coupangId: Long): Macbook?
 
     @Query(
         """

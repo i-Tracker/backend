@@ -16,14 +16,12 @@ class MacbookService(
 ) {
 
     fun saveAll(macbooks: List<Macbook>) {
-        for (macbook in macbooks) {
-            val maybeMacbook = macbookRepository.findByCoupangId(macbook.coupangId)
-            if (maybeMacbook.isEmpty) {
-                macbookRepository.save(macbook)
-                continue
+        macbooks.filter { it != Macbook.empty() }
+            .forEach { macbook ->
+                macbookRepository.findByCoupangId(macbook.coupangId)
+                    ?.apply { addAllPrices(macbook.prices) }
+                    ?: macbookRepository.save(macbook)
             }
-            maybeMacbook.get().addAllPrices(macbook.prices)
-        }
     }
 
     fun updateAllPartnersLink(partnersLinkInformation: List<PartnersLinkInfo>) {

@@ -1,6 +1,12 @@
 spring:
   application:
     name: itracker
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:14306/itracker?serverTimezone=Asia/Seoul
+    username: root
+    password: itracker123!
+
   jpa:
     hibernate:
       ddl-auto: update

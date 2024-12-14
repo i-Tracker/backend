@@ -19,6 +19,7 @@ class MacbookMappers(
                         macbooks.add(macbookMapper.toDomain(product))
                     }
                 }
+                macbooks.filterNot{ it == Macbook.empty()}
             } catch (e: Exception) {
                 throw CrawlException(
                     """

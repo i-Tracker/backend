@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
-import java.util.*
 
 
 private val LOGGER = KotlinLogging.logger {}
@@ -40,12 +39,12 @@ class LoggerAspect {
 
     @Before("apiInfo()")
     fun beforeApiRequest(joinPoint: JoinPoint) {
-        val request =
-            (Objects.requireNonNull(RequestContextHolder.getRequestAttributes()) as ServletRequestAttributes).request
+        val request = RequestContextHolder.getRequestAttributes()?.let { (it as ServletRequestAttributes).request }
+
         LOGGER.info {
             """
             [ API Start ]
-            - Method: ${request.method}
+            - Method: ${request?.method ?: "Local"}
             - URI: ${getURI(request)}
             - IP: ${getClientIP(request)}
             - Signature: ${getSignature(joinPoint)}
@@ -54,7 +53,7 @@ class LoggerAspect {
     }
 
     @AfterReturning(value = "apiInfo()", returning = "response")
-    fun afterApiRequest(response: Any) {
+    fun afterApiRequest(response: Any?) {
         LOGGER.info {
             """
             [ API End ]
@@ -63,12 +62,12 @@ class LoggerAspect {
         }
     }
 
-    private fun getURI(request: HttpServletRequest): String {
-        return "${request.requestURI}${request.queryString.let { if (it != null) "?$it" else "" }}"
+    private fun getURI(request: HttpServletRequest?): String {
+        return "${request?.requestURI}${request?.queryString.let { if (it != null) "?$it" else "" }}"
     }
 
-    private fun getClientIP(request: HttpServletRequest): String? {
-        return IP_HEADERS.firstNotNullOfOrNull { header -> request.getHeader(header) } ?: request.remoteAddr
+    private fun getClientIP(request: HttpServletRequest?): String? {
+        return IP_HEADERS.firstNotNullOfOrNull { header -> request?.getHeader(header) } ?: request?.remoteAddr
     }
 
     private fun getSignature(joinPoint: JoinPoint): String {
